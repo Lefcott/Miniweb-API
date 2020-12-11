@@ -13,7 +13,7 @@ const http = require('http');
 
 const env = require('../env.json');
 
-const webOrigins = env.WEB_ORIGINS.split(/\s*,\s*/g);
+const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
 app.use(
