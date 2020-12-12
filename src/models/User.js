@@ -36,6 +36,11 @@ export default class extends User {
     return this.save();
   }
 
+  static async getValidationError({ email }) {
+    const previousUser = await User.findOne({ email });
+    return previousUser && 'A user with that email aleady exists';
+  }
+
   static async register(data) {
     return new User({
       name: data.name,

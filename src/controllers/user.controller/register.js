@@ -5,9 +5,9 @@ import rollbar from '../../utils/rollbar';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export const register = async ({ body, session }, res) => {
-  const previousUser = await User.findOne({ email: body.email });
+  const validationError = await User.getValidationError(body);
 
-  if (previousUser) return res.status(422).json({ error: 'A user with that email aleady exists' });
+  if (validationError) return res.status(422).json({ error: validationError });
 
   const user = await User.register(body);
   session.user_id = user._id;
