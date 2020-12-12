@@ -32,7 +32,6 @@ export const sendEmail = (from, to, subject, text, html) =>
     if (!to || !to.length) throw new Error(`No recipients found for sending email, subject: ${subject}`);
 
     to = Array.isArray(to) ? to : [to];
-    log(html);
     ses.sendEmail(
       {
         Destination: { ToAddresses: to },
@@ -51,7 +50,6 @@ export const sendEmail = (from, to, subject, text, html) =>
   });
 
 export const getEmailFromTemplate = (name, language_code, data) => {
-  log(data);
   const template = templates[name];
   if (!template) throw new Error(`Unexistent template with name ${name}`);
   const language = template.lang[language_code];
