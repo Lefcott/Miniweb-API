@@ -21,15 +21,3 @@ export const confirmEmail = {
   middlewares: sessionMiddleware,
   query: joi.object().keys({ token: joi.string().required() })
 };
-
-// export const login = {
-//   method: 'post',
-//   paths: '/login',
-//   middlewares: sessionMiddleware,
-//   domains: process.env.DOMAIN_NAME,
-//   errorMessage: 'Bad parameters',
-//   body: joi.object().keys({
-//     email: joi.string().email().required(),
-//     password: joi.string().required()
-//   })
-// };
