@@ -15,13 +15,12 @@ export const register = {
   })
 };
 
-// export const confirmRegister = {
-//   method: 'get',
-//   paths: '/confirm_register/:confirmID',
-//   middlewares: sessionMiddleware,
-//   errorMessage: 'Bad parameters',
-//   params: joi.object().keys({ confirmID: joi.string().required() })
-// };
+export const confirmEmail = {
+  method: 'get',
+  paths: '/email_confirmation',
+  middlewares: sessionMiddleware,
+  query: joi.object().keys({ token: joi.string().required() })
+};
 
 // export const login = {
 //   method: 'post',

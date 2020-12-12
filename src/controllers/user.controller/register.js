@@ -1,15 +1,17 @@
-import env from '../env.json';
-import User from '../models/User';
-import { sendEmail, getEmailFromTemplate } from '../utils/emails';
-import { hash, compare, largeID, randomCode } from '../utils/passwords';
-import * as redis from '../utils/redis';
-import * as sms from '../utils/sms';
-import rollbar from '../utils/rollbar';
+import User from '../../models/User';
+import env from '../../env.json';
+import { sendEmail, getEmailFromTemplate } from '../../utils/emails';
+import rollbar from '../../utils/rollbar';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export const register = async ({ body, session }, res) => {
+  const previousUser = await User.findOne({ email: body.email });
+
+  if (previousUser) return res.status(422).json({ error: 'A user with that email aleady exists' });
+
   const user = await User.register(body);
   session.user_id = user._id;
+
   const emailData = {
     name: user.name,
     surname: user.surname,
