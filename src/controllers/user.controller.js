@@ -9,6 +9,7 @@ import rollbar from '../utils/rollbar';
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export const register = async ({ body, session }, res) => {
   const user = await User.register(body);
+  session.user_id = user._id;
   const emailData = {
     name: user.name,
     surname: user.surname,
@@ -17,9 +18,7 @@ export const register = async ({ body, session }, res) => {
     )}`
   };
   const email = getEmailFromTemplate('register', session.language_code, emailData);
-  sendEmail('confirm', user.email, email.subject, email.text, email.html).catch(error =>
-    rollbar.error(error)
-  );
+  sendEmail('confirm', user.email, email.subject, email.text, email.html).catch(rollbar.error);
 
   res.status(200).json({ message: 'user created' });
 };
