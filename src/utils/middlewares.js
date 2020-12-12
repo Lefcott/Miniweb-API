@@ -26,7 +26,7 @@ app.use(
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
-      store: new RedisStore({ client: redis }),
+      store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET,
       saveUninitialized: true,
       resave: false
@@ -56,8 +56,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => res.status(200).send('Hello World!'));
-app.get('/checkip', (req, res) => res.status(200).send(req.ip));
-app.use('/api', router);
+app.use('/', router);
 
 log('Listen');
 const port = env.PORT || process.env.PORT;

@@ -1,5 +1,5 @@
 {
-  "Name": "required",
-  "Surname": "required",
-  "VerificationLink": "required"
+  "name": "required",
+  "surname": "required",
+  "verification_link": "required"
 }

@@ -1,8 +1,13 @@
 import { uuid } from 'uuidv4';
 import bcrypt from 'bcryptjs';
 
-export const encrypt = pass =>
-  new Promise(resolve => bcrypt.hash(pass, 6, (err, hash) => resolve(err ? null : hash)));
+export const hash = pass =>
+  new Promise(resolve =>
+    bcrypt.hash(pass, 6, (err, _hash) => {
+      if (err) throw err;
+      resolve(_hash);
+    })
+  );
 
 export const largeID = n => {
   let result = '';

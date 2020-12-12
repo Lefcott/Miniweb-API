@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import env from '../env.json';
+import env from './env.json';
 
 const { connect } = mongoose;
 
@@ -9,5 +9,3 @@ connect(env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, as
   if (error) return console.error(error);
   console.log('Connected to MongoDB!');
 });
-
-export * from './models';

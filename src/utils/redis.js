@@ -160,3 +160,4 @@ export const Update = (key, where = {}, update, strRegisters) =>
       resolve(await Add(key, regs));
     });
   });
+export { redis as client };

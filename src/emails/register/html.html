@@ -3,15 +3,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap" rel="stylesheet" />
     <style>
       .button {
-        width: 200px;
-        height: 40px;
-        background-color: rgb(106, 160, 235);
-        border-radius: 12px;
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        border: 1px solid transparent;
+        margin: 1rem 0;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        background-color: #104c91;
         color: #fff;
-        cursor: pointer;
-        margin: 20px;
-        padding: 4px;
-        font-weight: bolder;
+        text-decoration: none;
       }
       #container {
         background-color: #118ab2;
@@ -25,9 +29,10 @@
   </head>
   <body>
     <div id="container">
-      <h1>{{ data.Name }} {{ data.Surname }}, {{ lang.welcome }}</h1>
-      {{ lang.message }}
-      <br /><br /><br /><a class="button" href="{{ data.VerificationLink }}">{{ lang.complete }}</a>
+      <h1>{{ data.name }} {{ data.surname }}, {{ language.welcome }}</h1>
+      {{ language.message }}
+      <br /><br /><br />
+      <a href="{{ data.verification_link }}" class="button">{{ language.complete }}</a>
     </div>
   </body>
 </html>

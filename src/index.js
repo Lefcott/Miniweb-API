@@ -1,8 +1,9 @@
 import './load_env';
 import './globals';
 
+import './database';
 import './utils/middlewares';
-import './routes/schemas';
+import './routes';
 import './tasks';
 
 process.on('uncaughtException', (err, origin) => {

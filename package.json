@@ -3,16 +3,12 @@
   "version": "0.1.0",
   "description": "Multi-Tenant service for web products",
   "engines": {
-    "node": "14.5.0"
+    "node": "15.4.0"
   },
   "scripts": {
     "start": "node -r esm src",
     "dev": "nodemon app -e env,js,json",
     "build": "node -r esm scripts/build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lefcott19/BloomeChatbot.git"
   },
   "author": "Leandro Cotti",
   "license": "ISC",
@@ -27,6 +23,7 @@
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
+    "error-stack-parser": "^2.0.6",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -43,9 +40,8 @@
     "uuidv4": "^6.0.7"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "css-loader": "^3.6.0",
-    "eslint": "^5.16.0",
+    "eslint": "^7.15.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-strongloop": "^2.1.0",

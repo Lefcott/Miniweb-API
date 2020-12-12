@@ -1,2 +1,2 @@
-{{ data.Name }} {{ data.Surname }}, {{ lang.welcome }}
-{{ data.VerificationLink }}
+{{ data.name }} {{ data.surname }}, {{ language.welcome }}
+{{ data.verification_link }}
