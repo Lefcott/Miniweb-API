@@ -16,6 +16,7 @@ const env = require('../env.json');
 const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
+log('webOrigins', webOrigins);
 app.use(
   cors({
     origin: webOrigins,
