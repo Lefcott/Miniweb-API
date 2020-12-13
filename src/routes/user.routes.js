@@ -21,3 +21,9 @@ export const confirmEmail = {
   middlewares: sessionMiddleware,
   query: joi.object().keys({ token: joi.string().required() })
 };
+
+export const clearEmailConfirmationNotification = {
+  method: 'delete',
+  paths: '/email_confirmation_notification',
+  middlewares: sessionMiddleware
+};

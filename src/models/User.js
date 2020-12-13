@@ -26,13 +26,13 @@ const User = mongoose.model(
 
 export default class extends User {
   confirmEmail() {
-    this.email_confirmation_token = undefined;
+    this.email_confirmation_token = null;
     this.email_confirmed = true;
     return this.save();
   }
 
   confirmPhone() {
-    this.phone_confirmation_code = undefined;
+    this.phone_confirmation_code = null;
     this.phone_confirmed = true;
     return this.save();
   }
@@ -58,5 +58,12 @@ export default class extends User {
     const authenticated = await compare(password, user.password);
     if (!authenticated) throw new AuthenticationError('Invalid email or password');
     return user;
+  }
+
+  static async clearEmailConfirmationNotification(session) {
+    const user = await User.findOne({ _id: session.user_id });
+    if (!user) return;
+    user.notified_email_confirmed = true;
+    return user.save();
   }
 }
