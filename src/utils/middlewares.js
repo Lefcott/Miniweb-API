@@ -1,4 +1,5 @@
 import SocketIo from 'socket.io';
+import cors from 'cors';
 
 import rollbar from './rollbar';
 import * as redis from './redis';
@@ -15,6 +16,9 @@ const env = require('../env.json');
 const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
+
+app.use(cors());
+
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
