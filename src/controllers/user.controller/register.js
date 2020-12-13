@@ -7,7 +7,8 @@ import rollbar from '../../utils/rollbar';
 export default async ({ body, session }, res) => {
   const validationError = await User.getValidationError(body);
 
-  if (validationError) return res.status(422).json({ error: validationError });
+  if (validationError)
+    return res.status(422).json({ error: validationError.error, code: validationError.code });
 
   const user = await User.register(body);
   session.user_id = user._id;
