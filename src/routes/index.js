@@ -87,16 +87,24 @@ const defineRoute = (method, paths, schemaName, schema, epName, logic) => {
         );
       await logic(req, res, next);
     } catch (error) {
-      const response = {
-        message: 'There was an internal server error',
-        error: {
-          code: error.name,
-          message: error.message,
-          stack: errorStackParser.parse(error).map(data => data.source)
-        }
-      };
-      res.status(500).json(response);
-      rollbar.error(`New internal server error:\n${JSON.stringify(response, null, 2)}`);
+      let response;
+
+      if (error instanceof AuthenticationError)
+        res.status(403).json({
+          message: 'There was an authentication error',
+          error: { code: error.name, message: error.message }
+        });
+      else {
+        res.status(500).json({
+          message: 'There was an internal server error',
+          error: {
+            code: error.name,
+            message: error.message,
+            stack: errorStackParser.parse(error).map(data => data.source)
+          }
+        });
+        rollbar.error(`New internal server error:\n${JSON.stringify(response, null, 2)}`);
+      }
     }
   });
 };

@@ -1,9 +1,9 @@
-## Summary
+## Descripción
 
 -
 
 ## Screenshots
 
-## Jira Card
+## Card
 
 []()

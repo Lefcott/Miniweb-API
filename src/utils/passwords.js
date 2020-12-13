@@ -23,5 +23,3 @@ export const randomCode = digits => {
   }
   return code;
 };
-
-export const { compareSync: compare } = bcrypt;

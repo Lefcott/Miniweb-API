@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
+import { compare } from 'bcryptjs';
 
 import { randomCode, hash } from '../utils/passwords';
 
@@ -49,5 +50,13 @@ export default class extends User {
       email: data.email,
       password: await hash(data.password)
     }).save();
+  }
+
+  static async authenticate({ email, password }) {
+    const user = await User.findOne({ email });
+    if (!user) throw new AuthenticationError('Invalid email or password');
+    const authenticated = await compare(password, user.password);
+    if (!authenticated) throw new AuthenticationError('Invalid email or password');
+    return user;
   }
 }
