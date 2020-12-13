@@ -4,7 +4,7 @@ import { sendEmail, getEmailFromTemplate } from '../../utils/emails';
 import rollbar from '../../utils/rollbar';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
-export const register = async ({ body, session }, res) => {
+export default async ({ body, session }, res) => {
   const validationError = await User.getValidationError(body);
 
   if (validationError) return res.status(422).json({ error: validationError });

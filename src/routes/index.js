@@ -90,19 +90,23 @@ const defineRoute = (method, paths, schemaName, schema, epName, logic) => {
       let response;
 
       if (error instanceof AuthenticationError)
-        res.status(403).json({
-          message: 'There was an authentication error',
-          error: { code: error.name, message: error.message }
-        });
+        res.status(403).json(
+          (response = {
+            message: 'There was an authentication error',
+            error: { code: error.name, message: error.message }
+          })
+        );
       else {
-        res.status(500).json({
-          message: 'There was an internal server error',
-          error: {
-            code: error.name,
-            message: error.message,
-            stack: errorStackParser.parse(error).map(data => data.source)
-          }
-        });
+        res.status(500).json(
+          (response = {
+            message: 'There was an internal server error',
+            error: {
+              code: error.name,
+              message: error.message,
+              stack: errorStackParser.parse(error).map(data => data.source)
+            }
+          })
+        );
         rollbar.error(`New internal server error:\n${JSON.stringify(response, null, 2)}`);
       }
     }
@@ -119,20 +123,12 @@ const defineRoutes = () => {
       ? schemaFiles[k].substring(0, schemaFiles[k].length - 10)
       : schemaFiles[k];
     const schema = require(`./${name}.routes`);
-    const controllerPath = `${projectDir}/src/controllers/${name}.controller`;
-    const controller = require(controllerPath);
 
     schemas[name] = {};
     const epNames = Object.keys(schema);
     for (let m = 0; m < epNames.length; m += 1) {
       const epName = epNames[m];
-      if (!controller[epName]) {
-        rollbar.error(
-          `No controller was found for route "${name}" and endpoint "${epName}". Won't define that endpoint.
-Please review "${controllerPath}"`
-        );
-        continue;
-      }
+      const { default: controller } = require(`${projectDir}/src/controllers/${name}.controller/${epName}`);
       let { paths } = schema[epName];
       const { method } = schema[epName];
       if (!method) {
@@ -150,7 +146,7 @@ Please review "${controllerPath}"`
         continue;
       }
 
-      defineRoute(method, paths, name, schema[epName], epName, controller[epName]);
+      defineRoute(method, paths, name, schema[epName], epName, controller);
     }
   }
 };

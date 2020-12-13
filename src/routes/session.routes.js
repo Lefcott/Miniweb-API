@@ -17,3 +17,9 @@ export const createSession = {
     password: joi.string().required()
   })
 };
+
+export const deleteSession = {
+  method: 'delete',
+  paths: '/sessions',
+  middlewares: sessionMiddleware
+};
