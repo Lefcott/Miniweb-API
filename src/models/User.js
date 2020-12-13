@@ -16,7 +16,6 @@ const User = mongoose.model(
       password: { type: String, required: true },
       email_confirmation_token: { type: String, default: () => `${uuid()}-${uuid()}-${uuid()}` },
       email_confirmed: { type: Boolean, default: false },
-      has_read_welcome_message: { type: Boolean, default: false },
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
       phone_confirmed: { type: Boolean, default: false }
     },

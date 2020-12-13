@@ -8,6 +8,7 @@ export default async ({ session }, res) => {
   if (!user) throw new Error(`could not find user with id ${session.user_id}`);
 
   user.email_confirmation_token = undefined;
+  user.password = undefined;
 
   res.status(200).json([{ user }]);
 };
