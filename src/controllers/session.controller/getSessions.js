@@ -9,6 +9,7 @@ export default async ({ session }, res) => {
 
   user.email_confirmation_token = undefined;
   user.password = undefined;
+  user.phone_confirmation_code = undefined;
 
   res.status(200).json([{ user }]);
 };
