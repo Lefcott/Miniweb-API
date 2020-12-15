@@ -18,7 +18,21 @@ const User = mongoose.model(
       email_confirmed: { type: Boolean, default: false },
       notified_email_confirmed: { type: Boolean, default: false },
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
-      phone_confirmed: { type: Boolean, default: false }
+      phone_confirmed: { type: Boolean, default: false },
+      pages: [
+        {
+          name: { type: String, required: true },
+          request_summary: String,
+          domain: String,
+          active: { type: Boolean, default: false },
+          checklist: [
+            {
+              code: { type: String, required: true },
+              status: { type: String, required: true } // 'pending' | 'done'
+            }
+          ]
+        }
+      ]
     },
     { collection: 'users' }
   )
