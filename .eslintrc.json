@@ -21,7 +21,10 @@
   "globals": {
     "globalThis": "readonly",
     "log": "readonly",
-    "AuthenticationError": "readonly"
+    "AuthorizationError": "readonly",
+    "AuthenticationError": "readonly",
+    "SessionError": "readonly",
+    "ValidationError": "readonly"
   },
   "rules": {
     "indent": [

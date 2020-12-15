@@ -24,11 +24,11 @@ const User = mongoose.model(
           name: { type: String, required: true },
           request_summary: String,
           domain: String,
-          active: { type: Boolean, default: false },
+          status: { type: String, required: true }, // first_payment_pending | first_payment_pending | active | disabled
           checklist_items: [
             {
               code: { type: String, required: true },
-              status: { type: String, required: true } // 'pending' | 'done'
+              status: { type: String, required: true } // pending | done
             }
           ]
         }
@@ -48,6 +48,23 @@ export default class extends User {
   confirmPhone() {
     this.phone_confirmation_code = null;
     this.phone_confirmed = true;
+    return this.save();
+  }
+
+  validatePageCreation(page) {
+    const alreadyUsedPage = this.pages.find(({ name }) => name === page.name);
+    if (alreadyUsedPage)
+      throw new ValidationError(`a page with name ${page.name} already exists for user ${this._id}`);
+  }
+
+  createPage(page) {
+    this.pages.push({
+      name: page.name,
+      request_summary: page.request_summary,
+      domain: page.domain,
+      status: 'first_payment_pending',
+      checklist_items: page.checklist_items.map(item => ({ code: item, status: 'pending' }))
+    });
     return this.save();
   }
 
@@ -79,5 +96,15 @@ export default class extends User {
     if (!user) return;
     user.notified_email_confirmed = true;
     return user.save();
+  }
+
+  static async validateSession(session, params) {
+    if (!session.user_id !== params.user_id && false)
+      throw new AuthenticationError(
+        `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`
+      );
+    const user = await this.findOne({ _id: params.user_id });
+    if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
+    return user;
   }
 }
