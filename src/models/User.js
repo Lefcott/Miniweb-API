@@ -24,7 +24,11 @@ const User = mongoose.model(
           name: { type: String, required: true },
           summary: String,
           domain: String,
-          status: { type: String, required: true }, // first_payment_pending | first_payment_pending | active | disabled
+          status: {
+            // first_payment_pending | development_pending | second_payment_pending | active | disabled
+            type: String,
+            required: true
+          },
           checklist_items: [
             {
               code: { type: String, required: true },
