@@ -19,10 +19,10 @@ const User = mongoose.model(
       notified_email_confirmed: { type: Boolean, default: false },
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
       phone_confirmed: { type: Boolean, default: false },
-      pages: [
+      development_requests: [
         {
           name: { type: String, required: true },
-          request_summary: String,
+          summary: String,
           domain: String,
           status: { type: String, required: true }, // first_payment_pending | first_payment_pending | active | disabled
           checklist_items: [
@@ -51,19 +51,23 @@ export default class extends User {
     return this.save();
   }
 
-  validatePageCreation(page) {
-    const alreadyUsedPage = this.pages.find(({ name }) => name === page.name);
-    if (alreadyUsedPage)
-      throw new ValidationError(`a page with name ${page.name} already exists for user ${this._id}`);
+  validateDevelopmentRequestCreation(development_request) {
+    const alreadySavedRequest = this.development_requests.find(
+      ({ name }) => name === development_request.name
+    );
+    if (alreadySavedRequest)
+      throw new ValidationError(
+        `a development request with name ${development_request.name} already exists for user ${this._id}`
+      );
   }
 
-  createPage(page) {
-    this.pages.push({
-      name: page.name,
-      request_summary: page.request_summary,
-      domain: page.domain,
+  createDevelopmentRequest(development_request) {
+    this.development_requests.push({
+      name: development_request.name,
+      summary: development_request.summary,
+      domain: development_request.domain,
       status: 'first_payment_pending',
-      checklist_items: page.checklist_items.map(item => ({ code: item, status: 'pending' }))
+      checklist_items: development_request.checklist_items.map(item => ({ code: item, status: 'pending' }))
     });
     return this.save();
   }

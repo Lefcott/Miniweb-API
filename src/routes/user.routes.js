@@ -28,14 +28,14 @@ export const clearEmailConfirmationNotification = {
   middlewares: sessionMiddleware
 };
 
-export const createPageRequest = {
+export const createDevelopmentRequest = {
   method: 'post',
-  paths: '/users/:user_id/pages',
+  paths: '/users/:user_id/development_requests',
   middlewares: sessionMiddleware,
   params: joi.object().keys({ user_id: joi.string().required() }),
   body: joi.object().keys({
     name: joi.string().required(),
-    request_summary: joi.string(),
+    summary: joi.string(),
     domain: joi.string(),
     checklist_items: joi.array().min(1).items(joi.string()).required()
   })
