@@ -1,0 +1,7 @@
+import ChecklistItem from '../../models/ChecklistItem';
+
+/** @param {import('express').Request} req @param {import('express').Response} res */
+export default async ({ query, session }, res) => {
+  const checklistItems = await ChecklistItem.find(query);
+  res.status(200).json(checklistItems);
+};

@@ -25,7 +25,7 @@ const User = mongoose.model(
           request_summary: String,
           domain: String,
           active: { type: Boolean, default: false },
-          checklist: [
+          checklist_items: [
             {
               code: { type: String, required: true },
               status: { type: String, required: true } // 'pending' | 'done'
