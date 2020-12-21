@@ -7,6 +7,7 @@ const ChecklistItem = mongoose.model(
     {
       code: { type: String, required: true },
       price: Number,
+      currency: String, // USD | ARS
       type: String // monthly | unique
     },
     { collection: 'checklist_items' }
