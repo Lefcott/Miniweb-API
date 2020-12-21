@@ -6,6 +6,7 @@ const ChecklistItem = mongoose.model(
   mongoose.Schema(
     {
       code: { type: String, required: true },
+      enabled: { type: String, required: true },
       price: Number,
       currency: String, // USD | ARS
       type: String // monthly | unique
