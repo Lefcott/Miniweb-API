@@ -10,5 +10,5 @@ export default async ({ query, session }, res) => {
     session.user_id = user._id;
   }
 
-  res.redirect(env.DASHBOARD_URL);
+  res.redirect(`${env.DASHBOARD_URL}/request_development`);
 };
