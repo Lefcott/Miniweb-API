@@ -37,6 +37,6 @@ export const createDevelopmentRequest = {
     name: joi.string().required(),
     summary: joi.string(),
     domain: joi.string(),
-    checklist_items: joi.array().min(1).items(joi.string()).required()
+    checklist_items: joi.array().items(joi.string()).required()
   })
 };
