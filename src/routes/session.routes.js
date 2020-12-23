@@ -1,6 +1,6 @@
-import { sessionMiddleware } from '../utils/middlewares';
+import joi from '@hapi/joi';
 
-const joi = require('@hapi/joi');
+import { sessionMiddleware } from '../utils/middlewares';
 
 export const getSessions = {
   method: 'get',
