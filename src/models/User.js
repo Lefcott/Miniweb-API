@@ -107,7 +107,7 @@ export default class extends User {
   }
 
   static async validateSession(session, params) {
-    if (!session.user_id !== params.user_id)
+    if (session.user_id !== params.user_id)
       throw new AuthenticationError(
         `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`
       );
