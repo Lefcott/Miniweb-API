@@ -6,7 +6,12 @@ const Configuration = mongoose.model(
     {
       development_request_id: { type: String, required: true },
       name: { type: String, required: true },
-      field_values: []
+      field_values: [
+        {
+          field_code: { type: String, required: true },
+          value: {}
+        }
+      ]
     },
     { collection: 'configurations' }
   )
