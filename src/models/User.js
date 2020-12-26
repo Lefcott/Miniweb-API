@@ -4,6 +4,17 @@ import { compare } from 'bcryptjs';
 
 import { randomCode, hash } from '../utils/passwords';
 
+const Field = {
+  input_type: { type: String, required: true }, // text | number | email | phone | table
+  table: {
+    fields: [
+      {
+        input_type: { type: String, required: true } // text | number | email | phone
+      }
+    ]
+  }
+};
+
 const User = mongoose.model(
   'User',
   mongoose.Schema(
@@ -34,7 +45,8 @@ const User = mongoose.model(
               code: { type: String, required: true },
               status: { type: String, required: true } // pending | done
             }
-          ]
+          ],
+          fields: [Field]
         }
       ]
     },
