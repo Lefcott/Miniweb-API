@@ -6,7 +6,7 @@ const Configuration = mongoose.model(
     {
       development_request_id: { type: String, required: true },
       name: { type: String, required: true },
-      data: {}
+      field_values: []
     },
     { collection: 'configurations' }
   )
