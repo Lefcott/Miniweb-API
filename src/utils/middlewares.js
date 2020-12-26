@@ -16,13 +16,13 @@ const env = require('../env.json');
 const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
-// app.use(
-//   cors({
-//     origin: webOrigins,
-//     methods: ['get', 'GET', 'POST', 'post', 'PUT', 'put', 'PATCH', 'patch', 'DELETE', 'delete'],
-//     credentials: true // enable set cookie
-//   })
-// );
+app.use(
+  cors({
+    origin: webOrigins,
+    methods: ['get', 'GET', 'POST', 'post', 'PUT', 'put', 'PATCH', 'patch', 'DELETE', 'delete'],
+    credentials: true // enable set cookie
+  })
+);
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
