@@ -26,6 +26,7 @@ const User = mongoose.model(
       phone: String,
       language_code: { type: String, default: 'es' },
       email: { type: String, required: true },
+      username: String,
       password: { type: String, required: true },
       email_confirmation_token: { type: String, default: () => `${uuid()}-${uuid()}-${uuid()}` },
       email_confirmed: { type: Boolean, default: false },
@@ -106,7 +107,7 @@ export default class extends User {
   }
 
   static async authenticate({ email, password }) {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ $or: [{ email }, { username: email }] });
     if (!user) throw new AuthenticationError('Invalid email or password');
     const authenticated = await compare(password, user.password);
     if (!authenticated) throw new AuthenticationError('Invalid email or password');
