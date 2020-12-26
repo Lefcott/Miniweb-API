@@ -6,10 +6,12 @@ import { randomCode, hash } from '../utils/passwords';
 
 const Field = {
   name: { type: String, required: true },
+  code: { type: String, required: true },
   input_type: { type: String, required: true }, // text | number | url | email | phone | file | table
   table_fields: [
     {
       name: { type: String, required: true },
+      code: { type: String, required: true },
       input_type: { type: String, required: true } // text | number | url | email | phone | file
     }
   ]
