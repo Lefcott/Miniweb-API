@@ -5,14 +5,14 @@ import { compare } from 'bcryptjs';
 import { randomCode, hash } from '../utils/passwords';
 
 const Field = {
+  name: { type: String, required: true },
   input_type: { type: String, required: true }, // text | number | email | phone | table
-  table: {
-    fields: [
-      {
-        input_type: { type: String, required: true } // text | number | email | phone
-      }
-    ]
-  }
+  table_fields: [
+    {
+      name: { type: String, required: true },
+      input_type: { type: String, required: true } // text | number | email | phone
+    }
+  ]
 };
 
 const User = mongoose.model(
