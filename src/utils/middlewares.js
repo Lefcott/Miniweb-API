@@ -16,7 +16,7 @@ const env = require('../env.json');
 const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
-console.log('webOrigins', webOrigins);
+
 app.use(
   cors({
     origin: webOrigins,
@@ -24,6 +24,7 @@ app.use(
     credentials: true // enable set cookie
   })
 );
+
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({

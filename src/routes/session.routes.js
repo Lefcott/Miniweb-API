@@ -13,7 +13,7 @@ export const createSession = {
   paths: '/sessions',
   middlewares: sessionMiddleware,
   body: joi.object().keys({
-    email: joi.string().email().required(),
+    email: joi.string().required(),
     password: joi.string().required()
   })
 };
