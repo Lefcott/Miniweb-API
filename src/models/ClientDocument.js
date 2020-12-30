@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
+import lodash from 'lodash';
 
 const ClientDocument = mongoose.model(
   'ClientDocument',
@@ -29,12 +30,7 @@ export default class extends ClientDocument {
         })
         .filter(([, value]) => value)
         .map(([regex_field, value]) => {
-          let regex;
-          try {
-            regex = new RegExp(value, regex_flags);
-          } catch (e) {
-            regex = new RegExp();
-          }
+          const regex = new RegExp(lodash.escapeRegExp(value), regex_flags);
           return { [regex_field]: regex };
         })
     };
