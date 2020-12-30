@@ -20,15 +20,20 @@ export default class extends ClientDocument {
     delete query.regex_fields;
     delete query.regex_flags;
 
-    const regex_query = Object.fromEntries(
-      regex_fields
-        .filter(regex_field => {
-          const regex = query[regex_field];
+    const regex_query = {
+      $or: regex_fields
+        .map(regex_field => {
+          const value = query[regex_field];
           delete query[regex_field];
-          return regex;
+          return [regex_field, value];
         })
-        .map(regex_field => [regex_field, new RegExp(query[regex_field], regex_flags)])
-    );
+        .filter(([, value]) => value)
+        .map(([regex_field, value]) => ({
+          [regex_field]: new RegExp(value, regex_flags)
+        }))
+    };
+
+    if (!regex_query.$or.length) delete regex_query.$or;
 
     return ClientDocument.find({ ...query, ...regex_query })
       .skip(page_size * (page_number - 1))
