@@ -1,13 +1,10 @@
 export const normalize = word => {
   if (typeof word !== 'string') return word;
-  const w = word
+  word = word
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
-  let result = '';
-  for (let k = 0; k < w.length; k += 1) if (w[k - 1] !== w[k]) result += w[k];
-
-  return result;
+  return word;
 };
 
 export const toAccentInsensitive = strRegex =>
