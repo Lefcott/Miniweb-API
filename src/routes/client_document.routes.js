@@ -9,6 +9,7 @@ export const list = {
     page_number: joi.number().min(1).required(),
     regex_fields: joi.array().default([]),
     regex_flags: joi.string().default(''),
+    regex_normalize_characters: joi.boolean().default(true),
     contains: joi.string()
   }),
   options: { allowUnknown: true }
