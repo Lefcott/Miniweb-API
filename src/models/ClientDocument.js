@@ -22,4 +22,13 @@ export default class extends ClientDocument {
       .skip(page_size * (page_number - 1))
       .limit(page_size);
   }
+
+  static async get_distinct_object(query) {
+    const keys = Object.keys(query);
+    const queries = Promise.all(keys.map(key => ClientDocument.distinct(key)));
+
+    const results = await queries;
+
+    return Object.fromEntries(keys.map((key, i) => [key, results[i]]));
+  }
 }

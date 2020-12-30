@@ -24,7 +24,9 @@ app.use(
     credentials: true // enable set cookie
   })
 );
-
+app.options('*', (req, res) => {
+  res.status(200).json({ hola: 'chau' });
+});
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({

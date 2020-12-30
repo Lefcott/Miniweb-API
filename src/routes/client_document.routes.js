@@ -10,3 +10,9 @@ export const list = {
   }),
   options: { allowUnknown: true }
 };
+
+export const distinct = {
+  method: 'get',
+  paths: '/client_document_distinct',
+  options: { allowUnknown: true }
+};
