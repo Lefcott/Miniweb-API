@@ -6,7 +6,8 @@ export const list = {
   query: joi.object().keys({
     table_name: joi.string().required(),
     page_size: joi.number().min(1).required(),
-    page_number: joi.number().min(1).required()
+    page_number: joi.number().min(1).required(),
+    contains: joi.string()
   }),
   options: { allowUnknown: true }
 };
