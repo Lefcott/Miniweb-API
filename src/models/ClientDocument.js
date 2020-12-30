@@ -21,7 +21,9 @@ export default class extends ClientDocument {
     delete query.regex_flags;
 
     const regex_query = Object.fromEntries(
-      regex_fields.map(regex_field => [regex_field, new RegExp(query[regex_field], regex_flags)])
+      regex_fields
+        .filter(regex_field => query[regex_field])
+        .map(regex_field => [regex_field, new RegExp(query[regex_field], regex_flags)])
     );
 
     log('regex_query', regex_query);
