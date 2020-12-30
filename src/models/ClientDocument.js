@@ -28,9 +28,15 @@ export default class extends ClientDocument {
           return [regex_field, value];
         })
         .filter(([, value]) => value)
-        .map(([regex_field, value]) => ({
-          [regex_field]: new RegExp(value, regex_flags)
-        }))
+        .map(([regex_field, value]) => {
+          let regex;
+          try {
+            regex = new RegExp(value, regex_flags);
+          } catch (e) {
+            regex = new RegExp();
+          }
+          return { [regex_field]: regex };
+        })
     };
 
     if (!regex_query.$or.length) delete regex_query.$or;
