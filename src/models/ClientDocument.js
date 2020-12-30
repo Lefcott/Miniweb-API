@@ -22,11 +22,13 @@ export default class extends ClientDocument {
 
     const regex_query = Object.fromEntries(
       regex_fields
-        .filter(regex_field => query[regex_field])
+        .filter(regex_field => {
+          const regex = query[regex_field];
+          delete query[regex_field];
+          return regex;
+        })
         .map(regex_field => [regex_field, new RegExp(query[regex_field], regex_flags)])
     );
-
-    log('regex_query', regex_query);
 
     return ClientDocument.find({ ...query, ...regex_query })
       .skip(page_size * (page_number - 1))
