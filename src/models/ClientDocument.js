@@ -13,7 +13,7 @@ const ClientDocument = mongoose.model(
 );
 
 export default class extends ClientDocument {
-  static find(query) {
+  static search(query) {
     const { page_size, page_number } = query;
     delete query.page_size;
     delete query.page_number;

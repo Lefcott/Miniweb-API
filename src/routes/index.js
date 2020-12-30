@@ -30,8 +30,8 @@ const SCHEMA = {
 };
 const sessionDefaultValues = { language_code: 'es' };
 
-const getSchemaError = (schema = joi.object(), objectToValidate = {}, options) => {
-  options = options || { stripUnknown: false };
+const getSchemaError = (schema = joi.object(), objectToValidate = {}, options = {}) => {
+  options = { stripUnknown: false, ...options };
   const { error, value } = schema.validate(objectToValidate, options);
   const errors = (error && error.details.map(err => err.message)) || null;
   return { errors, value };
