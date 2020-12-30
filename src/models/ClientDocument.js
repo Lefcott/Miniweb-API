@@ -14,11 +14,19 @@ const ClientDocument = mongoose.model(
 
 export default class extends ClientDocument {
   static search(query) {
-    const { page_size, page_number } = query;
+    const { page_size, page_number, regex_fields, regex_flags } = query;
     delete query.page_size;
     delete query.page_number;
+    delete query.regex_fields;
+    delete query.regex_flags;
 
-    return ClientDocument.find(query)
+    const regex_query = Object.fromEntries(
+      regex_fields.map(regex_field => [regex_field, new RegExp(query[regex_field], regex_flags)])
+    );
+
+    log('regex_query', regex_query);
+
+    return ClientDocument.find({ ...query, ...regex_query })
       .skip(page_size * (page_number - 1))
       .limit(page_size);
   }
