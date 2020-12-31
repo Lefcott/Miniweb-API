@@ -6,7 +6,8 @@ import wait from '../src/utils/wait';
 const urls = [
   'http://dev.dancotll.com',
   'http://dev.dashboard.dancotll.com',
-  'http://dev.businessgo-api.dancotll.com'
+  'http://dev.businessgo-api.dancotll.com',
+  'http://globy-dev.dancotll.com'
 ];
 
 const execute = async () => {
