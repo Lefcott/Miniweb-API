@@ -6,5 +6,7 @@ export default async ({ body, session }, res) => {
 
   session.user_id = user._id;
 
-  res.status(200).json({ message: 'authenticated' });
+  user.makeSecure();
+
+  res.status(200).json([{ user }]);
 };

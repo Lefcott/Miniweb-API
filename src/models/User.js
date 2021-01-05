@@ -57,7 +57,7 @@ const User = mongoose.model(
   )
 );
 
-export default class extends User {
+export default class ExtendedUser extends User {
   confirmEmail() {
     this.email_confirmation_token = null;
     this.email_confirmed = true;
@@ -91,13 +91,19 @@ export default class extends User {
     return this.save();
   }
 
+  makeSecure() {
+    this.email_confirmation_token = undefined;
+    this.password = undefined;
+    this.phone_confirmation_code = undefined;
+  }
+
   static async getValidationError({ email }) {
-    const previousUser = await User.findOne({ email });
+    const previousUser = await ExtendedUser.findOne({ email });
     return previousUser && { error: 'A user with that email aleady exists', code: 'email_already_used' };
   }
 
   static async register(data) {
-    return new User({
+    return new ExtendedUser({
       name: data.name,
       surname: data.surname,
       phone: data.phone,
@@ -107,7 +113,7 @@ export default class extends User {
   }
 
   static async authenticate({ email, password }) {
-    const user = await User.findOne({ $or: [{ email }, { username: email }] });
+    const user = await ExtendedUser.findOne({ $or: [{ email }, { username: email }] });
     if (!user) throw new AuthenticationError('Invalid email or password');
     const authenticated = await compare(password, user.password);
     if (!authenticated) throw new AuthenticationError('Invalid email or password');
@@ -115,7 +121,7 @@ export default class extends User {
   }
 
   static async clearEmailConfirmationNotification(session) {
-    const user = await User.findOne({ _id: session.user_id });
+    const user = await ExtendedUser.findOne({ _id: session.user_id });
     if (!user) return;
     user.notified_email_confirmed = true;
     return user.save();
