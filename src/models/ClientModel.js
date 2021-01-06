@@ -9,6 +9,7 @@ const ClientModel = mongoose.model(
   mongoose.Schema(
     {
       table_name: { type: String, required: true },
+      table_descriptive_name: { type: String, required: true },
       fields: [
         {
           key: { type: String, required: true },
