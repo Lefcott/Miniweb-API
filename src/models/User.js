@@ -33,7 +33,7 @@ const User = mongoose.model(
       notified_email_confirmed: { type: Boolean, default: false },
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
       phone_confirmed: { type: Boolean, default: false },
-      tables: [String],
+      table_names: [String],
       development_requests: [
         {
           name: { type: String, required: true },
