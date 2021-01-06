@@ -14,6 +14,7 @@ const ClientModel = mongoose.model(
         {
           key: { type: String, required: true },
           name: { type: String, required: true },
+          important: { type: Boolean, required: true },
           input_type: { type: String, required: true }, // text | number | photo | email | phone
           is_required: { type: Boolean, default: false }
         }
