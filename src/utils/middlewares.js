@@ -25,6 +25,7 @@ app.use((req, res, next) => {
   console.log('headers', req.headers);
 
   res.header('Access-Control-Allow-Origin', origin);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Cookie');
   next();
 });
 
@@ -59,11 +60,6 @@ app.use((req, res, next) => {
 app.use(rollbar.errorHandler());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Cookie');
-  next();
-});
 
 app.get('/', (req, res) => res.status(200).send('Hello World!'));
 app.use('/', router);
