@@ -3,6 +3,7 @@ import SocketIo from 'socket.io';
 import rollbar from './rollbar';
 import * as redis from './redis';
 
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const bodyParser = require('body-parser');
@@ -16,6 +17,8 @@ const env = require('../env.json');
 const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
+
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   const origin = req.get('origin');
