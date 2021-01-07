@@ -36,7 +36,7 @@ app.use(
 );
 
 const sessionMiddleware = (req, res, next) => {
-  if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
+  if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && req.query.session !== 'false')
     return session({
       cookie: {
         httpOnly: true,
