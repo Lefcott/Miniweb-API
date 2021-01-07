@@ -19,6 +19,7 @@ const server = http.createServer(app);
 
 app.use((req, res, next) => {
   if (!req.headers.origin) req.headers.origin = req.headers.referer;
+  next();
 });
 
 app.use(
