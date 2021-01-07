@@ -48,7 +48,7 @@ const sessionMiddleware = (req, res, next) => {
       saveUninitialized: true,
       resave: false
     })(req, res, (...args) => {
-      res.header('Set-Cookie', `${res.getHeaders()['Set-Cookie']}; Secure`);
+      res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
       next(...args);
     });
   req.session = {};
@@ -66,7 +66,9 @@ app.use(rollbar.errorHandler());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => res.status(200).send('Hello World!'));
+app.get('/', (req, res) => {
+  res.status(200).send('Hello World!');
+});
 app.use('/', router);
 
 log('Listen');
