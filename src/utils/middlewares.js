@@ -40,7 +40,7 @@ const sessionMiddleware = (...args) => {
     return session({
       cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'none'
       },
       store: new RedisStore({ client: redis.client }),
