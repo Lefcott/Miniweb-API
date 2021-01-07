@@ -56,6 +56,7 @@ const sessionMiddleware = (req, res, next) => {
     'Set-Cookie',
     'connect.sid=s%3A8R52PJCJI2dj77a0hDovecIJVkRlGeMx.ZLXqDDOs%2FSfQbBpo9CmGgGsAsue1LmPsMwdd14Ab2xI; Path=/; HttpOnly; SameSite=None; Secure'
   );
+  next();
 };
 
 const router = express.Router();
