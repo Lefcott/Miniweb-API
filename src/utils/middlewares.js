@@ -38,7 +38,11 @@ app.use(
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
-      cookie: { sameSite: 'none', httpOnly: true, secure: true },
+      cookie: {
+        httpOnly: true,
+        secure: false,
+        sameSite: true
+      },
       store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET,
       saveUninitialized: false,
