@@ -35,21 +35,23 @@ app.use(
   })
 );
 
-const sessionMiddleware = (...args) => {
+const sessionMiddleware = (req, res, next) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
-      // cookie: {
-      //   httpOnly: true,
-      //   secure: true,
-      //   sameSite: 'none'
-      // },
+      cookie: {
+        httpOnly: true,
+        // secure: true,
+        sameSite: 'none'
+      },
       store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET,
       saveUninitialized: true,
       resave: false
-    })(...args);
-  args[0].session = {};
-  args[2]();
+    })(req, res, (...agrs) => {
+      res.header('Set-Cookie', `${res.getHeaders()['Set-Cookie']}; Secure`);
+      next(...args);
+    });
+  req.session = {};
 };
 
 const router = express.Router();
