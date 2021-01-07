@@ -45,7 +45,7 @@ const sessionMiddleware = (req, res, next) => {
       cookie: { secure: false },
       store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET
-    });
+    })(req, res, next);
   // (req, res, (...args) => {
   //   res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
   //   next(...args);
