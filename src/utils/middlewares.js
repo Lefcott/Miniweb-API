@@ -20,11 +20,6 @@ const server = http.createServer(app);
 app.use((req, res, next) => {
   const origin = req.get('origin');
 
-  console.log('origin', origin);
-  console.log('body', req.body);
-  console.log('headers', req.headers);
-
-  res.header('Access-Control-Allow-Origin', origin);
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Cookie, Set-Cookie'
@@ -43,7 +38,7 @@ app.use(
 const sessionMiddleware = (...args) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && args[0].query.session !== 'false')
     return session({
-      cookie: { sameSite: 'none' },
+      cookie: { sameSite: 'none', httpOnly: true, secure: true },
       store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET,
       saveUninitialized: true,
