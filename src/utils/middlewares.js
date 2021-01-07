@@ -27,7 +27,6 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Cookie, Set-Cookie'
   );
-  res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Origin', origin);
 
   next();
