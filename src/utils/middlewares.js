@@ -17,6 +17,10 @@ const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
 
+app.post('*', (req, res, next) => {
+  console.log('req', req);
+  next();
+});
 
 app.use(
   cors({
