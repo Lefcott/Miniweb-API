@@ -41,7 +41,7 @@ const sessionMiddleware = (...args) => {
       cookie: { sameSite: 'none', httpOnly: true, secure: true },
       store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET,
-      saveUninitialized: true,
+      saveUninitialized: false,
       resave: false
     })(...args);
   args[0].session = {};
