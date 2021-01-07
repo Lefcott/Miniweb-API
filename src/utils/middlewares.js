@@ -36,22 +36,26 @@ app.use(
 );
 
 const sessionMiddleware = (req, res, next) => {
-  if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && req.query.session !== 'false')
-    return session({
-      cookie: {
-        httpOnly: true,
-        // secure: true,
-        sameSite: 'none'
-      },
-      store: new RedisStore({ client: redis.client }),
-      secret: env.WEB_SESSION_SECRET,
-      saveUninitialized: true,
-      resave: false
-    })(req, res, (...args) => {
-      res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
-      next(...args);
-    });
+  // if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && req.query.session !== 'false')
+  //   return session({
+  //     cookie: {
+  //       httpOnly: true,
+  //       // secure: true,
+  //       sameSite: 'none'
+  //     },
+  //     store: new RedisStore({ client: redis.client }),
+  //     secret: env.WEB_SESSION_SECRET,
+  //     saveUninitialized: true,
+  //     resave: false
+  //   })(req, res, (...args) => {
+  //     res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
+  //     next(...args);
+  //   });
   req.session = {};
+  res.header(
+    'Set-Cookie',
+    'connect.sid=s%3A8R52PJCJI2dj77a0hDovecIJVkRlGeMx.ZLXqDDOs%2FSfQbBpo9CmGgGsAsue1LmPsMwdd14Ab2xI; Path=/; HttpOnly; SameSite=None; Secure'
+  );
 };
 
 const router = express.Router();
