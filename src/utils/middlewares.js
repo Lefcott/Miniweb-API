@@ -17,7 +17,7 @@ const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
 
-app.use((req, res, next) => {
+app.post('*', (req, res, next) => {
   if (!req.headers.origin) req.headers.origin = req.headers.referer;
   next();
 });
