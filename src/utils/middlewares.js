@@ -18,7 +18,11 @@ const app = express();
 const server = http.createServer(app);
 
 app.use((req, res, next) => {
-  console.log('req', req);
+  const origin = req.get('origin');
+
+  console.log('origin', origin);
+
+  res.header('Access-Control-Allow-Origin', origin);
   next();
 });
 
@@ -55,11 +59,6 @@ app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  const origin = req.get('origin');
-
-  console.log('origin', origin);
-
-  res.header('Access-Control-Allow-Origin', origin);
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
