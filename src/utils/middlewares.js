@@ -40,19 +40,17 @@ app.use(
 const sessionMiddleware = (req, res, next) => {
   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && req.query.session !== 'false')
     return session({
-      cookie: {
-        httpOnly: true,
-        // secure: true,
-        sameSite: 'none'
-      },
-      store: new RedisStore({ client: redis.client }),
-      secret: env.WEB_SESSION_SECRET,
+      resave: false,
       saveUninitialized: true,
-      resave: false
-    })(req, res, (...args) => {
-      res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
-      next(...args);
+      cookie: { secure: false },
+      store: new RedisStore({ client: redis.client }),
+      secret: env.WEB_SESSION_SECRET
     });
+  // (req, res, (...args) => {
+  //   res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
+  //   next(...args);
+  // });
+  return next();
   // req.session = {};
   // res.header(
   //   'Set-Cookie',
