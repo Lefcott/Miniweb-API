@@ -21,6 +21,8 @@ app.use((req, res, next) => {
   const origin = req.get('origin');
 
   console.log('origin', origin);
+  console.log('body', req.body);
+  console.log('headers', req.headers);
 
   res.header('Access-Control-Allow-Origin', origin);
   next();
