@@ -17,6 +17,7 @@ const webOrigins = JSON.parse(env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
 
+app.use(express.cookieParser());
 app.use((req, res, next) => {
   const origin = req.get('origin');
 
