@@ -42,7 +42,7 @@ const sessionMiddleware = (...args) => {
       store: new RedisStore({ client: redis.client }),
       secret: env.WEB_SESSION_SECRET,
       saveUninitialized: false,
-      resave: false
+      resave: true
     })(...args);
   args[0].session = {};
   args[2]();
