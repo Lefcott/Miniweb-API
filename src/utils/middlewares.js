@@ -47,7 +47,7 @@ const sessionMiddleware = (req, res, next) => {
       secret: env.WEB_SESSION_SECRET,
       saveUninitialized: true,
       resave: false
-    })(req, res, (...agrs) => {
+    })(req, res, (...args) => {
       res.header('Set-Cookie', `${res.getHeaders()['Set-Cookie']}; Secure`);
       next(...args);
     });
