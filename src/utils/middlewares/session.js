@@ -9,7 +9,7 @@ const sessionExpireSeconds = 3600 * 24;
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async (req, res, next) => {
   let session;
-  const { 'connect.sid': connectSid } = parseHttpHeader(req.headers.cookie);
+  const { 'connect.sid': connectSid } = parseHttpHeader(`Cookie: ; ${req.headers.cookie}`);
 
   const finalSessionKey = `${sessionKey}:${connectSid}`;
   req.session = {};
