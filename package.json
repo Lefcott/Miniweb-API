@@ -35,11 +35,13 @@
     "mongoose": "^5.9.12",
     "mongoose-lean-defaults": "^0.4.1",
     "mustache": "^4.1.0",
+    "parse-http-header": "^1.0.1",
     "prettier": "^2.0.5",
     "redis": "^3.0.2",
     "rollbar": "^2.19.4",
     "socket.io": "^3.0.4",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "css-loader": "^3.6.0",

@@ -33,10 +33,7 @@ export const isActive = () => active;
 export const Find = (key, where = {}) =>
   new Promise(resolve => {
     redis.smembers(key, (error, docs) => {
-      if (error) {
-        console.error(__filename, 'Find', error);
-        return resolve({ string: null, json: null });
-      }
+      if (error) throw error;
       const results = { string: [], json: [] };
       if (docs.length === 0) return resolve(results);
       const objs = docs.map(doc => JSON.parse(doc));
@@ -60,10 +57,7 @@ export const Add = (key, registers) =>
     let regs = Array.isArray(registers) ? registers : [registers];
     regs = regs.map(reg => JSON.stringify(reg));
     redis.sadd(key, ...regs, (error, added) => {
-      if (error) {
-        console.error(__filename, 'Add', error);
-        return resolve(null);
-      }
+      if (error) throw error;
       resolve(added);
     });
   });
@@ -78,16 +72,10 @@ export const Add = (key, registers) =>
 export const Set = (key, value, expire = null) =>
   new Promise(resolve => {
     redis.set(key, value, (error, added) => {
-      if (error) {
-        rollbar.error(error);
-        return resolve(null);
-      }
+      if (error) throw error;
       if (!expire || typeof expire !== 'number') return resolve({ added, expired: 0 });
       redis.expire(key, expire, (expError, expired) => {
-        if (expError) {
-          rollbar.error(expError);
-          return resolve(null);
-        }
+        if (expError) throw expError;
         resolve({ added, expired });
       });
     });
@@ -103,10 +91,7 @@ export const Set = (key, value, expire = null) =>
 export const Get = key =>
   new Promise(resolve => {
     redis.get(key, (error, result) => {
-      if (error) {
-        rollbar.error(error);
-        return resolve(null);
-      }
+      if (error) throw error;
       resolve(result);
     });
   });
@@ -123,13 +108,11 @@ export const Delete = (key, where = {}) =>
     if (!regs) return resolve(null);
     if (regs.length === 0) return resolve(0);
     redis.srem(key, ...regs, (error, deleted) => {
-      if (error) {
-        console.error(__filename, 'Delete', error);
-        return resolve(null);
-      }
+      if (error) throw error;
       resolve(deleted);
     });
   });
+
 /**
  * Updates documents on redis, returning number of updated registers or null
  * @param {string} key Redis key to search on
@@ -145,14 +128,10 @@ export const Update = (key, where = {}, update, strRegisters) =>
       strRegisters = Array.isArray(strRegisters) ? strRegisters : [strRegisters];
       regs = strRegisters.map(reg => JSON.parse(reg));
     } else ({ string: strRegisters, json: regs } = await Find(key, where));
-    if (!strRegisters) return resolve(null);
     if (strRegisters.length === 0) return resolve(0);
 
     redis.srem(key, ...strRegisters, async (error, deleted) => {
-      if (error) {
-        console.error(__filename, 'Update', error);
-        return resolve(null);
-      }
+      if (error) throw error;
       if (deleted === 0) return resolve(0);
       const keys = Object.keys(update);
       for (let k = 0; k < regs.length; k += 1)
@@ -160,4 +139,5 @@ export const Update = (key, where = {}, update, strRegisters) =>
       resolve(await Add(key, regs));
     });
   });
+
 export { redis as client };
