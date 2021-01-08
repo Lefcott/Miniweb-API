@@ -19,13 +19,13 @@ export default async (req, res, next) => {
     if (session) req.session = JSON.parse(session);
   } else connectSid = uuid();
 
-  res.setHeader('Set-Cookie', `connect.sid=${connectSid}; Path=/; HttpOnly; SameSite=None; Secure`);
+  res.setHeader(
+    'Set-Cookie',
+    `connect.sid=${connectSid}; Path=/; HttpOnly${req.secure ? '; SameSite=None; Secure' : ''}`
+  );
 
   res.on('finish', async () => {
     const newSession = JSON.stringify(req.session);
-
-    log('session', session);
-    log('newSession', newSession);
 
     if (newSession !== session) await redis.Set(finalSessionKey, newSession, sessionExpireSeconds);
   });
