@@ -8,7 +8,5 @@ export default async ({ body, session }, res) => {
 
   user.makeSecure();
 
-  session.save(() => {
-    res.status(200).json([{ user }]);
-  });
+  res.status(200).json([{ user }]);
 };
