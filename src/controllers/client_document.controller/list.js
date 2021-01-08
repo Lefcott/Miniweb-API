@@ -4,5 +4,5 @@ import ClientDocument from '../../models/ClientDocument';
 export default async ({ query }, res) => {
   const client_documents = await ClientDocument.search(query);
 
-  res.status(200).json(client_documents.map(({ value }) => value));
+  res.status(200).json(client_documents.map(({ _id, value }) => ({ _id, ...value })));
 };
