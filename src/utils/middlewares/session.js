@@ -9,7 +9,7 @@ const sessionExpireSeconds = 3600 * 24;
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async (req, res, next) => {
   let session;
-  const { 'connect.sid': connectSid } = parseHttpHeader(`Cookie: ; ${req.headers.cookie}`);
+  let { 'connect.sid': connectSid } = parseHttpHeader(`Cookie: ; ${req.headers.cookie}`);
 
   const finalSessionKey = `${sessionKey}:${connectSid}`;
   req.session = {};
@@ -17,7 +17,7 @@ export default async (req, res, next) => {
   if (connectSid) {
     session = await redis.Get(finalSessionKey);
     if (session) req.session = JSON.parse(session);
-  }
+  } else connectSid = uuid();
 
   res.setHeader('Set-Cookie', `connect.sid=${connectSid}; Path=/; HttpOnly; SameSite=None; Secure`);
 
