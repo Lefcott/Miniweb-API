@@ -23,6 +23,8 @@ export default async (req, res, next) => {
     'Set-Cookie',
     `connect.sid=${connectSid}; Path=/; HttpOnly${req.secure ? '; SameSite=None; Secure' : ''}`
   );
+  console.log('req.secure', req.secure);
+  console.log('req.protocol', req.protocol);
 
   res.on('finish', async () => {
     const newSession = JSON.stringify(req.session);
