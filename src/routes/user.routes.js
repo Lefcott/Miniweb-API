@@ -47,3 +47,8 @@ export const getClientModels = {
   middlewares: sessionMiddleware,
   params: joi.object().keys({ user_id: joi.string().required() })
 };
+
+export const delete_client_document = {
+  method: 'delete',
+  paths: '/users/:user_id/client_documents/:client_document_id'
+};

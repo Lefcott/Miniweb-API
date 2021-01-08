@@ -98,6 +98,13 @@ export default class ExtendedUser extends User {
     this.phone_confirmation_code = undefined;
   }
 
+  validateClientDocumentOwnership(clientDocument) {
+    if (!this.table_names.includes(clientDocument.table_name))
+      throw new AuthorizationError(
+        `User ${this._id} does not own document with table name ${clientDocument.table_name}`
+      );
+  }
+
   static async getValidationError({ email }) {
     const previousUser = await ExtendedUser.findOne({ email });
     return previousUser && { error: 'A user with that email aleady exists', code: 'email_already_used' };
@@ -133,7 +140,7 @@ export default class ExtendedUser extends User {
       throw new AuthenticationError(
         `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`
       );
-    const user = await this.findOne({ _id: params.user_id });
+    const user = await ExtendedUser.findOne({ _id: params.user_id });
     if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
     return user;
   }
