@@ -5,11 +5,11 @@ import ClientDocument from '../../models/ClientDocument';
 export default async ({ session, params, body }, res) => {
   const user = await User.findFromSession(session, params);
 
-  const client_document = await ClientDocument.findOne({ _id: params.client_document_id });
+  const client_document = new ClientDocument(body);
 
   user.validateClientDocumentOwnership(client_document);
 
-  await client_document.edit(body);
+  await client_document.save();
 
-  res.status(200).json({ message: `Client document ${client_document._id} updated` });
+  res.status(200).json({ message: `Client document ${client_document._id} saved` });
 };

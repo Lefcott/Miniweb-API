@@ -39,8 +39,8 @@ export const create = {
   method: 'post',
   paths: '/users/:user_id/client_documents',
   middlewares: sessionMiddleware,
-  body: {
+  body: joi.object().keys({
     table_name: joi.string().required,
     value: joi.object().required()
-  }
+  })
 };

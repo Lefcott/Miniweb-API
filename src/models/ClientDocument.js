@@ -55,7 +55,8 @@ export default class extends ClientDocument {
 
     return ClientDocument.find({ ...query, ...regex_query })
       .skip(page_size * (page_number - 1))
-      .limit(page_size);
+      .limit(page_size)
+      .sort({ _id: -1 });
   }
 
   static async get_distinct_object(query) {
