@@ -141,16 +141,16 @@ const defineRoutes = () => {
   schemaFiles = schemaFiles.filter(file => file !== 'index.js');
   const schemas = {};
   for (let k = 0; k < schemaFiles.length; k += 1) {
-    const name = schemaFiles[k].endsWith('.routes.js')
-      ? schemaFiles[k].substring(0, schemaFiles[k].length - 10)
+    const name = schemaFiles[k].endsWith('.js')
+      ? schemaFiles[k].substring(0, schemaFiles[k].length - '.js'.length)
       : schemaFiles[k];
-    const schema = require(`./${name}.routes`);
+    const schema = require(`./${name}`);
 
     schemas[name] = {};
     const epNames = Object.keys(schema);
     for (let m = 0; m < epNames.length; m += 1) {
       const epName = epNames[m];
-      const { default: controller } = require(`${projectDir}/src/controllers/${name}.controller/${epName}`);
+      const { default: controller } = require(`${projectDir}/src/controllers/${name}/${epName}`);
       let { paths } = schema[epName];
       const { method } = schema[epName];
       if (!method) {

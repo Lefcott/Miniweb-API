@@ -1,5 +1,7 @@
 import joi from '@hapi/joi';
 
+import { sessionMiddleware } from '../utils/middlewares';
+
 export const list = {
   method: 'get',
   paths: '/client_documents',
@@ -19,4 +21,10 @@ export const distinct = {
   method: 'get',
   paths: '/client_document_distinct',
   options: { allowUnknown: true }
+};
+
+export const _delete = {
+  method: 'delete',
+  paths: '/users/:user_id/client_documents/:client_document_id',
+  middlewares: sessionMiddleware
 };

@@ -2,13 +2,13 @@ import joi from '@hapi/joi';
 
 import { sessionMiddleware } from '../utils/middlewares';
 
-export const getSessions = {
-  method: 'get',
+export const _delete = {
+  method: 'delete',
   paths: '/sessions',
   middlewares: sessionMiddleware
 };
 
-export const createSession = {
+export const create = {
   method: 'post',
   paths: '/sessions',
   middlewares: sessionMiddleware,
@@ -18,8 +18,8 @@ export const createSession = {
   })
 };
 
-export const deleteSession = {
-  method: 'delete',
+export const list = {
+  method: 'get',
   paths: '/sessions',
   middlewares: sessionMiddleware
 };
