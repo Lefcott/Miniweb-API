@@ -11,5 +11,5 @@ export default async ({ session, params, body }, res) => {
 
   await client_document.save();
 
-  res.status(200).json({ message: `Client document ${client_document._id} saved` });
+  res.status(200).json(client_document);
 };
