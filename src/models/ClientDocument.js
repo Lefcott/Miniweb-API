@@ -15,7 +15,11 @@ const ClientDocument = mongoose.model(
   )
 );
 
-export default class extends ClientDocument {
+export default class ExtendedClientDocument extends ClientDocument {
+  serialize() {
+    return { _id: this._id, ...this.value };
+  }
+
   edit(body) {
     this.value = body;
 
@@ -53,7 +57,7 @@ export default class extends ClientDocument {
 
     if (!regex_query.$or.length) delete regex_query.$or;
 
-    return ClientDocument.find({ ...query, ...regex_query })
+    return ExtendedClientDocument.find({ ...query, ...regex_query })
       .skip(page_size * (page_number - 1))
       .limit(page_size)
       .sort({ _id: -1 });
@@ -61,7 +65,7 @@ export default class extends ClientDocument {
 
   static async get_distinct_object(query) {
     const keys = Object.keys(query);
-    const queries = Promise.all(keys.map(key => ClientDocument.distinct(key)));
+    const queries = Promise.all(keys.map(key => ExtendedClientDocument.distinct(key)));
 
     const results = await queries;
 
