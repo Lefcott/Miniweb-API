@@ -37,7 +37,7 @@ export const update = {
 
 export const create = {
   method: 'post',
-  paths: '/users/:user_id/client_documents/:client_document_id',
+  paths: '/users/:user_id/client_documents',
   middlewares: sessionMiddleware,
   body: {
     table_name: joi.string().required,
