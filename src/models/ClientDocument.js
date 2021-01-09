@@ -16,6 +16,14 @@ const ClientDocument = mongoose.model(
 );
 
 export default class extends ClientDocument {
+  edit(body) {
+    this.value = body;
+
+    delete this.value._id;
+
+    return this.save();
+  }
+
   static search(query) {
     const { page_size, page_number, regex_fields, regex_flags } = query;
     const { regex_normalize_characters } = query;

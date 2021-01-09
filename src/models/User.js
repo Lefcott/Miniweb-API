@@ -135,7 +135,7 @@ export default class ExtendedUser extends User {
     return user.save();
   }
 
-  static async validateSession(session, params) {
+  static async findFromSession(session, params) {
     if (session.user_id !== params.user_id)
       throw new AuthenticationError(
         `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`

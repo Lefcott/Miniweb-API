@@ -2,8 +2,7 @@ import User from '../../models/User';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ body, session, params }, res) => {
-  const user = await User.validateSession(session, params);
-  user.validateDevelopmentRequestCreation(body);
+  const user = await User.findFromSession(session, params);
 
   await user.createDevelopmentRequest(body);
 

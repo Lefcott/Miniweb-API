@@ -28,3 +28,9 @@ export const _delete = {
   paths: '/users/:user_id/client_documents/:client_document_id',
   middlewares: sessionMiddleware
 };
+
+export const update = {
+  method: 'put',
+  paths: '/users/:user_id/client_documents/:client_document_id',
+  middlewares: sessionMiddleware
+};
