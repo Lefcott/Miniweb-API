@@ -34,3 +34,13 @@ export const update = {
   paths: '/users/:user_id/client_documents/:client_document_id',
   middlewares: sessionMiddleware
 };
+
+export const create = {
+  method: 'post',
+  paths: '/users/:user_id/client_documents/:client_document_id',
+  middlewares: sessionMiddleware,
+  body: {
+    table_name: joi.string().required,
+    value: joi.object().required()
+  }
+};
