@@ -36,6 +36,7 @@ const User = mongoose.model(
       table_names: [String],
       cloudinary_settings: {
         cloud_name: { type: String, required: true },
+        preset_name: { type: String, required: true },
         api_key: { type: String, required: true },
         api_secret: { type: String, required: true }
       },
