@@ -34,6 +34,11 @@ const User = mongoose.model(
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
       phone_confirmed: { type: Boolean, default: false },
       table_names: [String],
+      cloudinary_settings: {
+        cloud_name: { type: String, required: true },
+        api_key: { type: String, required: true },
+        api_secret: { type: String, required: true }
+      },
       development_requests: [
         {
           name: { type: String, required: true },
