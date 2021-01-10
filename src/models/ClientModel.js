@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import Field from './shared/Field';
 
-const ClientModel = mongoose.model(
+const ClientModelBase = mongoose.model(
   'ClientModel',
   mongoose.Schema(
     {
@@ -16,4 +16,4 @@ const ClientModel = mongoose.model(
   )
 );
 
-export default class extends ClientModel {}
+export default class ClientModel extends ClientModelBase {}

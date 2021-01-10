@@ -4,7 +4,7 @@ import lodash from 'lodash';
 
 import { normalize, toAccentInsensitive } from '../utils/string';
 
-const ClientDocument = mongoose.model(
+const ClientDocumentBase = mongoose.model(
   'ClientDocument',
   mongoose.Schema(
     {
@@ -15,7 +15,7 @@ const ClientDocument = mongoose.model(
   )
 );
 
-export default class ExtendedClientDocument extends ClientDocument {
+export default class ClientDocument extends ClientDocumentBase {
   serialize() {
     return { _id: this._id, ...this.value };
   }
@@ -57,7 +57,7 @@ export default class ExtendedClientDocument extends ClientDocument {
 
     if (!regex_query.$or.length) delete regex_query.$or;
 
-    return ExtendedClientDocument.find({ ...query, ...regex_query })
+    return ClientDocument.find({ ...query, ...regex_query })
       .skip(page_size * (page_number - 1))
       .limit(page_size)
       .sort({ _id: -1 });
@@ -65,7 +65,7 @@ export default class ExtendedClientDocument extends ClientDocument {
 
   static async get_distinct_object(query) {
     const keys = Object.keys(query);
-    const queries = Promise.all(keys.map(key => ExtendedClientDocument.distinct(key)));
+    const queries = Promise.all(keys.map(key => ClientDocument.distinct(key)));
 
     const results = await queries;
 

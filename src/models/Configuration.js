@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Configuration = mongoose.model(
+const ConfigurationBase = mongoose.model(
   'Configuration',
   mongoose.Schema(
     {
@@ -17,4 +17,4 @@ const Configuration = mongoose.model(
   )
 );
 
-export default class extends Configuration {}
+export default class Configuration extends ConfigurationBase {}

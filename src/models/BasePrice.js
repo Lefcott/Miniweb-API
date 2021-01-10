@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const BasePrice = mongoose.model(
+const BasePriceBase = mongoose.model(
   'BasePrice',
   mongoose.Schema(
     {
@@ -12,4 +12,4 @@ const BasePrice = mongoose.model(
   )
 );
 
-export default class extends BasePrice {}
+export default class BasePrice extends BasePriceBase {}

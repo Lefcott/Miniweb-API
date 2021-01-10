@@ -3,11 +3,13 @@ import mongoose from 'mongoose';
 
 import Field from './shared/Field';
 
-const Project = mongoose.model(
+const ProjectBase = mongoose.model(
   'Project',
   mongoose.Schema(
     {
       code: { type: String, required: true },
+      name: { type: String, required: true },
+      base_url: { type: String, required: true },
       language_code: { type: String, required: true }, // es | en
       table_names: [{ type: String, required: true }],
       fields: [Field],
@@ -17,8 +19,8 @@ const Project = mongoose.model(
   )
 );
 
-export default class ExtendedProject extends Project {
+export default class Project extends ProjectBase {
   static find_by_code(code) {
-    return ExtendedProject.findOne(code);
+    return Project.findOne({ code });
   }
 }

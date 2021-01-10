@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
-const ChecklistItem = mongoose.model(
+const ChecklistItemBase = mongoose.model(
   'ChecklistItem',
   mongoose.Schema(
     {
@@ -15,4 +15,4 @@ const ChecklistItem = mongoose.model(
   )
 );
 
-export default class extends ChecklistItem {}
+export default class ChecklistItem extends ChecklistItemBase {}

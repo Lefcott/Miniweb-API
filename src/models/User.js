@@ -17,7 +17,7 @@ const Field = {
   ]
 };
 
-const User = mongoose.model(
+const UserBase = mongoose.model(
   'User',
   mongoose.Schema(
     {
@@ -62,7 +62,7 @@ const User = mongoose.model(
   )
 );
 
-export default class ExtendedUser extends User {
+export default class User extends UserBase {
   confirmEmail() {
     this.email_confirmation_token = null;
     this.email_confirmed = true;
@@ -110,12 +110,12 @@ export default class ExtendedUser extends User {
   }
 
   static async getValidationError({ email }) {
-    const previousUser = await ExtendedUser.findOne({ email });
+    const previousUser = await User.findOne({ email });
     return previousUser && { error: 'A user with that email aleady exists', code: 'email_already_used' };
   }
 
   static async register(data) {
-    return new ExtendedUser({
+    return new User({
       name: data.name,
       surname: data.surname,
       phone: data.phone,
@@ -125,7 +125,7 @@ export default class ExtendedUser extends User {
   }
 
   static async authenticate({ email, password }) {
-    const user = await ExtendedUser.findOne({ $or: [{ email }, { username: email }] });
+    const user = await User.findOne({ $or: [{ email }, { username: email }] });
     if (!user) throw new AuthenticationError('Invalid email or password');
     const authenticated = await compare(password, user.password);
     if (!authenticated) throw new AuthenticationError('Invalid email or password');
@@ -133,7 +133,7 @@ export default class ExtendedUser extends User {
   }
 
   static async clearEmailConfirmationNotification(session) {
-    const user = await ExtendedUser.findOne({ _id: session.user_id });
+    const user = await User.findOne({ _id: session.user_id });
     if (!user) return;
     user.notified_email_confirmed = true;
     return user.save();
@@ -144,7 +144,7 @@ export default class ExtendedUser extends User {
       throw new AuthenticationError(
         `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`
       );
-    const user = await ExtendedUser.findOne({ _id: params.user_id });
+    const user = await User.findOne({ _id: params.user_id });
     if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
     return user;
   }

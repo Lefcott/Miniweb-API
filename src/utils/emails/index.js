@@ -25,8 +25,8 @@ fs.readdir(`${projectDir}/src/emails`, (error, dirs) => {
   }
 });
 
-export const sendEmail = (from, to, subject, text, html) =>
-  new Promise(async resolve => {
+export const sendEmail = (from, to, subject, text, html, data) =>
+  new Promise(resolve => {
     from = constants.EMAIL_FROM[from];
     if (!from) throw new Error(`From ${from} not found`);
     if (!to || !to.length) throw new Error(`No recipients found for sending email, subject: ${subject}`);
@@ -41,10 +41,12 @@ export const sendEmail = (from, to, subject, text, html) =>
         },
         Source: from
       },
-      (error, data) => {
+      (error, response) => {
         if (error) throw error;
-        rollbar.info(`sent '${subject}' email from ${from} to ${to}`);
-        resolve(data);
+        rollbar.info(
+          `sent '${subject}' email from ${from} to ${to}\n Data:\n${JSON.stringify(data, null, 2)}`
+        );
+        resolve(response);
       }
     );
   });

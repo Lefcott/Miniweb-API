@@ -1,2 +1,2 @@
-{{ data.name }} {{ data.surname }}, {{ language.welcome }}
-{{ data.verification_link }}
+{{ lang.new_request_in }} {{ data.project_name }}
+{{ data.cart_link }}

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import Field from './shared/Field';
 
-const CartModel = mongoose.model(
+const CartModelBase = mongoose.model(
   'CartModel',
   mongoose.Schema(
     {
@@ -14,4 +14,8 @@ const CartModel = mongoose.model(
   )
 );
 
-export default class extends CartModel {}
+export default class CartModel extends CartModelBase {
+  static find_by_project_code(project_code) {
+    return CartModel.findOne({ project_code });
+  }
+}
