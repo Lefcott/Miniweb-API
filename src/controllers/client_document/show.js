@@ -6,5 +6,5 @@ export default async ({ params }, res) => {
 
   if (!client_document) return res.status(404).json({ message: 'client document not found' });
 
-  res.status(200).json(client_document);
+  res.status(200).json(client_document.serialize());
 };
