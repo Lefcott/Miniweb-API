@@ -17,6 +17,14 @@ export const list = {
   options: { allowUnknown: true }
 };
 
+export const show = {
+  method: 'get',
+  paths: '/client_documents/:_id',
+  params: joi.object().keys({
+    _id: joi.string().required()
+  })
+};
+
 export const distinct = {
   method: 'get',
   paths: '/client_document_distinct',
