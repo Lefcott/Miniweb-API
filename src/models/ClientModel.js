@@ -1,8 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
-import lodash from 'lodash';
 
-import { normalize, toAccentInsensitive } from '../utils/string';
+import Field from './shared/Field';
 
 const ClientModel = mongoose.model(
   'ClientModel',
@@ -11,16 +10,7 @@ const ClientModel = mongoose.model(
       name: { type: String, required: true },
       table_name: { type: String, required: true },
       table_descriptive_name: { type: String, required: true },
-      fields: [
-        {
-          key: { type: String, required: true },
-          name: { type: String, required: true },
-          default_value: { type: mongoose.SchemaTypes.Mixed },
-          important: { type: Boolean, required: true },
-          input_type: { type: String, required: true }, // text | number | image | email | phone
-          is_required: { type: Boolean, default: false }
-        }
-      ]
+      fields: [Field]
     },
     { collection: 'client_models' }
   )
