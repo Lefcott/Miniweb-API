@@ -1,6 +1,8 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
+import { getEmailFromTemplate, sendEmail } from '../utils/emails';
+
 import Project from './Project';
 
 const Cart = mongoose.model(
@@ -21,18 +23,28 @@ const Cart = mongoose.model(
 );
 
 export default class ExtendedCart extends Cart {
-  static async validate_project(body) {
-    log(body);
-    const projects = await Project.find({ code: body.project_code });
+  notify_creation() {
+    const { subject, text, html } = getEmailFromTemplate('new_cart', this.project.language_code);
+    const [from, to] = ['notifications@dancotll.com <DancotLL>', this.project.configuration.contact_email];
 
-    if (!projects.length) throw new ValidationError(`project with code ${body.project_code} not found`);
+    sendEmail(from, to, subject, text, html);
   }
 
-  static create(body) {
-    return new ExtendedCart({
+  static async create(body) {
+    const project = await Project.find_by_code(body.project_code);
+
+    if (!project) throw new ValidationError(`project with code ${body.project_code} not found`);
+
+    const cart = new ExtendedCart({
       project_code: body.project_code,
       items: body.items,
       data: body.data
-    }).save();
+    });
+
+    cart.project = project;
+
+    cart.notify_creation();
+
+    return cart.save();
   }
 }

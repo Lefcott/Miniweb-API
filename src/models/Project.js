@@ -8,6 +8,7 @@ const Project = mongoose.model(
   mongoose.Schema(
     {
       code: { type: String, required: true },
+      language_code: { type: String, required: true }, // es | en
       table_names: [{ type: String, required: true }],
       fields: [Field],
       configuration: {}
@@ -16,4 +17,8 @@ const Project = mongoose.model(
   )
 );
 
-export default class extends Project {}
+export default class ExtendedProject extends Project {
+  static find_by_code(code) {
+    return ExtendedProject.findOne(code);
+  }
+}

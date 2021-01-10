@@ -1,0 +1,2 @@
+{{ data.name }} {{ data.surname }}, {{ language.welcome }}
+{{ data.verification_link }}

@@ -89,28 +89,30 @@ const defineRoute = (method, paths, schemaName, schema, epName, logic) => {
     } catch (error) {
       let response;
 
-      if (error instanceof ValidationError)
+      if (error instanceof ValidationError) {
         res.status(422).json(
           (response = {
             message: 'There was validation error',
             error: { code: error.name, message: error.message }
           })
         );
-      else if (error instanceof AuthorizationError)
+        rollbar.error(`New validation error:\n${JSON.stringify(response, null, 2)}`);
+      } else if (error instanceof AuthorizationError)
         res.status(403).json(
           (response = {
             message: 'There was an authorization error',
             error: { code: error.name, message: error.message }
           })
         );
-      else if (error instanceof AuthenticationError)
+      else if (error instanceof AuthenticationError) {
         res.status(401).json(
           (response = {
             message: 'There was an authentication error',
             error: { code: error.name, message: error.message }
           })
         );
-      else if (error instanceof SessionError) {
+        rollbar.error(`New authentication error:\n${JSON.stringify(response, null, 2)}`);
+      } else if (error instanceof SessionError) {
         res.status(403).json(
           (response = {
             message: "There was an session error, you're probably not logged in",

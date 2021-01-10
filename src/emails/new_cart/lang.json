@@ -1,0 +1,10 @@
+{
+  "es": {
+    "subject": "Nuevo pedido",
+    "newRequest": "Nuevo pedido en"
+  },
+  "en": {
+    "subject": "New request",
+    "newRequest": "New request in"
+  }
+}
