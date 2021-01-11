@@ -18,3 +18,11 @@ export const create = {
       .required()
   })
 };
+
+export const show = {
+  method: 'get',
+  paths: '/ecommerce_api/carts/:_id',
+  params: joi.object().keys({
+    _id: joi.string().required()
+  })
+};
