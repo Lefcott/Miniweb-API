@@ -24,7 +24,8 @@
     "AuthorizationError": "readonly",
     "AuthenticationError": "readonly",
     "SessionError": "readonly",
-    "ValidationError": "readonly"
+    "ValidationError": "readonly",
+    "NotFoundError": "readonly"
   },
   "rules": {
     "indent": [

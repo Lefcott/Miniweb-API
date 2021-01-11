@@ -4,7 +4,7 @@ import Project from '../../models/Project';
 export default async ({ params }, res) => {
   const project = await Project.findOne(params);
 
-  if (!project) return res.status(404).json({ message: 'project not found' });
+  if (!project) throw new NotFoundError('project not found');
 
   res.status(200).json(project);
 };

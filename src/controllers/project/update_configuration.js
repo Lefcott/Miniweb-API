@@ -6,7 +6,7 @@ export default async ({ session, params, body }, res) => {
   const user = await User.findFromSession(session, params);
   const project = await Project.findOne({ _id: params.project_id });
 
-  if (!project) return res.status(404).json({ message: 'project not found' });
+  if (!project) throw new NotFoundError('project not found');
 
   user.validate_project_ownership(project);
 

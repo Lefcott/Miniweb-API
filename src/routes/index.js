@@ -86,48 +86,16 @@ const defineRoute = (method, paths, schema, logic) => {
         );
       await logic(req, res, next);
     } catch (error) {
-      let response;
+      const response = {
+        message: error.generic_message,
+        error: {
+          code: error.name,
+          message: error.message,
+          stack: error.stack && errorStackParser.parse(error).map(data => data.source)
+        }
+      };
 
-      if (error instanceof ValidationError)
-        res.status(422).json(
-          (response = {
-            message: 'There was validation error',
-            error: { code: error.name, message: error.message }
-          })
-        );
-      else if (error instanceof AuthorizationError)
-        res.status(403).json(
-          (response = {
-            message: 'There was an authorization error',
-            error: { code: error.name, message: error.message }
-          })
-        );
-      else if (error instanceof AuthenticationError)
-        res.status(401).json(
-          (response = {
-            message: 'There was an authentication error',
-            error: { code: error.name, message: error.message }
-          })
-        );
-      else if (error instanceof SessionError)
-        res.status(403).json(
-          (response = {
-            message: "There was an session error, you're probably not logged in",
-            error: { code: error.name, message: error.message }
-          })
-        );
-      else
-        res.status(500).json(
-          (response = {
-            message: 'There was an internal server error',
-            error: {
-              code: error.name,
-              message: error.message,
-              stack: errorStackParser.parse(error).map(data => data.source)
-            }
-          })
-        );
-
+      res.status(422).json(response);
       rollbar.error(`New ${error.name}:\n${JSON.stringify(response, null, 2)}`);
     }
   });
