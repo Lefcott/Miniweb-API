@@ -1,6 +1,6 @@
 import joi from '@hapi/joi';
 
-import { sessionMiddleware } from '../utils/middlewares';
+import { sessionMiddleware } from '../../utils/middlewares';
 
 export const create = {
   method: 'post',

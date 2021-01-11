@@ -20,6 +20,12 @@ const ProjectBase = mongoose.model(
 );
 
 export default class Project extends ProjectBase {
+  update_configuration(body) {
+    this.configuration = body;
+
+    return this.save();
+  }
+
   static find_by_code(code) {
     return Project.findOne({ code });
   }

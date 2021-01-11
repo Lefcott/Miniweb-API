@@ -37,13 +37,11 @@ const getSchemaError = (schema = joi.object(), objectToValidate = {}, options = 
   return { errors, value };
 };
 
-const getValidator = (schemaName, schema) => async (req, res, next) => {
+const getValidator = schema => async (req, res, next) => {
   const { method } = req;
   const { path } = req.route;
   if (!schema) {
-    throw new Error(
-      `Couldn't find validations for path "${path}" and method "${method}". Schema: "${schemaName}". Calling next()`
-    );
+    throw new Error(`Couldn't find validations for ${method} ${path}`);
   }
   if (schema.domains) {
     schema.domains = Array.isArray(schema.domains) ? schema.domains : [schema.domains];
@@ -60,7 +58,7 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
   SCHEMA.REQUEST_TYPES.forEach(type => {
     if (schema[type]) {
       if (typeof schema[type].validate !== 'function') {
-        const error = `Invalid schema object. path '${path}'. Method '${method}'. Schema: '${schemaName}'. Key:'${type}'`;
+        const error = `Invalid schema object. path '${path}'. Method '${method}'. Key:'${type}'`;
         rollbar.error(error);
         return schemaErrors.push(error);
       }
@@ -77,8 +75,9 @@ const getValidator = (schemaName, schema) => async (req, res, next) => {
   } else next();
 };
 
-const defineRoute = (method, paths, schemaName, schema, epName, logic) => {
-  const validator = getValidator(schemaName, schema);
+const defineRoute = (method, paths, schema, logic) => {
+  const validator = getValidator(schema);
+
   middlewares.router[method](paths, validator, async (req, res, next) => {
     try {
       if (req.session)
@@ -136,40 +135,38 @@ const defineRoute = (method, paths, schemaName, schema, epName, logic) => {
 
 const defineRoutes = () => {
   const controllerFiles = fs.readdirSync(`${projectDir}/src/controllers`);
-  let schemaFiles = fs.readdirSync(__dirname);
-  schemaFiles = schemaFiles.filter(file => file !== 'index.js');
-  const schemas = {};
-  for (let k = 0; k < schemaFiles.length; k += 1) {
-    const name = schemaFiles[k].endsWith('.js')
-      ? schemaFiles[k].substring(0, schemaFiles[k].length - '.js'.length)
-      : schemaFiles[k];
-    const schema = require(`./${name}`);
+  let namespaces = fs.readdirSync(__dirname);
+  namespaces = namespaces.filter(file => file !== 'index.js').map(namespace => `/${namespace}`);
 
-    schemas[name] = {};
-    const epNames = Object.keys(schema);
-    for (let m = 0; m < epNames.length; m += 1) {
-      const epName = epNames[m];
-      const { default: controller } = require(`${projectDir}/src/controllers/${name}/${epName}`);
-      let { paths } = schema[epName];
-      const { method } = schema[epName];
-      if (!method) {
-        rollbar.error(
-          `No "method" was specified on route "${name}", endpoint "${epName}". This route definition will be ignored`
-        );
-        continue;
-      }
-      paths = Array.isArray(paths) ? paths : [paths];
-      paths = paths.filter(path => path);
-      if (paths.length === 0) {
-        rollbar.warn(
-          `No "paths" specified at route "${name}", endpoint ${epName}. This route definition will be ignored`
-        );
-        continue;
-      }
+  namespaces.forEach(namespace => {
+    const routes = fs.readdirSync(`${__dirname}${namespace}`);
 
-      defineRoute(method, paths, name, schema[epName], epName, controller);
-    }
-  }
+    routes.forEach(route => {
+      const entity = route.endsWith('.js') ? route.substring(0, route.length - '.js'.length) : route;
+      const schemas = require(`.${namespace}/${entity}`);
+      const schema_names = Object.keys(schemas);
+
+      schema_names.forEach(schema_name => {
+        const schema = schemas[schema_name];
+        const paths = Array.isArray(schema.paths) ? schema.paths : [schema.paths].filter(path => path);
+        const complete_paths = paths.map(path => `${namespace}${path}`);
+        const { default: controller } = require(`${projectDir}/src/controllers/${entity}/${schema_name}`);
+
+        if (!schema.method)
+          return rollbar.error(
+            `No "method" was specified on route "${entity}", endpoint "${schema_name}". This route definition will be ignored`
+          );
+
+        if (!paths.length) {
+          return rollbar.warn(
+            `No "paths" specified at route "${entity}", endpoint ${schema_name}. This route definition will be ignored`
+          );
+        }
+
+        defineRoute(schema.method, complete_paths, schema, controller);
+      });
+    });
+  });
 };
 
 defineRoutes();

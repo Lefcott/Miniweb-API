@@ -2,7 +2,7 @@ import joi from '@hapi/joi';
 
 export const create = {
   method: 'post',
-  paths: '/ecommerce_api/carts',
+  paths: '/carts',
   body: joi.object().keys({
     project_code: joi.string().required(),
     data: joi.object().required(),
@@ -21,7 +21,7 @@ export const create = {
 
 export const show = {
   method: 'get',
-  paths: '/ecommerce_api/carts/:_id',
+  paths: '/carts/:_id',
   params: joi.object().keys({
     _id: joi.string().required()
   })

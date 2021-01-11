@@ -33,6 +33,7 @@ const UserBase = mongoose.model(
       notified_email_confirmed: { type: Boolean, default: false },
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
       phone_confirmed: { type: Boolean, default: false },
+      project_codes: [String],
       table_names: [String],
       cloudinary_settings: {
         cloud_name: { type: String, required: true },
@@ -109,6 +110,11 @@ export default class User extends UserBase {
       );
   }
 
+  validate_project_ownership(project) {
+    if (!this.project_codes.includes(project.code))
+      throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`);
+  }
+
   static async getValidationError({ email }) {
     const previousUser = await User.findOne({ email });
     return previousUser && { error: 'A user with that email aleady exists', code: 'email_already_used' };
@@ -126,9 +132,13 @@ export default class User extends UserBase {
 
   static async authenticate({ email, password }) {
     const user = await User.findOne({ $or: [{ email }, { username: email }] });
-    if (!user) throw new AuthenticationError('Invalid email or password');
+
+    if (!user) throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`);
+
     const authenticated = await compare(password, user.password);
+
     if (!authenticated) throw new AuthenticationError('Invalid email or password');
+
     return user;
   }
 
@@ -145,7 +155,9 @@ export default class User extends UserBase {
         `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`
       );
     const user = await User.findOne({ _id: params.user_id });
+
     if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
+
     return user;
   }
 }
