@@ -4,6 +4,8 @@ import { compare } from 'bcryptjs';
 
 import { randomCode, hash } from '../utils/passwords';
 
+import Project from './Project';
+
 const Field = {
   name: { type: String, required: true },
   code: { type: String, required: true },
@@ -113,6 +115,10 @@ export default class User extends UserBase {
   validate_project_ownership(project) {
     if (!this.project_codes.includes(project.code))
       throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`);
+  }
+
+  find_projects() {
+    return Project.find({ code: this.project_codes });
   }
 
   static async getValidationError({ email }) {
