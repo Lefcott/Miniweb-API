@@ -4,9 +4,9 @@ import { sessionMiddleware } from '../../utils/middlewares';
 
 export const show = {
   method: 'get',
-  paths: '/projects/:_id',
+  paths: '/projects/:project_code',
   params: joi.object().keys({
-    _id: joi.string().required()
+    project_code: joi.string().required()
   })
 };
 
