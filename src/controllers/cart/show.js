@@ -4,7 +4,7 @@ import Cart from '../../models/Cart';
 export default async ({ params }, res) => {
   const cart = await Cart.findOne(params);
 
-  if (!cart) throw new NotFoundError('cart not found');
+  if (!cart) throw new NotFoundError('cart not found', { params });
 
   res.status(200).json(cart);
 };

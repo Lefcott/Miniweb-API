@@ -84,7 +84,8 @@ export default class User extends UserBase {
     );
     if (alreadySavedRequest)
       throw new ValidationError(
-        `a development request with name ${development_request.name} already exists for user ${this._id}`
+        `a development request with name ${development_request.name} already exists for user ${this._id}`,
+        { development_request }
       );
   }
 
@@ -105,16 +106,19 @@ export default class User extends UserBase {
     this.phone_confirmation_code = undefined;
   }
 
-  validateClientDocumentOwnership(clientDocument) {
-    if (!this.table_names.includes(clientDocument.table_name))
+  validateClientDocumentOwnership(client_document) {
+    if (!this.table_names.includes(client_document.table_name))
       throw new AuthorizationError(
-        `User ${this._id} does not own document with table name ${clientDocument.table_name}`
+        `User ${this._id} does not own document with table name ${client_document.table_name}`,
+        { client_document }
       );
   }
 
   validate_project_ownership(project) {
     if (!this.project_codes.includes(project.code))
-      throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`);
+      throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`, {
+        project
+      });
   }
 
   find_projects() {
@@ -139,11 +143,12 @@ export default class User extends UserBase {
   static async authenticate({ email, password }) {
     const user = await User.findOne({ $or: [{ email }, { username: email }] });
 
-    if (!user) throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`);
+    if (!user)
+      throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`, { email, password });
 
     const authenticated = await compare(password, user.password);
 
-    if (!authenticated) throw new AuthenticationError('Invalid email or password');
+    if (!authenticated) throw new AuthenticationError('Invalid email or password', { email, password });
 
     return user;
   }
@@ -158,11 +163,12 @@ export default class User extends UserBase {
   static async findFromSession(session, params) {
     if (session.user_id !== params.user_id)
       throw new AuthenticationError(
-        `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`
+        `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`,
+        { session, params }
       );
     const user = await User.findOne({ _id: params.user_id });
 
-    if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
+    if (!user) throw new SessionError(`user with id ${params.user_id} was not found`, { session, params });
 
     return user;
   }

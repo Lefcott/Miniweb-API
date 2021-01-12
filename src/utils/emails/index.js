@@ -28,8 +28,8 @@ fs.readdir(`${projectDir}/src/emails`, (error, dirs) => {
 export const sendEmail = (from, to, subject, text, html, data) =>
   new Promise(resolve => {
     from = constants.EMAIL_FROM[from];
-    if (!from) throw new Error(`From ${from} not found`);
-    if (!to || !to.length) throw new Error(`No recipients found for sending email, subject: ${subject}`);
+    if (!from) throw new Error(`From ${from} not found`, { subject, to });
+    if (!to || !to.length) throw new Error(`No recipients found for sending email`, { from, subject });
 
     to = Array.isArray(to) ? to : [to];
     ses.sendEmail(
@@ -53,10 +53,10 @@ export const sendEmail = (from, to, subject, text, html, data) =>
 
 export const getEmailFromTemplate = (name, language_code, data) => {
   const template = templates[name];
-  if (!template) throw new Error(`Unexistent template with name ${name}`);
+  if (!template) throw new Error(`Unexistent template with name ${name}`, { language_code, data });
   const language = template.lang[language_code];
-  if (!language) throw new Error(`Unexistent language with code ${language_code}`);
-  if (!language.subject) throw new Error(`Didn't find subject for language ${language_code}`);
+  if (!language) throw new Error(`Unexistent language with code ${language_code}`, { data });
+  if (!language.subject) throw new Error(`Didn't find subject for language ${language_code}`, { data });
 
   return {
     subject: language.subject,

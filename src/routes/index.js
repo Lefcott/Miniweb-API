@@ -89,14 +89,15 @@ const defineRoute = (method, paths, schema, logic) => {
       const response = {
         message: error.generic_message,
         error: {
-          code: error.name,
+          code: error.code || 'internal_server_error',
           message: error.message,
+          meta: error.meta || {},
           stack: error.stack && errorStackParser.parse(error).map(data => data.source)
         }
       };
 
       res.status(422).json(response);
-      rollbar.error(`New ${error.name}:\n${JSON.stringify(response, null, 2)}`);
+      rollbar.error(`New ${error.code} error:\n${JSON.stringify(response, null, 2)}`);
     }
   });
 };

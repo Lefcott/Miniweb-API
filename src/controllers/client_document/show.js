@@ -4,7 +4,7 @@ import ClientDocument from '../../models/ClientDocument';
 export default async ({ params }, res) => {
   const client_document = await ClientDocument.findById(params._id);
 
-  if (!client_document) throw new NotFoundError('client document not found');
+  if (!client_document) throw new NotFoundError('client document not found', { params });
 
   res.status(200).json(client_document.serialize());
 };
