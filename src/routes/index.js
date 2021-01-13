@@ -86,6 +86,7 @@ const defineRoute = (method, paths, schema, logic) => {
         );
       await logic(req, res, next);
     } catch (error) {
+      const level = error.level || 'error';
       const response = {
         message: error.generic_message,
         error: {
@@ -97,7 +98,7 @@ const defineRoute = (method, paths, schema, logic) => {
       };
 
       res.status(422).json(response);
-      rollbar.error(`New ${error.code} error:\n${JSON.stringify(response, null, 2)}`);
+      rollbar[level](`New ${error.code} error:\n${JSON.stringify(response, null, 2)}`);
     }
   });
 };

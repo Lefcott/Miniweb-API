@@ -3,6 +3,7 @@ export default class AuthenticationError extends Error {
     super();
 
     this.code = 'not_authenticated';
+    this.level = 'warn';
     this.status_code = 401;
     this.generic_message = 'There was an authentication error';
     this.message = message;

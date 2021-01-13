@@ -3,6 +3,7 @@ export default class NotFoundError extends Error {
     super();
 
     this.code = 'not_found';
+    this.level = 'warn';
     this.status_code = 403;
     this.generic_message = 'The requested resource was not found';
     this.message = message;
