@@ -40,10 +40,9 @@ export default class Cart extends CartBase {
     const project = await Project.find_by_code(body.project_code);
     const cart_model = await CartModel.find_by_project_code(body.project_code);
 
-    if (!project) throw new ValidationError(`project with code ${body.project_code} not found`, { body });
+    if (!project) throw new ValidationError(`project with code ${body.project_code} not found`);
 
-    if (!cart_model)
-      throw new ValidationError(`card model with project code ${body.project_code} not found`, { body });
+    if (!cart_model) throw new ValidationError(`card model with project code ${body.project_code} not found`);
 
     const cart = new Cart({
       project_code: body.project_code,

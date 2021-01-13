@@ -143,12 +143,11 @@ export default class User extends UserBase {
   static async authenticate({ email, password }) {
     const user = await User.findOne({ $or: [{ email }, { username: email }] });
 
-    if (!user)
-      throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`, { email, password });
+    if (!user) throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`);
 
     const authenticated = await compare(password, user.password);
 
-    if (!authenticated) throw new AuthenticationError('Invalid email or password', { email, password });
+    if (!authenticated) throw new AuthenticationError('Invalid email or password');
 
     return user;
   }
@@ -168,7 +167,7 @@ export default class User extends UserBase {
       );
     const user = await User.findOne({ _id: params.user_id });
 
-    if (!user) throw new SessionError(`user with id ${params.user_id} was not found`, { session, params });
+    if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
 
     return user;
   }
