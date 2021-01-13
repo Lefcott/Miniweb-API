@@ -2,6 +2,7 @@
 /* eslint-disable global-require */
 import joi from '@hapi/joi';
 import errorStackParser from 'error-stack-parser';
+import { v4 as uuid } from 'uuid';
 
 import fs from 'fs';
 import url from 'url';
@@ -90,15 +91,33 @@ const defineRoute = (method, paths, schema, logic) => {
       const response = {
         message: error.generic_message,
         error: {
+          id: uuid(),
           code: error.code || 'internal_server_error',
-          message: error.message,
+          message: error.message
+        }
+      };
+      const rollbar_log = {
+        ...response,
+        error: {
+          ...response.error,
           meta: error.meta || {},
           stack: error.stack && errorStackParser.parse(error).map(data => data.source)
+        },
+        status_code: error.status_code,
+        request: {
+          path: req.url,
+          body: req.body,
+          params: req.params,
+          query: req.query,
+          session: req.session,
+          headers: req.headers
         }
       };
 
-      res.status(422).json(response);
-      rollbar[level](`New ${error.code} error:\n${JSON.stringify(response, null, 2)}`);
+      res.status(error.status_code).json(response);
+      rollbar[level](
+        `New ${error.code} error (${response.error.id}):\n${JSON.stringify(rollbar_log, null, 2)}`
+      );
     }
   });
 };
