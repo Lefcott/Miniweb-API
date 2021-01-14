@@ -1,10 +1,8 @@
 import { check } from '@lefcott/filter-json';
 
-import env from '../env.json';
-
 import rollbar from './rollbar';
 
-const redis = require('redis').createClient(env.REDISCLOUD_URL);
+const redis = require('redis').createClient(process.env.REDISCLOUD_URL);
 
 let active = false;
 

@@ -1,5 +1,4 @@
 import User from '../../models/User';
-import env from '../../env.json';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ query, session }, res) => {
@@ -10,5 +9,5 @@ export default async ({ query, session }, res) => {
     session.user_id = user._id;
   }
 
-  res.redirect(`${env.DASHBOARD_URL}/request_development`);
+  res.redirect(`${process.env.DASHBOARD_URL}/request_development`);
 };

@@ -14,9 +14,7 @@ const cors = require('cors');
 
 const http = require('http');
 
-const env = require('../../env.json');
-
-const webOrigins = JSON.parse(env.WEB_ORIGINS);
+const webOrigins = JSON.parse(process.env.WEB_ORIGINS);
 const app = express();
 const server = http.createServer(app);
 
@@ -42,33 +40,6 @@ app.use(
   })
 );
 
-// const sessionMiddleware = (req, res, next) => {
-//   if ((env.REQUIRE_REDIS === 'TRUE' || redis.isActive()) && req.query.session !== 'false')
-//     return session({
-//       secret: 'SuperSecret - (Change it)',
-//       resave: false,
-//       saveUninitialized: true,
-//       cookie: {
-//         secure: true,
-//         httpOnly: true,
-//         sameSite: 'none',
-//         maxAge: 60 * 60 * 24 * 1000
-//       },
-//       store: new RedisStore({ client: redis.client })
-//     })(req, res, next);
-//   // (req, res, (...args) => {
-//   //   res.header('Set-Cookie', `${res.getHeaders()['set-sookie']}; Secure`);
-//   //   next(...args);
-//   // });
-//   return next();
-//   // req.session = {};
-//   // res.header(
-//   //   'Set-Cookie',
-//   //   'connect.sid=s%3A8R52PJCJI2dj77a0hDovecIJVkRlGeMx.ZLXqDDOs%2FSfQbBpo9CmGgGsAsue1LmPsMwdd14Ab2xI; Path=/; HttpOnly; SameSite=None; Secure'
-//   // );
-//   // next();
-// };
-
 const router = express.Router();
 app.disable('x-powered-by');
 app.use((req, res, next) => {
@@ -87,10 +58,10 @@ app.get('/', (req, res) => {
 app.use('/', router);
 
 log('Listen');
-const port = env.PORT || process.env.PORT;
+const port = process.env.PORT || process.process.env.PORT;
 
 server.listen(port, () => {
-  log(`Listening on ${port} with environment ${env.NODE_ENV}`);
+  log(`Listening on ${port} with environment ${process.env.NODE_ENV}`);
 });
 
 export { app, router, sessionMiddleware };

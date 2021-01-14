@@ -1,3 +1,3 @@
-import env from './env.json';
+import dotenv from 'dotenv';
 
-Object.keys(env).forEach(key => (process.env[key] = env[key]));
+dotenv.config();

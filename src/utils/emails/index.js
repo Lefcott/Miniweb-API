@@ -3,7 +3,6 @@ import mustache from 'mustache';
 import fs from 'fs';
 
 import rollbar from '../rollbar';
-import env from '../../env.json';
 import projectDir from '../projectDir';
 import { ses } from '../aws';
 

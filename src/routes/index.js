@@ -7,7 +7,6 @@ import { v4 as uuid } from 'uuid';
 import fs from 'fs';
 import url from 'url';
 
-import env from '../env.json';
 import * as middlewares from '../utils/middlewares';
 import projectDir from '../utils/projectDir';
 import rollbar from '../utils/rollbar';
@@ -50,7 +49,7 @@ const getValidator = schema => async (req, res, next) => {
     if (!schema.domains.includes(host)) return res.status(401).json({ error: 'Domain is not in whitelist' });
   }
   const { errorMessage } = schema;
-  if (schema.admin && req.headers[`admin_secret_${env.NODE_ENV}`] !== env.ADMIN_SECRET) {
+  if (schema.admin && req.headers[`admin_secret_${process.env.NODE_ENV}`] !== process.env.ADMIN_SECRET) {
     return res.status(401).json({
       error: "What are you doing ?? You're not an administrator"
     });
