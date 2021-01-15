@@ -59,8 +59,6 @@ export default class Project extends ProjectBase {
     this.configuration_sections.forEach(configuration_section => {
       configuration_section.form = forms.find(form => form.code === configuration_section.form_code);
     });
-
-    log(this.configuration_sections);
   }
 
   static async find_by_code(code) {
