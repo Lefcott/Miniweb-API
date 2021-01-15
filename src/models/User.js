@@ -37,10 +37,6 @@ const UserBase = mongoose.model(
       phone_confirmed: { type: Boolean, default: false },
       project_codes: [String],
       table_names: [String],
-      cloudinary_settings: {
-        cloud_name: { type: String, required: true },
-        preset_name: { type: String, required: true }
-      },
       development_requests: [
         {
           name: { type: String, required: true },

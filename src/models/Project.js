@@ -12,6 +12,10 @@ const ProjectBase = mongoose.model(
       base_url: { type: String, required: true },
       language_code: { type: String, required: true }, // es | en
       table_names: [{ type: String, required: true }],
+      cloudinary_settings: {
+        cloud_name: { type: String, required: true },
+        preset_name: { type: String, required: true }
+      },
       fields: [Field],
       configuration: {}
     },
