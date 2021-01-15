@@ -113,7 +113,7 @@ const defineRoute = (method, paths, schema, logic) => {
         }
       };
 
-      res.status(error.status_code).json(response);
+      res.status(error.status_code || 500).json(response);
       rollbar[level](
         `New ${error.code} error (${response.error.id}):\n${JSON.stringify(rollbar_log, null, 2)}`
       );

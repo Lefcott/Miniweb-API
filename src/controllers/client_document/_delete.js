@@ -3,11 +3,11 @@ import ClientDocument from '../../models/ClientDocument';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ session, params }, res) => {
-  const user = await User.findFromSession(session, params);
+  const user = await User.find_from_session(session, params);
 
   const client_document = await ClientDocument.findOne({ _id: params.client_document_id });
 
-  user.validateClientDocumentOwnership(client_document);
+  user.validate_client_document_ownership(client_document);
 
   await client_document.delete();
 

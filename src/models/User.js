@@ -102,7 +102,7 @@ export default class User extends UserBase {
     this.phone_confirmation_code = undefined;
   }
 
-  validateClientDocumentOwnership(client_document) {
+  validate_client_document_ownership(client_document) {
     if (!this.table_names.includes(client_document.table_name))
       throw new AuthorizationError(
         `User ${this._id} does not own document with table name ${client_document.table_name}`,
@@ -155,7 +155,7 @@ export default class User extends UserBase {
     return user.save();
   }
 
-  static async findFromSession(session, params) {
+  static async find_from_session(session, params) {
     if (session.user_id !== params.user_id)
       throw new AuthenticationError(
         `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`,
