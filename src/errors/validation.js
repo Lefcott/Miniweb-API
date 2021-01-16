@@ -3,7 +3,7 @@ export default class ValidationError extends Error {
     super();
 
     this.code = 'invalid_parameters';
-    this.level = 'warn';
+    this.level = 'error';
     this.status_code = 422;
     this.generic_message = 'There was validation error, the given parameters are wrong';
     this.message = message;
