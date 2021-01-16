@@ -12,5 +12,5 @@ export default async ({ session, params, body }, res) => {
 
   await project.update_configuration(body);
 
-  res.status(200).json({ message: 'project confugration updated' });
+  res.status(200).json(project.configuration);
 };
