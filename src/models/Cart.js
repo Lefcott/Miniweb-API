@@ -31,7 +31,7 @@ export default class Cart extends CartBase {
       cart_link: `${this.project.base_url}/carts/${this._id}`
     };
     const { subject, text, html } = getEmailFromTemplate('new_cart', this.project.language_code, data);
-    const [from, to] = ['notifications', this.project.configuration.contact_email];
+    const [from, to] = ['notifications', this.project.configuration.basic_info.contact_email];
 
     sendEmail(from, to, subject, text, html, data);
   }

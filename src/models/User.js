@@ -140,7 +140,14 @@ export default class User extends UserBase {
   }
 
   static async authenticate({ email, password }) {
-    const user = await User.findOne({ $or: [{ email }, { username: email }] });
+    const user = await User.findOne({
+      $or: [
+        {
+          email: email.toLowerCase()
+        },
+        { username: email.toLowerCase() }
+      ]
+    });
 
     if (!user) throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`);
 
