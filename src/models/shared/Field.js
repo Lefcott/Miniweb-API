@@ -13,7 +13,7 @@ Field.add({
     form_code: { type: String, required: true },
     field_key: { type: String, required: true }
   },
-  suboptions: [Field]
+  subfields: [Field]
 });
 
 export default Field;
