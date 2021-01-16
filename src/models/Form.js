@@ -10,6 +10,7 @@ const FormBase = mongoose.model(
       code: { type: String, required: true },
       project_code: { type: String, required: true },
       name: { type: String, required: true },
+      enum_name: String,
       fields: [Field]
     },
     { collection: 'forms' }

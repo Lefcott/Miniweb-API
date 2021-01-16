@@ -31,7 +31,7 @@ const ProjectBase = mongoose.model(
         */
       }
     },
-    { collection: 'projects' }
+    { collection: 'projects', minimize: false }
   )
 );
 
