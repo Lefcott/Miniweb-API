@@ -1,7 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
-import Field from './shared/Field';
 import Form from './Form';
 import ClientModel from './ClientModel';
 
@@ -18,7 +17,6 @@ const ProjectBase = mongoose.model(
         cloud_name: { type: String, required: true },
         preset_name: { type: String, required: true }
       },
-      fields: [Field],
       configuration_sections: [
         {
           form_code: { type: String, required: true },
