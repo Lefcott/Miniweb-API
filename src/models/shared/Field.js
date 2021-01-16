@@ -1,6 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const Field = {
+const Field = new Schema();
+
+Field.add({
   key: { type: String, required: true },
   name: { type: String, required: true },
   default_value: { type: mongoose.SchemaTypes.Mixed },
@@ -10,7 +12,8 @@ const Field = {
   options_reference: {
     form_code: { type: String, required: true },
     field_key: { type: String, required: true }
-  }
-};
+  },
+  suboptions: [Field]
+});
 
 export default Field;
