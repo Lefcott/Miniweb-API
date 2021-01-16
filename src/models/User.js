@@ -102,8 +102,11 @@ export default class User extends UserBase {
     this.phone_confirmation_code = undefined;
   }
 
-  validate_client_document_ownership(client_document) {
-    if (!this.table_names.includes(client_document.table_name))
+  async validate_client_document_ownership(client_document) {
+    const projects = await this.find_projects();
+    const table_names = [...new Set(projects.map(project => project.table_names).flat())];
+
+    if (!table_names.includes(client_document.table_name))
       throw new AuthorizationError(
         `User ${this._id} does not own document with table name ${client_document.table_name}`,
         { client_document }
@@ -155,15 +158,10 @@ export default class User extends UserBase {
     return user.save();
   }
 
-  static async find_from_session(session, params) {
-    if (session.user_id !== params.user_id)
-      throw new AuthenticationError(
-        `user with id ${params.user_id} does not match with id ${session.user_id} wich is stored on the session`,
-        { session, params }
-      );
-    const user = await User.findOne({ _id: params.user_id });
+  static async find_from_session(session) {
+    const user = await User.findOne({ _id: session.user_id });
 
-    if (!user) throw new SessionError(`user with id ${params.user_id} was not found`);
+    if (!user) throw new SessionError(`user with id ${session.user_id} was not found`);
 
     return user;
   }

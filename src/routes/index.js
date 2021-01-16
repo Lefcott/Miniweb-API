@@ -104,6 +104,7 @@ const defineRoute = (method, paths, schema, logic) => {
         },
         status_code: error.status_code,
         request: {
+          method: req.method,
           path: req.url,
           body: req.body,
           params: req.params,
@@ -115,7 +116,11 @@ const defineRoute = (method, paths, schema, logic) => {
 
       res.status(error.status_code || 500).json(response);
       rollbar[level](
-        `New ${error.code} error (${response.error.id}):\n${JSON.stringify(rollbar_log, null, 2)}`
+        `New ${error.code || 'Internal'} error (${response.error.id}):\n${JSON.stringify(
+          rollbar_log,
+          null,
+          2
+        )}`
       );
     }
   });

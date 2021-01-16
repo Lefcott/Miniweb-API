@@ -19,9 +19,9 @@ export const list = {
 
 export const show = {
   method: 'get',
-  paths: '/client_documents/:_id',
+  paths: '/client_documents/:client_document_id',
   params: joi.object().keys({
-    _id: joi.string().required()
+    client_document_id: joi.string().required()
   })
 };
 
@@ -33,19 +33,19 @@ export const distinct = {
 
 export const _delete = {
   method: 'delete',
-  paths: '/users/:user_id/client_documents/:client_document_id',
+  paths: '/client_documents/:client_document_id',
   middlewares: sessionMiddleware
 };
 
 export const update = {
   method: 'put',
-  paths: '/users/:user_id/client_documents/:client_document_id',
+  paths: '/client_documents/:client_document_id',
   middlewares: sessionMiddleware
 };
 
 export const create = {
   method: 'post',
-  paths: '/users/:user_id/client_documents',
+  paths: '/client_documents',
   middlewares: sessionMiddleware,
   body: joi.object().keys({
     table_name: joi.string().required(),

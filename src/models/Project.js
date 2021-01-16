@@ -48,6 +48,14 @@ export default class Project extends ProjectBase {
     return ClientModel.find({ table_name: { $in: this.table_names } });
   }
 
+  validate_client_docuemnt_ownership(client_document) {
+    if (!this.table_names.includes(client_document.table_name))
+      throw new AuthorizationError(
+        `Project ${this._id} does not own document with table name ${client_document.table_name}`,
+        { client_document }
+      );
+  }
+
   async set_configuration_sections() {
     const forms = await Form.find({
       project_code: this.code,

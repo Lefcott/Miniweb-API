@@ -12,17 +12,15 @@ export const show = {
 
 export const list = {
   method: 'get',
-  paths: '/users/:user_id/projects',
-  middlewares: sessionMiddleware,
-  params: joi.object().keys({ user_id: joi.string().required() })
+  paths: '/projects',
+  middlewares: sessionMiddleware
 };
 
 export const update_configuration = {
   method: 'put',
-  paths: '/user/:user_id/projects/:project_id/configuration',
+  paths: '/projects/:project_id/configuration',
   middlewares: sessionMiddleware,
   params: joi.object().keys({
-    user_id: joi.string().required(),
     project_id: joi.string().required()
   }),
   body: joi.object().required()
