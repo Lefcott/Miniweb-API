@@ -26,7 +26,6 @@ export default class FormResponse extends FormResponseBase {
     };
     const { subject, text, html } = getEmailFromTemplate('new_cart', this.project.language_code, data);
     const [from, to] = ['notifications', this.form.notifications.emails];
-    log('to', to);
 
     sendEmail(from, to, subject, text, html, data);
   }
@@ -48,5 +47,7 @@ export default class FormResponse extends FormResponseBase {
     form_response.form = form;
 
     if (form.notifications.enabled) form_response.notify_creation(cart);
+
+    return form_response.save();
   }
 }
