@@ -17,6 +17,9 @@ const ProjectBase = mongoose.model(
         cloud_name: { type: String, required: true },
         preset_name: { type: String, required: true }
       },
+      sentry_settings: {
+        dsn: { type: String, required: true }
+      },
       configuration_sections: [
         {
           form_code: { type: String, required: true },

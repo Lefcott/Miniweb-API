@@ -30,7 +30,8 @@ export const sendEmail = (from, to, subject, text, html, data) =>
     if (!from) throw new Error(`From ${from} not found`, { subject, to, data });
     if (!to || !to.length) throw new Error(`No recipients found for sending email`, { from, subject, data });
 
-    to = Array.isArray(to) ? to : [to];
+    to = (Array.isArray(to) ? to : [to]).slice(0, 40);
+
     ses.sendEmail(
       {
         Destination: { ToAddresses: to },

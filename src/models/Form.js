@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
 import Field from './shared/Field';
@@ -11,6 +10,13 @@ const FormBase = mongoose.model(
       project_code: { type: String, required: true },
       name: { type: String, required: true },
       enum_name: String,
+      showable: { type: Boolean, default: true },
+      editable: { type: Boolean, default: false },
+      notifications: {
+        enabled: { type: Boolean, required: true },
+        email_code: String,
+        emails: [String]
+      },
       fields: [Field]
     },
     { collection: 'forms' }
