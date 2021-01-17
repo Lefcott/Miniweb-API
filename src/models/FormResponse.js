@@ -18,11 +18,11 @@ const FormResponseBase = mongoose.model(
 );
 
 export default class FormResponse extends FormResponseBase {
-  notify_creation(cart) {
+  notify_creation(cart, additional_data = {}) {
     const data = {
       project_name: this.project.name,
       client_data: this.form.fields.map(field => ({ key: field.name, value: this.data[field.key] })),
-      ...(cart ? { cart_link: `${this.project.base_url}/carts/${cart._id}` } : {})
+      ...additional_data
     };
     const { subject, text, html } = getEmailFromTemplate('new_cart', this.project.language_code, data);
     const [from, to] = ['notifications', this.form.notifications.emails];
@@ -37,10 +37,12 @@ export default class FormResponse extends FormResponseBase {
     if (!project) throw new NotFoundError('project not found');
     if (!form) throw new NotFoundError('form not found');
 
+    const additional_data = cart ? { cart_link: `${project.base_url}/carts/${cart._id}` } : {};
+
     const form_response = new FormResponse({
       project_code: params.project_code,
       form_code: params.form_code,
-      data
+      data: { ...data, ...additional_data }
     });
 
     form_response.project = project;
