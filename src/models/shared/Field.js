@@ -12,8 +12,8 @@ Field.add({
   fillable_by_user: { type: Boolean, default: true },
   testing_value: String,
   options_reference: {
-    form_code: { type: String, required: true },
-    field_key: { type: String, required: true }
+    form_code: String,
+    field_key: String
   },
   subfields: [Field]
 });

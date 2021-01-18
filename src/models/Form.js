@@ -23,4 +23,10 @@ const FormBase = mongoose.model(
   )
 );
 
-export default class Form extends FormBase {}
+export default class Form extends FormBase {
+  update(body) {
+    this.fields = body.fields;
+
+    return this.save();
+  }
+}
