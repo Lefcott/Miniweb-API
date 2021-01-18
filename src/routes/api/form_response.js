@@ -15,3 +15,9 @@ export const list = {
   }),
   options: { allowUnknown: true }
 };
+
+export const create = {
+  method: 'post',
+  paths: '/projects/:project_code/forms/:form_code/form_responses',
+  body: joi.object()
+};
