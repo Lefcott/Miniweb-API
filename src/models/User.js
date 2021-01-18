@@ -113,8 +113,8 @@ export default class User extends UserBase {
       );
   }
 
-  validate_project_ownership(project) {
-    if (!this.project_codes.includes(project.code))
+  validate_project_ownership(project = {}, project_code) {
+    if (!this.project_codes.includes(project.code) && !this.project_codes.includes(project_code))
       throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`, {
         project
       });

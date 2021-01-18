@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import { getEmailFromTemplate, sendEmail } from '../utils/emails';
+import { getSearchQuery } from '../utils/search';
 
 import Project from './Project';
 import Form from './Form';
@@ -18,6 +19,10 @@ const FormResponseBase = mongoose.model(
 );
 
 export default class FormResponse extends FormResponseBase {
+  serialize() {
+    return { _id: this._id, ...this.data };
+  }
+
   notify_creation(cart, additional_data = {}) {
     const data = {
       project_name: this.project.name,
@@ -51,5 +56,15 @@ export default class FormResponse extends FormResponseBase {
     if (form.notifications.enabled) form_response.notify_creation(cart);
 
     return form_response.save();
+  }
+
+  static search(query, params) {
+    const { page_size, page_number, regex_fields, regex_flags } = query;
+    const searchQuery = getSearchQuery(query);
+
+    return FormResponse.find({ ...params, ...searchQuery })
+      .skip(page_size * (page_number - 1))
+      .limit(page_size)
+      .sort({ _id: -1 });
   }
 }
