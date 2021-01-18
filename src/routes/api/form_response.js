@@ -19,5 +19,5 @@ export const list = {
 export const create = {
   method: 'post',
   paths: '/projects/:project_code/forms/:form_code/form_responses',
-  body: joi.object()
+  body: joi.object().required()
 };
