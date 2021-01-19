@@ -1,0 +1,12 @@
+{
+  "es": {
+    "subject": "Nueva Suscripción",
+    "title": "Nueva Suscripción",
+    "message": "Te informamos que alguien se suscribió a las notificaciones por email de"
+  },
+  "en": {
+    "subject": "New Suscription",
+    "title": "New Suscription",
+    "message": "We inform you that someone has suscribed to email notifications for project"
+  }
+}

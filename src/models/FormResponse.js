@@ -29,7 +29,11 @@ export default class FormResponse extends FormResponseBase {
       client_data: this.form.fields.map(field => ({ key: field.name, value: this.data[field.key] })),
       ...additional_data
     };
-    const { subject, text, html } = getEmailFromTemplate('new_cart', this.project.language_code, data);
+    const { subject, text, html } = getEmailFromTemplate(
+      this.form.notifications.email_code,
+      this.project.language_code,
+      data
+    );
     const [from, to] = ['notifications', this.form.notifications.emails];
 
     sendEmail(from, to, subject, text, html, data);

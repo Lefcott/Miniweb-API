@@ -1,0 +1,2 @@
+{{ lang.new_request_in }} {{ data.project_name }}
+{{ data.cart_link }}

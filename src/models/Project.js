@@ -14,11 +14,11 @@ const ProjectBase = mongoose.model(
       language_code: { type: String, required: true }, // es | en
       table_names: [{ type: String, required: true }],
       cloudinary_settings: {
-        cloud_name: { type: String, required: true },
-        preset_name: { type: String, required: true }
+        cloud_name: String,
+        preset_name: String
       },
       sentry_settings: {
-        dsn: { type: String, required: true }
+        dsn: String
       },
       configuration_sections: [
         {
