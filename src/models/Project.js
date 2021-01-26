@@ -32,6 +32,9 @@ const ProjectBase = mongoose.model(
             [configuration_sections[].fields[].key]: value
           }
         */
+      },
+      chatbot: {
+        enabled: { type: Boolean, default: false }
       }
     },
     { collection: 'projects', minimize: false }
