@@ -48,6 +48,12 @@ export default class Project extends ProjectBase {
     return this.save();
   }
 
+  update_chatbot_configuration(body) {
+    this.chatbot.configuration = body;
+
+    return this.save();
+  }
+
   find_client_models() {
     return ClientModel.find({ table_name: { $in: this.table_names } });
   }
