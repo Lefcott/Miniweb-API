@@ -34,7 +34,8 @@ const ProjectBase = mongoose.model(
         */
       },
       chatbot: {
-        enabled: { type: Boolean, default: false }
+        enabled: { type: Boolean, default: false },
+        configuration: {}
       }
     },
     { collection: 'projects', minimize: false }
