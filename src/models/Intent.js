@@ -6,6 +6,7 @@ const IntentBase = mongoose.model(
     {
       project_code: { type: String, required: true },
       name: { type: String, required: true },
+      channel: String,
       phrases: [String],
       answers: [
         {
