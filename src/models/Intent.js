@@ -13,10 +13,7 @@ const IntentBase = mongoose.model(
             {
               type: { type: String, required: true }, // text | image
               text: String,
-              image: {
-                url: String,
-                text: String
-              }
+              image_url: String
             }
           ]
         }
