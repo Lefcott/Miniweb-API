@@ -15,7 +15,7 @@ Field.add({
     form_code: String,
     field_key: String
   },
-  options: [String],
+  options: [{ key: String, value: String }],
   subfields: [Field]
 });
 
