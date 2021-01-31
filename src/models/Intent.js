@@ -24,4 +24,12 @@ const IntentBase = mongoose.model(
   )
 );
 
-export default class Intent extends IntentBase {}
+export default class Intent extends IntentBase {
+  update(body) {
+    Object.keys(body).forEach(key => {
+      this[key] = body[key];
+    });
+
+    return this.save();
+  }
+}

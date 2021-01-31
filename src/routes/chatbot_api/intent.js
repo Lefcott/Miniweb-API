@@ -46,3 +46,42 @@ export const create = {
       .required()
   })
 };
+
+export const update = {
+  method: 'put',
+  paths: '/projects/:project_code/intents',
+  middlewares: sessionMiddleware,
+  query: joi.object().keys({
+    channel: joi
+      .string()
+      .valid(...channels)
+      .required()
+  }),
+  body: joi.object().keys({
+    _id: joi.string(),
+    __v: joi.number(),
+    project_code: joi.string().required(),
+    channel: joi
+      .string()
+      .valid(...channels)
+      .required(),
+    name: joi.string().required(),
+    phrases: joi.array().items(joi.string()).required(),
+    answers: joi
+      .array()
+      .items(
+        joi.object().keys({
+          _id: joi.string(),
+          possible_messages: joi.array().items(
+            joi.object().keys({
+              _id: joi.string(),
+              type: joi.string().valid(...message_types),
+              text: joi.string(),
+              image_url: joi.string()
+            })
+          )
+        })
+      )
+      .required()
+  })
+};
