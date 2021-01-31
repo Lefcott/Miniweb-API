@@ -7,6 +7,8 @@ export default async ({ session, params }, res) => {
 
   const intent = await Intent.findById(params.intent_id);
 
+  if (!intent) throw new NotFoundError('intent not found');
+
   await user.validate_project_ownership({}, intent.project_code);
 
   const result = await intent.delete();
