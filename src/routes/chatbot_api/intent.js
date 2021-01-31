@@ -85,3 +85,9 @@ export const update = {
       .required()
   })
 };
+
+export const _delete = {
+  method: 'delete',
+  paths: '/intents/:intent_id',
+  middlewares: sessionMiddleware
+};
