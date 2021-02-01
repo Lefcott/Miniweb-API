@@ -47,6 +47,7 @@ export default class Intent extends IntentBase {
     const intents = await Intent.find({ project_code, channel });
 
     set_scores(intents, text);
+
     const choosen_intent = get_max_score_intent(intents);
 
     if (!choosen_intent)
