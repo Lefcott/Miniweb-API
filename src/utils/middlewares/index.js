@@ -4,6 +4,7 @@ import rollbar from '../rollbar';
 import * as redis from '../redis';
 
 import sessionMiddleware from './session';
+import moesifMiddleware from './moesif';
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -51,9 +52,10 @@ app.use((req, res, next) => {
 app.use(rollbar.errorHandler());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(moesifMiddleware);
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello World!');
+  res.send('Hello World!');
 });
 app.use('/', router);
 

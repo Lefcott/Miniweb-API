@@ -2,7 +2,7 @@ import joi from '@hapi/joi';
 
 export const create_web_message = {
   method: 'post',
-  paths: '/projects/:project_code/web_message',
+  paths: '/projects/:project_code/web_messages',
   body: joi.object().keys({
     type: joi.string().valid('text').required(),
     text: joi.when('type', {
@@ -10,6 +10,14 @@ export const create_web_message = {
       then: joi.string().required(),
       otherwise: joi.forbidden()
     })
+  })
+};
+
+export const create_facebook_message = {
+  method: 'post',
+  paths: '/projects/:project_code/facebook_messages',
+  params: joi.object().keys({
+    project_code: joi.string().required()
   })
 };
 

@@ -34,7 +34,7 @@ const ProjectBase = mongoose.model(
         */
       },
       chatbot: {
-        enabled: { type: Boolean, default: false },
+        enabled_channels: [String],
         configuration: {}
       }
     },
