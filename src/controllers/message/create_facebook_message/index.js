@@ -11,12 +11,12 @@ export default async ({ params, body }, res) => {
   const project = await Project.findOne({ code: params.project_code });
 
   if (!project) throw new NotFoundError('project not found');
-  if (!project.configuration.chatbot.enabled_channels.includes('facebook'))
+  if (!project.chatbot.configuration.enabled_channels.includes('facebook'))
     throw new AuthorizationError(`facebook is not enabled for project ${params.project_code}`);
   res.send('OK');
 
   const intent = await Intent.detect_from_text(params.project_code, 'web', body.text);
-  const { message_token } = project.configuration.chatbot.facebook.authentication;
+  const { message_token } = project.chatbot.configuration.facebook.authentication;
   const answers = intent.get_random_answers();
   const { sender_id, text } = get_user_data(body);
   const url = `https://graph.facebook.com/v6.0/me/messages?access_token=${message_token}`;
