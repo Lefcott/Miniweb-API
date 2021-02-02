@@ -15,7 +15,7 @@ export const get_request_body = (sender_id, answer) => {
 
   switch (answer.type) {
     case 'text':
-      message = { text: answer.Text };
+      message = { text: answer.text };
       break;
     case 'button_list':
       message = {
@@ -23,12 +23,12 @@ export const get_request_body = (sender_id, answer) => {
           type: 'template',
           payload: {
             template_type: 'button',
-            text: removeMd(block.Title),
-            buttons: block.Buttons.map(Button => ({
-              type: Button.Type === 'Write' ? 'postback' : 'web_url',
-              url: Button.Type === 'Write' ? undefined : Button.Redirect,
-              payload: Button.Type === 'Write' ? Button.Write : undefined,
-              title: removeMd(Button.Text)
+            text: answer.text,
+            buttons: answer.buttons.map(button => ({
+              type: button.type === 'write' ? 'postback' : 'web_url',
+              url: button.type === 'write' ? undefined : button.url,
+              payload: button.type === 'write' ? button.text : undefined,
+              title: button.text
             }))
           }
         }

@@ -16,7 +16,14 @@ const IntentBase = mongoose.model(
             {
               type: { type: String, required: true }, // text | image | button_list
               text: String,
-              image_url: String
+              image_url: String,
+              buttons: [
+                {
+                  type: String, // write | url
+                  text: String,
+                  url: String
+                }
+              ]
             }
           ]
         }
