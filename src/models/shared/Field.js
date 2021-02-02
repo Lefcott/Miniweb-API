@@ -9,6 +9,7 @@ Field.add({
   important: { type: Boolean, required: true },
   input_type: { type: String, required: true }, // text | number | image | email | phone
   is_required: { type: Boolean, default: false },
+  read_only: { type: Boolean, default: false },
   fillable_by_user: { type: Boolean, default: true },
   testing_value: String,
   options_reference: {
