@@ -114,7 +114,7 @@ const defineRoute = (method, paths, schema, logic) => {
         }
       };
 
-      res.status(error.status_code || 500).json(response);
+      if (!res.finished) res.status(error.status_code || 500).json(response);
       rollbar[level](
         `New ${error.code || 'Internal'} error (${response.error.id}):\n${JSON.stringify(
           rollbar_log,
