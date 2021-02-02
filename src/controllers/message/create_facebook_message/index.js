@@ -11,7 +11,7 @@ export default async ({ params, body }, res) => {
   const project = await Project.findOne({ code: params.project_code });
 
   if (!project) throw new NotFoundError('project not found');
-  if (!project.chatbot.configuration.enabled_channels.includes('facebook'))
+  if (!project.chatbot.enabled_channels.includes('facebook'))
     throw new AuthorizationError(`facebook is not enabled for project ${params.project_code}`);
   res.send('OK');
 
