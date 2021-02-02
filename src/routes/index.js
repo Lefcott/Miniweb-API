@@ -97,6 +97,7 @@ const defineRoute = (method, paths, schema, logic) => {
       };
       const rollbar_log = {
         ...response,
+        response_finished: res.finished,
         error: {
           ...response.error,
           meta: error.meta || {},
