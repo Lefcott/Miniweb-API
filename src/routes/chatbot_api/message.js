@@ -18,8 +18,7 @@ export const subscribe_facebook_messages = {
   paths: '/projects/:project_code/facebook_messages',
   errorMessage: 'Bad parameters',
   params: joi.object().keys({
-    teamName: joi.string().required(),
-    botName: joi.string().required()
+    project_code: joi.string().required()
   }),
   query: joi.object().keys({
     'hub.mode': joi.string().valid('subscribe').required(),
