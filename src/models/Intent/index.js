@@ -14,7 +14,7 @@ const IntentBase = mongoose.model(
         {
           possible_messages: [
             {
-              type: { type: String, required: true }, // text | image
+              type: { type: String, required: true }, // text | image | button_list
               text: String,
               image_url: String
             }
