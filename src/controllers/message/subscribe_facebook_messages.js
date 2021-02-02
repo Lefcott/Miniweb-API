@@ -6,6 +6,8 @@ export default async ({ params, query }, res) => {
   const project = await Project.findOne({ code: params.project_code });
 
   if (!project) throw new NotFoundError('project not found');
+  if (project.chatbot.facebook.authentication.webhook_token !== token)
+    throw new AuthorizationError('facebook token does not match');
 
   res.send(challenge);
 };
