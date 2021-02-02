@@ -15,10 +15,10 @@ export default async ({ params, body }, res) => {
     throw new AuthorizationError(`facebook is not enabled for project ${params.project_code}`);
   res.send('OK');
 
-  const intent = await Intent.detect_from_text(params.project_code, 'facebook', body.text);
+  const { sender_id, text } = get_user_data(body);
+  const intent = await Intent.detect_from_text(params.project_code, 'facebook', text);
   const { message_token } = project.chatbot.configuration.facebook.authentication;
   const answers = intent.get_random_answers();
-  const { sender_id, text } = get_user_data(body);
   const url = `https://graph.facebook.com/v6.0/me/messages?access_token=${message_token}`;
 
   for (const answer of answers) {
