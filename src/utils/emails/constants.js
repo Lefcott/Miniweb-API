@@ -1,4 +1,4 @@
 export const EMAIL_FROM = {
-  confirm: 'confirm@dancotll.com',
-  notifications: 'notifications@dancotll.com'
+  confirm: 'confirm@webuildwebz.com',
+  notifications: 'notifications@webuildwebz.com'
 };
