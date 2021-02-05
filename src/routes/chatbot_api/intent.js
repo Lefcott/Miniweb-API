@@ -38,6 +38,13 @@ export const create = {
             joi.object().keys({
               type: joi.string().valid(...message_types),
               text: joi.string(),
+              buttons: joi.array().items(
+                joi.object().keys({
+                  type: joi.string().required(),
+                  text: joi.string().required(),
+                  url: joi.string()
+                })
+              ),
               image_url: joi.string()
             })
           )
