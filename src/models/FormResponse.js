@@ -57,7 +57,7 @@ export default class FormResponse extends FormResponseBase {
     form_response.project = project;
     form_response.form = form;
 
-    if (form.notifications.enabled) form_response.notify_creation(cart);
+    if (form.notifications.enabled) form_response.notify_creation(cart, additional_data);
 
     return form_response.save();
   }
