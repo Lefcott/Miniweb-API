@@ -7,7 +7,7 @@ export default async ({ body, session }, res) => {
     await user.set_language(body);
   }
 
-  session.language_code = body.language_code;
+  session.language_code = body.code;
 
   res.json({ message: 'language updated' });
 };
