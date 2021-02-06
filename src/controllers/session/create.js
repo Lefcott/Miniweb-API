@@ -5,6 +5,7 @@ export default async ({ body, session }, res) => {
   const user = await User.authenticate(body);
 
   session.user_id = user._id;
+  session.language_code = user.language_code;
 
   user.makeSecure();
 
