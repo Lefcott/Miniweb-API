@@ -124,6 +124,16 @@ export default class User extends UserBase {
     return Project.find({ code: this.project_codes });
   }
 
+  set_language(body) {
+    this.language_code = body.language_code;
+
+    return this.save();
+  }
+
+  static is_logged_in(session) {
+    return !!session.user_id;
+  }
+
   static async getValidationError({ email }) {
     const previousUser = await User.findOne({ email });
     return previousUser && { error: 'A user with that email aleady exists', code: 'email_already_used' };
