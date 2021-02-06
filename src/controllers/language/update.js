@@ -9,5 +9,5 @@ export default async ({ body, session }, res) => {
 
   session.language_code = body.language_code;
 
-  res.status(200).json({ message: 'user created' });
+  res.json({ message: 'language updated' });
 };
