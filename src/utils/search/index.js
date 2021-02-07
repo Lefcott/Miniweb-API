@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 
-import { normalize, toAccentInsensitive } from './string';
+import { normalize, toAccentInsensitive } from '../string';
 
 export const getSearchQuery = query => {
   const { page_size, page_number, regex_fields, regex_flags } = query;
