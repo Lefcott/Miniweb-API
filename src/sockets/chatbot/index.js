@@ -1,7 +1,9 @@
 import Conversation from '../../models/Conversation';
 import { socket_io } from '../../utils/socket_io';
 
-socket_io.of('/chatbot').on(
+import { NAMESPACE } from './constants';
+
+socket_io.of(NAMESPACE).on(
   'connection',
   /** @param {import('socket.io').Socket} socket */
   async socket => {

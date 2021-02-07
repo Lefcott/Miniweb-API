@@ -37,6 +37,8 @@ export default class Intent extends IntentBase {
       const random_index = Math.floor(Math.random() * answer.possible_messages.length);
       const random_ansswer = answer.possible_messages[random_index];
 
+      random_ansswer.conversation_id = user_message.conversation_id;
+
       return random_ansswer;
     });
 

@@ -12,6 +12,9 @@ export const create_web_message = {
       then: joi.string().required(),
       otherwise: joi.forbidden()
     })
+  }),
+  query: joi.object().keys({
+    respond: joi.bool().required()
   })
 };
 
