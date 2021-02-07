@@ -1,5 +1,3 @@
-import SocketIo from 'socket.io';
-
 import rollbar from '../rollbar';
 import * as redis from '../redis';
 
@@ -7,8 +5,6 @@ import sessionMiddleware from './session';
 import moesifMiddleware from './moesif';
 
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
@@ -66,5 +62,4 @@ server.listen(port, () => {
   log(`Listening on ${port} with environment ${process.env.NODE_ENV}`);
 });
 
-export { app, router, sessionMiddleware };
-export const socketIo = SocketIo(server);
+export { app, server, router, sessionMiddleware };
