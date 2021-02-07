@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+import Message from '../shared/Message';
+import Conversation from '../Conversation';
+
 import { set_scores, get_max_score_intent } from './utils';
 
 const IntentBase = mongoose.model(
@@ -12,20 +15,7 @@ const IntentBase = mongoose.model(
       phrases: [String],
       answers: [
         {
-          possible_messages: [
-            {
-              type: { type: String, required: true }, // text | image | button_list
-              text: String,
-              image_url: String,
-              buttons: [
-                {
-                  type: String, // write | url
-                  text: String,
-                  url: String
-                }
-              ]
-            }
-          ]
+          possible_messages: [Message]
         }
       ]
     },
@@ -42,15 +32,20 @@ export default class Intent extends IntentBase {
     return this.save();
   }
 
-  get_random_answers() {
-    return this.answers.map(answer => {
+  get_random_answers(channel, user_message) {
+    const bot_messages = this.answers.map(answer => {
       const random_index = Math.floor(Math.random() * answer.possible_messages.length);
+      const random_ansswer = answer.possible_messages[random_index];
 
-      return answer.possible_messages[random_index];
+      return random_ansswer;
     });
+
+    Conversation.add_messages_to_conversation(channel, [user_message, ...bot_messages]);
+
+    return bot_messages;
   }
 
-  static async detect_from_text(project_code, channel, text) {
+  static async detect_from_text(project_code, channel, conversation_id, text) {
     const intents = await Intent.find({ project_code, channel });
 
     set_scores(intents, text);

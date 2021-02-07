@@ -4,7 +4,9 @@ export const create_web_message = {
   method: 'post',
   paths: '/projects/:project_code/web_messages',
   body: joi.object().keys({
+    from: joi.string().valid('user').default('user'),
     type: joi.string().valid('text').required(),
+    conversation_id: joi.string(),
     text: joi.when('type', {
       is: 'text',
       then: joi.string().required(),
