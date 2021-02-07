@@ -12,5 +12,5 @@ export default async ({ session, params, body }, res) => {
 
   await project.update_chatbot_configuration(body);
 
-  res.status(200).json(project.chatbot.configuration);
+  res.json(project.chatbot.configuration);
 };

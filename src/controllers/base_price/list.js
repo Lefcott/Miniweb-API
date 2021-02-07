@@ -4,5 +4,5 @@ import BasePrice from '../../models/BasePrice';
 export default async ({ query }, res) => {
   const base_prices = await BasePrice.find(query);
 
-  res.status(200).json(base_prices);
+  res.json(base_prices);
 };

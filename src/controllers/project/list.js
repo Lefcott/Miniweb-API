@@ -7,5 +7,5 @@ export default async ({ session, params }, res) => {
 
   await Promise.all(projects.map(project => project.set_configuration_sections()));
 
-  res.status(200).json(projects);
+  res.json(projects);
 };

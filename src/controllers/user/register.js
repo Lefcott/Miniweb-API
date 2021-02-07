@@ -22,5 +22,5 @@ export default async ({ body, session }, res) => {
   const email = getEmailFromTemplate('register', session.language_code, emailData);
   sendEmail('confirm', user.email, email.subject, email.text, email.html).catch(rollbar.error);
 
-  res.status(200).json({ message: 'user created' });
+  res.json({ message: 'user created' });
 };

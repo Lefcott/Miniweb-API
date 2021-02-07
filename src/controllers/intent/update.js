@@ -11,5 +11,5 @@ export default async ({ session, params, query, body }, res) => {
 
   await intent.update({ project_code: params.project_code, channel: query.channel, ...body });
 
-  res.status(200).json(intent);
+  res.json(intent);
 };

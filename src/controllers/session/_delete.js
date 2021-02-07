@@ -2,5 +2,5 @@
 export default async ({ body, session }, res) => {
   delete session.user_id;
 
-  res.status(200).json({ message: 'session deleted' });
+  res.json({ message: 'session deleted' });
 };

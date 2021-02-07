@@ -11,5 +11,5 @@ export default async ({ session, params, query, body }, res) => {
 
   await intent.save();
 
-  res.status(200).json(intent);
+  res.json(intent);
 };

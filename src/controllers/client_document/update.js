@@ -10,5 +10,5 @@ export default async ({ session, params, body }, res) => {
 
   await client_document.edit(body);
 
-  res.status(200).json({ message: `Client document ${client_document._id} updated` });
+  res.json({ message: `Client document ${client_document._id} updated` });
 };

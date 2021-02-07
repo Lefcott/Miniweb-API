@@ -4,5 +4,5 @@ import Cart from '../../models/Cart';
 export default async ({ body, params }, res) => {
   const cart = await Cart.create(body, params);
 
-  res.status(200).json(cart);
+  res.json(cart);
 };

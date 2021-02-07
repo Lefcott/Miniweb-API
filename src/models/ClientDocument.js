@@ -15,7 +15,7 @@ const ClientDocumentBase = mongoose.model(
 );
 
 export default class ClientDocument extends ClientDocumentBase {
-  serialize() {
+  sanitize() {
     return { _id: this._id, ...this.value };
   }
 

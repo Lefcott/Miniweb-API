@@ -11,5 +11,5 @@ export default async ({ session, params, query }, res) => {
     _id: -1
   });
 
-  res.status(200).json(intents);
+  res.json(intents);
 };

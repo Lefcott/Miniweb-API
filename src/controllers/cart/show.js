@@ -6,5 +6,5 @@ export default async ({ params }, res) => {
 
   if (!cart) throw new NotFoundError('cart not found');
 
-  res.status(200).json(cart);
+  res.json(cart);
 };

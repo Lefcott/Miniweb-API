@@ -21,7 +21,7 @@ const ConversationBase = mongoose.model(
 );
 
 export default class Conversation extends ConversationBase {
-  serialize() {
+  sanitize() {
     this.message_count = this.messages.length;
     this.messages = undefined;
   }

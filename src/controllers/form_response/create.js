@@ -4,5 +4,5 @@ import FormResponse from '../../models/FormResponse';
 export default async ({ body, params }, res) => {
   const result = await FormResponse.create(body, params);
 
-  res.status(200).json(result);
+  res.json(result);
 };

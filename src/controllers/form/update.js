@@ -12,5 +12,5 @@ export default async ({ session, params, body }, res) => {
 
   const result = await form.update(body);
 
-  res.status(200).json(result);
+  res.json(result);
 };

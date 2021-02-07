@@ -9,5 +9,5 @@ export default async ({ session, query, params }, res) => {
 
   const form_responses = await FormResponse.search(query, params);
 
-  res.status(200).json(form_responses.map(form_response => form_response.serialize()));
+  res.json(form_responses.map(form_response => form_response.sanitize()));
 };

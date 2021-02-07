@@ -9,5 +9,5 @@ export default async ({ body, session }, res) => {
 
   user.makeSecure();
 
-  res.status(200).json([{ user }]);
+  res.json([{ user }]);
 };

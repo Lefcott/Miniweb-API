@@ -6,5 +6,5 @@ export default async ({ body, session, params }, res) => {
 
   await user.createDevelopmentRequest(body);
 
-  res.status(200).json({ message: 'the development request was saved' });
+  res.json({ message: 'the development request was saved' });
 };

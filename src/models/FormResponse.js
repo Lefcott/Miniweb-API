@@ -19,7 +19,7 @@ const FormResponseBase = mongoose.model(
 );
 
 export default class FormResponse extends FormResponseBase {
-  serialize() {
+  sanitize() {
     return { _id: this._id, ...this.data };
   }
 

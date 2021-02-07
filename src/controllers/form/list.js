@@ -4,5 +4,5 @@ import Form from '../../models/Form';
 export default async ({ params, query }, res) => {
   const forms = await Form.find({ project_code: params.project_code, ...query });
 
-  res.status(200).json(forms);
+  res.json(forms);
 };

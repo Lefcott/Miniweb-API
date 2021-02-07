@@ -9,5 +9,5 @@ export default async ({ session, params }, res) => {
   user.validate_project_ownership(project);
   const client_models = await project.find_client_models();
 
-  res.status(200).json(client_models);
+  res.json(client_models);
 };

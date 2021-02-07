@@ -6,5 +6,5 @@ export default async ({ params }, res) => {
 
   if (!form) throw new NotFoundError('form not found');
 
-  res.status(200).json(form);
+  res.json(form);
 };

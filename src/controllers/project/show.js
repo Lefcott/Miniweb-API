@@ -6,5 +6,5 @@ export default async ({ params, query }, res) => {
 
   if (!project) throw new NotFoundError('project not found');
 
-  res.status(200).json(project);
+  res.json(project);
 };
