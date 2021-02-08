@@ -8,7 +8,7 @@ import { send_messages } from '../../utils/messages';
 export default async ({ params, body, query }, res) => {
   const [project, conversation] = await Promise.all([
     Project.find_by_code(params.project_code),
-    Conversation.find_or_create(body.conversation_id, 'web')
+    Conversation.find_or_create(params.project_code, body.conversation_id, 'web')
   ]);
 
   broadcast_messages(conversation, [body]);

@@ -3,6 +3,9 @@ import joi from '@hapi/joi';
 export const create_web_message = {
   method: 'post',
   paths: '/projects/:project_code/web_messages',
+  params: joi.object().keys({
+    project_code: joi.string().required()
+  }),
   body: joi.object().keys({
     from: joi.string().default('user'),
     type: joi.string().valid('text').required(),

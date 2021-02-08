@@ -9,6 +9,7 @@ const ConversationBase = mongoose.model(
   'Conversation',
   mongoose.Schema(
     {
+      project_code: { type: String, required: true },
       id: { type: String, required: true },
       channel: { type: String, required: true },
       active: { type: Boolean, default: true },
@@ -27,11 +28,12 @@ export default class Conversation extends ConversationBase {
     this.messages = undefined;
   }
 
-  static async find_or_create(id, channel) {
-    let conversation = await Conversation.findOne({ id });
+  static async find_or_create(project_code, id, channel) {
+    let conversation = await Conversation.findOne({ project_code, id, channel });
 
     if (!conversation) {
       conversation = new Conversation({
+        project_code,
         id: id || uuid(),
         channel,
         messages: []
