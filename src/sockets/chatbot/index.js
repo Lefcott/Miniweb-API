@@ -14,7 +14,7 @@ socket_io.of(NAMESPACE).on(
     socket.join(conversation_id);
 
     if (officer) {
-      const conversation = await Conversation.find({ project_code, id: conversation_id });
+      const conversation = await Conversation.findOne({ project_code, id: conversation_id });
 
       ({ channel } = conversation);
       Conversation.add_officer(conversation, officer);
