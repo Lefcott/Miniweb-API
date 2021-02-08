@@ -14,7 +14,7 @@ export default async ({ params, body }, res) => {
   const user_message = map_user_message(body);
   const [project, conversation] = await Promise.all([
     Project.findOne({ code: params.project_code }),
-    Conversation.find_or_create(user_message.conversation_id, 'web')
+    Conversation.find_or_create(user_message.conversation_id, 'facebook')
   ]);
 
   if (!project) throw new NotFoundError('project not found');
