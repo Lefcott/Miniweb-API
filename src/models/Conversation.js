@@ -12,6 +12,7 @@ const ConversationBase = mongoose.model(
       id: { type: String, required: true },
       channel: { type: String, required: true },
       active: { type: Boolean, default: true },
+      officers: [{ name: String }],
       message_count: Number,
       messages: [Message],
       createdAt: { type: Date, default: Date.now }
@@ -44,6 +45,14 @@ export default class Conversation extends ConversationBase {
     const conversation = await this.find_or_create(conversation_id, channel);
 
     conversation.messages.push(...messages);
+
+    return conversation.save();
+  }
+
+  static async add_officer(id, officer) {
+    const conversation = await Conversation.findOne({ id });
+
+    conversation.officers.push(officer);
 
     return conversation.save();
   }

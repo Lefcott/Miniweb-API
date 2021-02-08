@@ -1,13 +1,13 @@
-export const get_user_data = body => {
+export const map_user_message = body => {
   const [data] = body.entry[0].messaging;
-  const sender_id = data.sender.id;
+  const conversation_id = data.sender.id;
   const text =
     (data.message && data.message.quick_reply && data.message.quick_reply.payload) ||
     (data.message && data.message.text) ||
     (data.postback && data.postback.payload) ||
     '';
 
-  return { sender_id, text };
+  return { conversation_id, type: 'text', text };
 };
 
 export const get_request_body = (sender_id, answer) => {

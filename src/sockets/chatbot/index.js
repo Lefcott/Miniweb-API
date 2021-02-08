@@ -8,13 +8,19 @@ socket_io.of(NAMESPACE).on(
   /** @param {import('socket.io').Socket} socket */
   async socket => {
     const { conversation_id } = socket.handshake.query;
+    const officer = socket.handshake.query.officer ? JSON.parse(socket.handshake.query.officer) : null;
 
     socket.join(conversation_id);
+
+    if (officer) Conversation.add_officer(conversation_id, officer);
 
     socket.on('disconnect', async () => {
       const conversation = await Conversation.find_or_create(conversation_id, 'web');
 
-      conversation.active = false;
+      if (officer) {
+        conversation.officers = conversation.officers.filter(_officer => `${_officer._id}` !== officer._id);
+      } else conversation.active = false;
+
       conversation.save();
     });
   }

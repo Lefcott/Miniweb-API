@@ -32,7 +32,8 @@ export default class Intent extends IntentBase {
     return this.save();
   }
 
-  get_random_answers(channel, user_message) {
+  async get_random_answers(channel, user_message) {
+    const { conversation_id } = user_message;
     const bot_messages = this.answers.map(answer => {
       const random_index = Math.floor(Math.random() * answer.possible_messages.length);
       const random_ansswer = answer.possible_messages[random_index];
@@ -41,6 +42,12 @@ export default class Intent extends IntentBase {
 
       return random_ansswer;
     });
+    const conversation = await Conversation.find_or_create(conversation_id, channel);
+
+    if (conversation.officers.length) {
+      Conversation.add_messages_to_conversation(channel, [user_message]);
+      return [];
+    }
 
     Conversation.add_messages_to_conversation(channel, [user_message, ...bot_messages]);
 
