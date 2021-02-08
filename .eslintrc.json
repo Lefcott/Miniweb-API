@@ -21,6 +21,7 @@
   "globals": {
     "globalThis": "readonly",
     "log": "readonly",
+    "InternalError": "readonly",
     "AuthorizationError": "readonly",
     "AuthenticationError": "readonly",
     "SessionError": "readonly",
@@ -87,6 +88,7 @@
     "import/namespace": "off",
     "import/no-absolute-path": "error",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "no-await-in-loop": "off",
     "jsx-a11y/anchor-is-valid": [
       "error",
       {

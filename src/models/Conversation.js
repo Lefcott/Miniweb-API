@@ -35,26 +35,17 @@ export default class Conversation extends ConversationBase {
         id: id || uuid(),
         channel,
         messages: []
-      });
+      }).save();
     }
     return conversation;
   }
 
-  static async add_messages_to_conversation(channel, messages = []) {
-    const [{ conversation_id }] = messages;
-    const conversation = await this.find_or_create(conversation_id, channel);
-
-    conversation.messages.push(...messages);
-
-    return conversation.save();
+  static async add_messages_to_conversation(conversation, messages = []) {
+    return Conversation.updateOne({ _id: conversation._id }, { $push: { messages } });
   }
 
   static async add_officer(id, officer) {
-    const conversation = await Conversation.findOne({ id });
-
-    conversation.officers.push(officer);
-
-    return conversation.save();
+    return Conversation.updateOne({ id }, { $push: { officers: officer } });
   }
 
   static search(query) {
