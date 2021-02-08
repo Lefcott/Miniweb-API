@@ -21,7 +21,9 @@ socket_io.of(NAMESPACE).on(
     }
 
     socket.on('disconnect', async () => {
-      const conversation = await Conversation.find_or_create(project_code, conversation_id, channel);
+      const conversation = await Conversation.findOne({ project_code, id: conversation_id, channel });
+
+      if (!conversation) return;
 
       if (officer) {
         conversation.officers = conversation.officers.filter(_officer => `${_officer._id}` !== officer._id);
