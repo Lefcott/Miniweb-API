@@ -9,13 +9,19 @@ socket_io.of(NAMESPACE).on(
   async socket => {
     const { project_code, conversation_id } = socket.handshake.query;
     const officer = socket.handshake.query.officer ? JSON.parse(socket.handshake.query.officer) : null;
+    let channel = 'web';
 
     socket.join(conversation_id);
 
-    if (officer) Conversation.add_officer(conversation_id, officer);
+    if (officer) {
+      const conversation = await Conversation.find({ project_code, id: conversation_id });
+
+      ({ channel } = conversation);
+      Conversation.add_officer(conversation, officer);
+    }
 
     socket.on('disconnect', async () => {
-      const conversation = await Conversation.find_or_create(project_code, conversation_id, 'web');
+      const conversation = await Conversation.find_or_create(project_code, conversation_id, channel);
 
       if (officer) {
         conversation.officers = conversation.officers.filter(_officer => `${_officer._id}` !== officer._id);

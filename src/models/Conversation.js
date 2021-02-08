@@ -46,8 +46,10 @@ export default class Conversation extends ConversationBase {
     return Conversation.updateOne({ _id: conversation._id }, { $push: { messages } });
   }
 
-  static async add_officer(id, officer) {
-    return Conversation.updateOne({ id }, { $push: { officers: officer } });
+  static async add_officer(conversation, officer) {
+    if (conversation.officers.filter(_officer => _officer._id === officer._id).length) return;
+
+    return Conversation.updateOne({ _id: conversation._id }, { $push: { officers: officer } });
   }
 
   static search(query) {

@@ -22,7 +22,6 @@ export default async ({ params, body }, res) => {
     throw new AuthorizationError(`facebook is not enabled for project ${params.project_code}`);
   res.send('OK');
 
-  log('user_message', user_message);
   broadcast_messages(conversation, [user_message]);
 
   const { message_token } = project.chatbot.configuration.facebook.authentication;
