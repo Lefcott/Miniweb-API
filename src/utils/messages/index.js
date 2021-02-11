@@ -3,6 +3,7 @@ import axios from 'axios';
 import broadcast_messages from '../../sockets/chatbot/outgoing_events/broadcast_messages';
 
 import { send_facebook_messages } from './facebook';
+import { send_telegram_messages } from './telegram';
 
 export const send_messages = async (project, conversation, messages) => {
   broadcast_messages(conversation, messages);

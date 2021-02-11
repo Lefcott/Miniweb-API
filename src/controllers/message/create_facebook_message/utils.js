@@ -1,53 +1,19 @@
+const get_text = body => {
+  const [data] = body.entry[0].messaging;
+
+  return (
+    (data.message && data.message.quick_reply && data.message.quick_reply.payload) ||
+    (data.message && data.message.text) ||
+    (data.postback && data.postback.payload)
+  );
+};
+
+export const validate_message = body => !!get_text(body);
+
 export const map_user_message = body => {
   const [data] = body.entry[0].messaging;
   const conversation_id = data.sender.id;
-  const text =
-    (data.message && data.message.quick_reply && data.message.quick_reply.payload) ||
-    (data.message && data.message.text) ||
-    (data.postback && data.postback.payload) ||
-    '';
+  const text = get_text(body);
 
   return { conversation_id, type: 'text', text };
-};
-
-export const get_request_body = (sender_id, answer) => {
-  let message;
-
-  switch (answer.type) {
-    case 'text':
-      message = { text: answer.text };
-      break;
-    case 'button_list':
-      message = {
-        attachment: {
-          type: 'template',
-          payload: {
-            template_type: 'button',
-            text: answer.text,
-            buttons: answer.buttons.map(button => ({
-              type: button.type === 'write' ? 'postback' : 'web_url',
-              url: button.type === 'write' ? undefined : button.url,
-              payload: button.type === 'write' ? button.text : undefined,
-              title: button.text
-            }))
-          }
-        }
-      };
-      break;
-    case 'image':
-      message = {
-        attachment: {
-          type: 'image',
-          payload: {
-            url: answer.image_url,
-            is_reusable: true
-          }
-        }
-      };
-      break;
-    default:
-      return null;
-  }
-
-  return { messaging_type: 'RESPONSE', recipient: { id: sender_id }, message };
 };
