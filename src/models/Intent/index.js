@@ -54,7 +54,7 @@ export default class Intent extends IntentBase {
     const choosen_intent = get_max_score_intent(intents);
 
     if (!choosen_intent)
-      throw new Error(`intent not found, text: ${text}, channel: ${channel}, project code: ${project_code}`);
+      throw new InternalError('intent not found', { project_code, channel, conversation_id, text });
 
     return choosen_intent;
   }
