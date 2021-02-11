@@ -13,6 +13,8 @@ import { validate_message, map_user_message } from './utils';
 export default async ({ params, body }, res) => {
   if (!validate_message(body)) return res.send('OK');
   const user_message = map_user_message(body);
+  log('body', body);
+  log('user_message', user_message);
   const [project, conversation] = await Promise.all([
     Project.findOne({ code: params.project_code }),
     Conversation.find_or_create(params.project_code, user_message.conversation_id, 'telegram')
