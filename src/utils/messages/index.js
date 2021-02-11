@@ -15,6 +15,9 @@ export const send_messages = async (project, conversation, messages) => {
     case 'facebook':
       await send_facebook_messages(project, conversation, messages);
       break;
+    case 'telegram':
+      await send_telegram_messages(project, conversation, messages);
+      break;
     default:
       throw new InternalError(`invalid channel ${conversation.channel}`, { project, conversation, messages });
   }
