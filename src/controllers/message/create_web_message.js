@@ -15,7 +15,7 @@ export default async ({ params, body, query }, res) => {
 
   if (!query.respond) return res.json({ message: 'response was skipped' });
 
-  const intent = await Intent.detect_from_text(params.project_code, 'web', body.conversation_id, body.text);
+  const intent = await Intent.detect_from_text(params.project_code, 'web', body.text);
   const messages = await intent.get_random_messages('web', conversation, body);
 
   send_messages(project, conversation, messages);

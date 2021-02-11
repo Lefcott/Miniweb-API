@@ -46,15 +46,14 @@ export default class Intent extends IntentBase {
     return conversation.officers.length ? [] : bot_messages;
   }
 
-  static async detect_from_text(project_code, channel, conversation_id, text) {
+  static async detect_from_text(project_code, channel, text) {
     const intents = await Intent.find({ project_code, channel });
 
     set_scores(intents, text);
 
     const choosen_intent = get_max_score_intent(intents);
 
-    if (!choosen_intent)
-      throw new InternalError('intent not found', { project_code, channel, conversation_id, text });
+    if (!choosen_intent) throw new InternalError('intent not found', { project_code, channel, text });
 
     return choosen_intent;
   }
