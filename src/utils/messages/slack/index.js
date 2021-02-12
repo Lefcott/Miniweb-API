@@ -7,7 +7,7 @@ import { send_image_message } from './image';
 import { send_button_list_message } from './button_list';
 
 export const send_slack_messages = async (project, conversation, messages) => {
-  const { message_token } = project.chatbot.configuration.telegram.authentication;
+  const { message_token } = project.chatbot.configuration.slack.authentication;
 
   const headers = {
     'Content-type': 'application/json',
