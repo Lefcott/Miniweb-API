@@ -1,6 +1,6 @@
 export const validate_message = body => {
   if (body.type !== 'event_callback' || body.subtype) return false;
-  if (body.event.type !== 'message' || !body.event.text) return false;
+  if (body.event.type !== 'message' || !body.event.text || body.event.bot_id) return false;
   return true;
 };
 
