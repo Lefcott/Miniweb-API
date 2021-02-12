@@ -4,6 +4,7 @@ import broadcast_messages from '../../sockets/chatbot/outgoing_events/broadcast_
 
 import { send_facebook_messages } from './facebook';
 import { send_telegram_messages } from './telegram';
+import { send_slack_messages } from './slack';
 
 export const send_messages = async (project, conversation, messages) => {
   broadcast_messages(conversation, messages);
@@ -17,6 +18,9 @@ export const send_messages = async (project, conversation, messages) => {
       break;
     case 'telegram':
       await send_telegram_messages(project, conversation, messages);
+      break;
+    case 'slack':
+      await send_slack_messages(project, conversation, messages);
       break;
     default:
       throw new InternalError(`invalid channel ${conversation.channel}`, { project, conversation, messages });
