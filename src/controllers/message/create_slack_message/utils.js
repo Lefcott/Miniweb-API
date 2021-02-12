@@ -5,8 +5,7 @@ export const validate_message = body => {
 };
 
 export const map_user_message = body => {
-  const { text, user, team } = body.event;
-  const conversation_id = `${team}/${user}`;
+  const { text, channel: conversation_id } = body.event;
 
   return { conversation_id, type: 'text', text };
 };

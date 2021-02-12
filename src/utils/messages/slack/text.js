@@ -4,7 +4,7 @@ import { BASE_URL } from './constants';
 
 export const send_text_message = (headers, conversation, message) => {
   const body = {
-    channel: conversation.id.split(':')[1],
+    channel: conversation.id,
     text: message.text,
     parse_mode: 'Markdown'
   };
