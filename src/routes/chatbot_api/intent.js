@@ -2,7 +2,7 @@ import joi from '@hapi/joi';
 
 import { sessionMiddleware } from '../../utils/middlewares';
 
-const channels = ['web', 'facebook', 'telegram'];
+const channels = ['web', 'facebook', 'telegram', 'slack'];
 const message_types = ['text', 'image'];
 
 export const list = {
