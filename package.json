@@ -21,6 +21,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
+    "discord.io": "^2.5.3",
     "dotenv": "^8.2.0",
     "error-stack-parser": "^2.0.6",
     "eslint-config-airbnb": "^18.2.1",
