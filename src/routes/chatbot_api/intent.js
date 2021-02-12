@@ -36,6 +36,7 @@ export const create = {
         joi.object().keys({
           possible_messages: joi.array().items(
             joi.object().keys({
+              from: joi.string(),
               type: joi.string().valid(...message_types),
               text: joi.string(),
               buttons: joi.array().items(
@@ -82,6 +83,7 @@ export const update = {
           possible_messages: joi.array().items(
             joi.object().keys({
               _id: joi.string(),
+              from: joi.string(),
               type: joi.string().valid(...message_types),
               text: joi.string(),
               image_url: joi.string()
