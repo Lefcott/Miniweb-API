@@ -7,7 +7,7 @@ import { send_image_message } from './image';
 import { send_button_list_message } from './button_list';
 
 export const send_line_messages = async (project, conversation, messages) => {
-  const { message_token } = project.chatbot.configuration.viber.authentication;
+  const { message_token } = project.chatbot.configuration.line.authentication;
   const headers = { Authorization: `Bearer ${message_token}` };
 
   for (const message of messages) {
@@ -22,7 +22,7 @@ export const send_line_messages = async (project, conversation, messages) => {
         await send_button_list_message(headers, conversation, message);
         break;
       default:
-        rollbar.warn(`invalid viber message type\n${JSON.stringify(message, null, 2)}`);
+        rollbar.warn(`invalid line message type\n${JSON.stringify(message, null, 2)}`);
     }
   }
 };
