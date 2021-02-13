@@ -7,12 +7,12 @@ import Project from '../../../models/Project';
 import broadcast_messages from '../../../sockets/chatbot/outgoing_events/broadcast_messages';
 import { send_messages } from '../../../utils/messages';
 
-import { validate_message, map_user_message } from './utils';
+import { validate_message, map_user_messages } from './utils';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ params, body }, res) => {
   if (!validate_message(body)) return res.send('OK');
-  const user_messages = map_user_message(body);
+  const user_messages = map_user_messages(body);
   const [project, conversation] = await Promise.all([
     Project.findOne({ code: params.project_code }),
     Conversation.find_or_create(params.project_code, user_messages[0].conversation_id, 'line')
