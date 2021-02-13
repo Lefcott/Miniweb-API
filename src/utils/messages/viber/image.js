@@ -7,6 +7,7 @@ export const send_image_message = (headers, sender, conversation, message) => {
     receiver: conversation.id,
     sender,
     type: 'picture',
+    text: message.text,
     media: message.image_url
   };
 
