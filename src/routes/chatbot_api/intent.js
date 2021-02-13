@@ -3,7 +3,7 @@ import joi from '@hapi/joi';
 import { sessionMiddleware } from '../../utils/middlewares';
 
 const channels = ['web', 'facebook', 'telegram', 'slack', 'viber'];
-const message_types = ['text', 'image'];
+const message_types = ['text', 'image', 'button_list'];
 
 export const list = {
   method: 'get',
@@ -66,8 +66,6 @@ export const update = {
       .required()
   }),
   body: joi.object().keys({
-    _id: joi.string(),
-    __v: joi.number(),
     project_code: joi.string().required(),
     channel: joi
       .string()
@@ -82,17 +80,23 @@ export const update = {
           _id: joi.string(),
           possible_messages: joi.array().items(
             joi.object().keys({
-              _id: joi.string(),
-              from: joi.string(),
               type: joi.string().valid(...message_types),
               text: joi.string(),
-              image_url: joi.string()
+              image_url: joi.string(),
+              buttons: joi.array().items(
+                joi.object().keys({
+                  type: joi.string().valid('write', 'url').required(),
+                  text: joi.string(),
+                  url: joi.string()
+                })
+              )
             })
           )
         })
       )
       .required()
-  })
+  }),
+  options: { allowUnknown: true }
 };
 
 export const _delete = {
