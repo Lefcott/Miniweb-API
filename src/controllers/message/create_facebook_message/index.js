@@ -6,9 +6,8 @@ import Conversation from '../../../models/Conversation';
 import Project from '../../../models/Project';
 import broadcast_messages from '../../../sockets/chatbot/outgoing_events/broadcast_messages';
 import { send_messages } from '../../../utils/messages';
-import { validate_message } from '../create_telegram_message/utils';
 
-import { map_user_message } from './utils';
+import { validate_message, map_user_message } from './utils';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ params, body }, res) => {
