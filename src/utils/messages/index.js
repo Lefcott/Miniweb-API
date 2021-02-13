@@ -28,7 +28,7 @@ export const send_messages = async (project, conversation, messages) => {
       await send_viber_messages(project, conversation, messages);
       break;
     case 'line':
-      await send_viber_messages(project, conversation, messages);
+      await send_line_messages(project, conversation, messages);
       break;
     default:
       throw new InternalError(`invalid channel ${conversation.channel}`, { project, conversation, messages });
