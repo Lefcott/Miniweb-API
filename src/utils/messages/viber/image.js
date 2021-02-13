@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-export const send_image_message = (base_url, conversation, message) => {
+import { URL } from './constants';
+
+export const send_image_message = (headers, sender, conversation, message) => {
   const body = {
-    chat_id: conversation.id,
-    caption: message.text,
-    photo: message.image_url,
-    parse_mode: 'Markdown'
+    receiver: conversation.id,
+    sender,
+    type: 'picture',
+    media: message.image_url
   };
 
-  return axios.post(`${base_url}/sendPhoto`, body);
+  return axios.post(URL, body, { headers });
 };
