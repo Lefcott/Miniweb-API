@@ -12,7 +12,7 @@ import { validate_message, map_user_message } from './utils';
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ params, body }, res) => {
   if (body.type === 'url_verification') return res.send(body.challenge);
-  if (!validate_message(body)) return res.send('OK');
+  if (!validate_message(body)) return res.send('skipping messages');
   const user_message = map_user_message(body);
   const [project, conversation] = await Promise.all([
     Project.findOne({ code: params.project_code }),
