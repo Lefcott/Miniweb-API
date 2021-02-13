@@ -6,7 +6,7 @@ import { send_text_message } from './text';
 import { send_image_message } from './image';
 import { send_button_list_message } from './button_list';
 
-export const send_telegram_messages = async (project, conversation, messages) => {
+export const send_viber_messages = async (project, conversation, messages) => {
   const { bot_name } = project.chatbot.configuration.viber;
   const { message_token } = project.chatbot.configuration.viber.authentication;
   const headers = { 'X-Viber-Auth-Token': message_token };
