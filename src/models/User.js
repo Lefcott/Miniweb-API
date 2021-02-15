@@ -25,6 +25,7 @@ const UserBase = mongoose.model(
     {
       name: { type: String, required: true },
       surname: { type: String, required: true },
+      admin: { type: Boolean, default: false },
       phone: String,
       language_code: { type: String, default: 'es' },
       email: { type: String, required: true },
@@ -103,6 +104,7 @@ export default class User extends UserBase {
   }
 
   async validate_client_document_ownership(client_document) {
+    if (!this.admin) throw new AuthorizationError(`user ${this._id} is not admin`);
     const projects = await this.find_projects();
     const table_names = [...new Set(projects.map(project => project.table_names).flat())];
 
@@ -114,6 +116,7 @@ export default class User extends UserBase {
   }
 
   validate_project_ownership(project = {}, project_code) {
+    if (!this.admin) throw new AuthorizationError(`user ${this._id} is not admin`);
     if (!this.project_codes.includes(project.code) && !this.project_codes.includes(project_code))
       throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`, {
         project
