@@ -15,10 +15,9 @@ const ConversationBase = mongoose.model(
       active: { type: Boolean, default: true },
       officers: [{ name: String }],
       message_count: Number,
-      messages: [Message],
-      createdAt: { type: Date, default: Date.now }
+      messages: [Message]
     },
-    { collection: 'conversations' }
+    { collection: 'conversations', timestamps: true }
   )
 );
 
@@ -59,6 +58,6 @@ export default class Conversation extends ConversationBase {
     return Conversation.find(searchQuery)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
-      .sort({ _id: -1 });
+      .sort({ updatedAt: -1 });
   }
 }
