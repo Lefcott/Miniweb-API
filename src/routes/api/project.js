@@ -8,9 +8,9 @@ export const show = {
   params: joi.object().keys({
     project_code_or_token: joi.string().required()
   }),
-  query: {
+  query: joi.object().keys({
     search_by_project_token: joi.bool().default(false)
-  }
+  })
 };
 
 export const list = {
