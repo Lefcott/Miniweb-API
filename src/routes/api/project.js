@@ -5,12 +5,12 @@ import { sessionMiddleware } from '../../utils/middlewares';
 export const show = {
   method: 'get',
   paths: '/projects/:project_code_or_token',
+  params: joi.object().keys({
+    project_code_or_token: joi.string().required()
+  }),
   query: {
     search_by_project_token: joi.bool().default(false)
-  },
-  params: joi.object().keys({
-    search_by_project_token: joi.string().required()
-  })
+  }
 };
 
 export const list = {
