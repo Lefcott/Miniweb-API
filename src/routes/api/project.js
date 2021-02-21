@@ -4,7 +4,10 @@ import { sessionMiddleware } from '../../utils/middlewares';
 
 export const show = {
   method: 'get',
-  paths: '/projects/:project_code',
+  paths: '/projects/:project_code_or_token',
+  query: {
+    search_by_project_token: joi.bool().default(false)
+  },
   params: joi.object().keys({
     project_code: joi.string().required()
   })

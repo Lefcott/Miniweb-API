@@ -9,6 +9,7 @@ const ProjectBase = mongoose.model(
   mongoose.Schema(
     {
       code: { type: String, required: true },
+      token: String,
       name: { type: String, required: true },
       base_url: { type: String, required: true },
       language_code: { type: String, required: true }, // es | en
