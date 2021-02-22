@@ -37,7 +37,8 @@ const ProjectBase = mongoose.model(
       chatbot: {
         enabled_channels: [String],
         configuration: {}
-      }
+      },
+      widgets: {}
     },
     { collection: 'projects', minimize: false }
   )
@@ -46,6 +47,12 @@ const ProjectBase = mongoose.model(
 export default class Project extends ProjectBase {
   update_configuration(body) {
     this.configuration = body;
+
+    return this.save();
+  }
+
+  update_widgets(body) {
+    this.widgets = body;
 
     return this.save();
   }

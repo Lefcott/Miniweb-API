@@ -29,6 +29,16 @@ export const update_configuration = {
   body: joi.object().required()
 };
 
+export const update_widgets = {
+  method: 'put',
+  paths: '/projects/:project_id/widgets',
+  middlewares: sessionMiddleware,
+  params: joi.object().keys({
+    project_id: joi.string().required()
+  }),
+  body: joi.object().required()
+};
+
 export const update_chatbot_configuration = {
   method: 'put',
   paths: '/projects/:project_id/chatbot_configuration',
