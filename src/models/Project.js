@@ -36,6 +36,7 @@ const ProjectBase = mongoose.model(
       },
       chatbot: {
         enabled_channels: [String],
+        enabled_origins: [String],
         configuration: {}
       },
       widgets: {}
