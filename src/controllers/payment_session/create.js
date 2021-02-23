@@ -16,9 +16,9 @@ export default async ({ body, params }, res) => {
     line_items: [
       {
         price_data: {
-          currency: 'usd',
+          currency: product.currency,
           product_data: { name: body.product_name, images: product.images },
-          unit_amount: product.price
+          unit_amount: product.price * 100
         },
         quantity: 1
       }
