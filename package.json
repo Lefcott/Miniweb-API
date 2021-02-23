@@ -39,6 +39,7 @@
     "similar-words": "^1.3.1",
     "socket.io": "^3.0.4",
     "socket.io-redis": "^6.0.1",
+    "stripe": "^8.137.0",
     "url": "^0.11.0",
     "uuid": "^8.3.2"
   },

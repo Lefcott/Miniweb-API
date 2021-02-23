@@ -7,7 +7,7 @@ export default async ({ session, params }, res) => {
 
   const client_document = await ClientDocument.findOne({ _id: params.client_document_id });
 
-  if (!client_document) res.json({ message: 'Client document already deleted' });
+  if (!client_document) return res.json({ message: 'Client document already deleted' });
 
   await user.validate_client_document_ownership(client_document);
 

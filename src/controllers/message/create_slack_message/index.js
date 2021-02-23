@@ -15,11 +15,10 @@ export default async ({ params, body }, res) => {
   if (!validate_message(body)) return res.send('skipping messages');
   const user_message = map_user_message(body);
   const [project, conversation] = await Promise.all([
-    Project.findOne({ code: params.project_code }),
+    Project.find_by_code(params.project_code),
     Conversation.find_or_create(params.project_code, user_message.conversation_id, 'slack')
   ]);
 
-  if (!project) throw new NotFoundError('project not found');
   if (!project.chatbot.enabled_channels.includes('slack'))
     throw new AuthorizationError(`slack is not enabled for project ${params.project_code}`);
   res.send('OK');

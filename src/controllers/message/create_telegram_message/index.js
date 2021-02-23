@@ -14,15 +14,12 @@ export default async ({ params, body }, res) => {
   if (!validate_message(body)) return res.send('skipping messages');
   const user_message = map_user_message(body);
   const [project, conversation] = await Promise.all([
-    Project.findOne({ code: params.project_code }),
+    Project.find_by_code(params.project_code),
     Conversation.find_or_create(params.project_code, user_message.conversation_id, 'telegram')
   ]);
 
-  if (!project) throw new NotFoundError('project not found');
-  if (!project.chatbot.enabled_channels.includes('telegram'))
-    throw new AuthorizationError(`telegram is not enabled for project ${params.project_code}`);
+  project.validate_channel('telegram');
   res.send('OK');
-
   broadcast_messages(conversation, [user_message]);
 
   const intent = await Intent.detect_from_text(params.project_code, 'telegram', user_message.text);

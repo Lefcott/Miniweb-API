@@ -11,6 +11,7 @@ export default async ({ params, body, query }, res) => {
     Conversation.find_or_create(params.project_code, body.conversation_id, body.channel)
   ]);
 
+  project.validate_channel('web');
   send_messages(project, conversation, [body]);
 
   if (!query.respond) return res.json({ message: 'response was skipped' });

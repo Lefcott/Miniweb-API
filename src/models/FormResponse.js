@@ -43,7 +43,6 @@ export default class FormResponse extends FormResponseBase {
     const project = await Project.find_by_code(params.project_code);
     const form = await Form.findOne({ project_code: params.project_code, code: params.form_code });
 
-    if (!project) throw new NotFoundError('project not found');
     if (!form) throw new NotFoundError('form not found');
 
     const additional_data = cart ? { cart_link: `${project.base_url}/carts/${cart._id}` } : {};

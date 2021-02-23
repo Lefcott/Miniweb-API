@@ -15,15 +15,12 @@ export default async ({ params, body }, res) => {
   const user_message = map_user_message(body);
   log('user_message', user_message);
   const [project, conversation] = await Promise.all([
-    Project.findOne({ code: params.project_code }),
+    Project.find_by_code(params.project_code),
     Conversation.find_or_create(params.project_code, user_message.conversation_id, 'facebook')
   ]);
 
-  if (!project) throw new NotFoundError('project not found');
-  if (!project.chatbot.enabled_channels.includes('facebook'))
-    throw new AuthorizationError(`facebook is not enabled for project ${params.project_code}`);
+  project.validate_channel('facebook');
   res.send('OK');
-
   broadcast_messages(conversation, [user_message]);
 
   const intent = await Intent.detect_from_text(params.project_code, 'facebook', user_message.text);

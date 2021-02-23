@@ -39,13 +39,24 @@ const ProjectBase = mongoose.model(
         enabled_origins: [String],
         configuration: {}
       },
-      widgets: {}
+      widgets: {},
+      ecommerce: {
+        stripe: {
+          publishable_key: String,
+          secret_key: String
+        }
+      }
     },
     { collection: 'projects', minimize: false }
   )
 );
 
 export default class Project extends ProjectBase {
+  validate_channel(channel) {
+    if (!this.chatbot.enabled_channels.includes(channel))
+      throw new AuthorizationError(`${channel} is not enabled for project ${this.code}`);
+  }
+
   update_configuration(body) {
     this.configuration = body;
 
