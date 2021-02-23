@@ -9,7 +9,7 @@ export default async ({ body, params }, res) => {
   const product = await Product.find_by_id(params.product_id);
   const project = await Project.find_by_code(product.project_code);
 
-  const stripe = new Stripe(project.ecommerce.stripe.publishable_key);
+  const stripe = new Stripe(project.ecommerce.stripe.secret_key);
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
