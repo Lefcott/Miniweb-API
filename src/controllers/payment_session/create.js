@@ -18,7 +18,7 @@ export default async ({ body, params }, res) => {
         price_data: {
           currency: 'usd',
           product_data: { name: product.name, images: product.images },
-          unit_amount: 2000
+          unit_amount: product.price
         },
         quantity: 1
       }
