@@ -7,7 +7,8 @@ const ProductBase = mongoose.model(
     category: { type: String, required: true },
     code: { type: String, required: true },
     price: { type: Number, required: true },
-    currency: { type: String, required: true }
+    currency: { type: String, required: true },
+    images: [String]
   })
 );
 
