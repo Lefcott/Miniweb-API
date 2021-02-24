@@ -2,7 +2,7 @@ import joi from '@hapi/joi';
 
 import { sessionMiddleware } from '../../utils/middlewares';
 
-export const register = {
+export const create = {
   method: 'post',
   paths: '/users',
   middlewares: sessionMiddleware,
