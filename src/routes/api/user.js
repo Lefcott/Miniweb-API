@@ -7,11 +7,11 @@ export const create = {
   paths: '/users',
   middlewares: sessionMiddleware,
   body: joi.object().keys({
-    name: joi.string().required(),
-    surname: joi.string().required(),
-    phone: joi.number().required(),
+    login_type: joi.string().valid('email').required(),
+    redirect_to: joi.string().required(),
     email: joi.string().email().required(),
-    password: joi.string().required()
+    password: joi.string().required(),
+    data: joi.object().required()
   })
 };
 
