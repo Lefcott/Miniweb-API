@@ -1,8 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
-import { getEmailFromTemplate, sendEmail } from '../utils/emails';
-
 import Project from './Project';
 import FormResponse from './FormResponse';
 

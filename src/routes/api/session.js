@@ -10,8 +10,11 @@ export const _delete = {
 
 export const create = {
   method: 'post',
-  paths: '/sessions',
+  paths: '/projects/:project_code/sessions',
   middlewares: sessionMiddleware,
+  params: joi.object().keys({
+    project_code: joi.string().required()
+  }),
   body: joi.object().keys({
     email: joi.string().required(),
     password: joi.string().required()

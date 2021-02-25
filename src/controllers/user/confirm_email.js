@@ -5,9 +5,9 @@ export default async ({ query, session }, res) => {
   const user = await User.findOne({ email_confirmation_token: query.token });
 
   if (user) {
-    await user.confirmEmail();
+    await user.confirm_email();
     session.user_id = user._id;
   }
 
-  res.redirect(`${process.env.DASHBOARD_URL}/request_development`);
+  res.redirect(user.email_confirmation_redirect);
 };

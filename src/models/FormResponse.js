@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { getEmailFromTemplate, sendEmail } from '../utils/emails';
+import { get_email_from_template, send_email } from '../utils/emails';
 import { getSearchQuery } from '../utils/search';
 
 import Project from './Project';
@@ -29,14 +29,14 @@ export default class FormResponse extends FormResponseBase {
       client_data: this.form.fields.map(field => ({ key: field.name, value: this.data[field.key] })),
       ...additional_data
     };
-    const { subject, text, html } = getEmailFromTemplate(
+    const { subject, text, html } = get_email_from_template(
       this.form.notifications.email_code,
       this.project.language_code,
       data
     );
     const [from, to] = ['notifications', this.form.notifications.emails];
 
-    sendEmail(from, to, subject, text, html, data);
+    send_email(from, to, subject, text, html, data);
   }
 
   static async create(data, params, cart) {

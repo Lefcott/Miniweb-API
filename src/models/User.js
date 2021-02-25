@@ -23,9 +23,10 @@ const UserBase = mongoose.model(
   'User',
   mongoose.Schema(
     {
-      name: { type: String, required: true },
-      surname: { type: String, required: true },
+      name: String,
+      surname: String,
       admin: { type: Boolean, default: false },
+      email_confirmation_redirect: String,
       phone: String,
       language_code: { type: String, default: 'es' },
       email: { type: String, required: true },
@@ -56,16 +57,18 @@ const UserBase = mongoose.model(
           ],
           fields: [Field]
         }
-      ]
+      ],
+      data: {}
     },
     { collection: 'users' }
   )
 );
 
 export default class User extends UserBase {
-  confirmEmail() {
-    this.email_confirmation_token = null;
+  confirm_email() {
     this.email_confirmed = true;
+    this.email_confirmation_token = null;
+    this.email_confirmation_redirect = null;
     return this.save();
   }
 
@@ -137,34 +140,35 @@ export default class User extends UserBase {
     return !!session.user_id;
   }
 
-  static async getValidationError({ email }) {
-    const previousUser = await User.findOne({ email });
-    return previousUser && { error: 'A user with that email aleady exists', code: 'email_already_used' };
+  static async validate_creation(params, { email }) {
+    const search = {
+      project_code: { $in: [params.project_code, 'all'] },
+      email
+    };
+    const previous_user = await User.findOne(search);
+
+    if (previous_user) throw new ValidationError('user with given email aleady exists', { previous_user });
   }
 
-  static async register(data) {
+  static async create(body) {
     return new User({
-      name: data.name,
-      surname: data.surname,
-      phone: data.phone,
-      email: data.email,
-      password: await hash(data.password)
+      login_type: body.login_type,
+      email_confirmation_redirect: body.email_confirmation_redirect,
+      email: body.email,
+      password: body.password && (await hash(body.password)),
+      data: body.data
     }).save();
   }
 
-  static async authenticate({ email, password }) {
+  static async authenticate(params, body) {
     const user = await User.findOne({
-      $or: [
-        {
-          email: email.toLowerCase()
-        },
-        { username: email.toLowerCase() }
-      ]
+      project_code: { $in: [params.project_code, 'all'] },
+      $or: [{ email: body.email.toLowerCase() }, { username: body.email.toLowerCase() }]
     });
 
-    if (!user) throw new AuthenticationError(`Invalid email or password: ${email}, ${password}`);
+    if (!user) throw new AuthenticationError('Invalid email or password');
 
-    const authenticated = await compare(password, user.password);
+    const authenticated = await compare(body.password, user.password);
 
     if (!authenticated) throw new AuthenticationError('Invalid email or password');
 

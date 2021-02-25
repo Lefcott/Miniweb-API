@@ -4,11 +4,11 @@ import { sessionMiddleware } from '../../utils/middlewares';
 
 export const create = {
   method: 'post',
-  paths: '/users',
+  paths: '/projects/:project_code/users',
   middlewares: sessionMiddleware,
   body: joi.object().keys({
     login_type: joi.string().valid('email').required(),
-    redirect_to: joi.string().required(),
+    email_confirmation_redirect: joi.string().required(),
     email: joi.string().email().required(),
     password: joi.string().required(),
     data: joi.object().required()

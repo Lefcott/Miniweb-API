@@ -24,7 +24,7 @@ fs.readdir(`${projectDir}/src/emails`, (error, dirs) => {
   }
 });
 
-export const sendEmail = (from, to, subject, text, html, data) =>
+export const send_email = (from, to, subject, text, html, data) =>
   new Promise(resolve => {
     from = constants.EMAIL_FROM[from];
     if (!from) throw new Error(`From ${from} not found`, { subject, to, data });
@@ -51,7 +51,7 @@ export const sendEmail = (from, to, subject, text, html, data) =>
     );
   });
 
-export const getEmailFromTemplate = (name, language_code, data) => {
+export const get_email_from_template = (name, language_code, data) => {
   const template = templates[name];
   if (!template) throw new Error(`Unexistent template with name ${name}`, { language_code, data });
   const language = template.lang[language_code];
