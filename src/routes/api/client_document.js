@@ -5,9 +5,12 @@ import { SEARCH_PARAMETERS } from '../../utils/search/constants';
 
 export const list = {
   method: 'get',
-  paths: '/client_documents',
+  paths: '/projects/:project_code/client_documents',
+  params: joi.object().keys({
+    project_code: joi.string().required()
+  }),
   query: joi.object().keys({
-    table_name: joi.string().required(),
+    entity: joi.string().required(),
     ...SEARCH_PARAMETERS
   }),
   options: { allowUnknown: true }
@@ -41,10 +44,13 @@ export const update = {
 
 export const create = {
   method: 'post',
-  paths: '/client_documents',
+  paths: '/projects/:project_code/client_documents',
   middlewares: sessionMiddleware,
+  params: joi.object().keys({
+    project_code: joi.string().required()
+  }),
   body: joi.object().keys({
-    table_name: joi.string().required(),
+    entity: joi.string().required(),
     value: joi.object().required()
   })
 };

@@ -9,7 +9,7 @@ export default async ({ session, params }, res) => {
 
   if (!client_document) return res.json({ message: 'Client document already deleted' });
 
-  await user.validate_client_document_ownership(client_document);
+  await client_document.validate_deletion(user);
 
   await client_document.delete();
 
