@@ -6,7 +6,7 @@ import rollbar from '../../utils/rollbar';
 export default async ({ params, body, session }, res) => {
   await User.validate_creation(params, body);
 
-  const user = await User.create(body);
+  const user = await User.create(params.project_code, body);
   session.user_id = user._id;
 
   const emailData = {
