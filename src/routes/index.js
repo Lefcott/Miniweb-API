@@ -68,7 +68,14 @@ const getValidator = schema => async (req, res, next) => {
       errors && schemaErrors.push(errors);
     }
   });
-  if (schemaErrors.length) return res.status(400).json({ errors: errorMessage || schemaErrors });
+  if (schemaErrors.length)
+    return res.status(400).json({
+      error: {
+        code: 'invalid_parameters',
+        id: uuid(),
+        message: errorMessage || schemaErrors
+      }
+    });
   if (schema.middlewares) {
     const _middlewares = Array.isArray(schema.middlewares) ? schema.middlewares : [schema.middlewares];
     for (let i = 0; i < _middlewares.length; i += 1) _middlewares[i](req, res, _middlewares[i + 1] || next);
