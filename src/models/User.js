@@ -139,8 +139,9 @@ export default class User extends UserBase {
     if (previous_user) throw new ValidationError('user with given email aleady exists', { previous_user });
   }
 
-  static async create(body) {
+  static async create(body, project_code) {
     return new User({
+      project_code,
       login_type: body.login_type,
       email_confirmation_redirect: body.email_confirmation_redirect,
       email: body.email,
