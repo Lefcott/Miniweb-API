@@ -4,10 +4,11 @@ import User from '../../models/User';
 export default async ({ query, session }, res) => {
   const user = await User.findOne({ email_confirmation_token: query.token });
 
-  if (user) {
-    await user.confirm_email();
-    session.user_id = user._id;
-  }
+  if (!user) throw new NotFoundError('user not found');
+
+  session.user_id = user._id;
 
   res.redirect(user.email_confirmation_redirect);
+
+  user.confirm_email();
 };
