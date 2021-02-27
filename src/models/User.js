@@ -163,7 +163,7 @@ export default class User extends UserBase {
 
     const authenticated = await compare(body.password, user.password);
 
-    if (!authenticated) throw new AuthenticationError('Invalid email or password');
+    if (!authenticated) throw new AuthenticationError('Invalid email or password', 'invalid_credentials');
 
     return user;
   }
