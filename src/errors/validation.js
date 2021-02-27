@@ -1,8 +1,8 @@
 export default class ValidationError extends Error {
-  constructor(message, meta = {}) {
+  constructor(message, code, meta = {}) {
     super();
 
-    this.code = 'invalid_parameters';
+    this.code = code || 'invalid_parameters';
     this.level = 'error';
     this.status_code = 422;
     this.generic_message = 'There was validation error, the given parameters are wrong';

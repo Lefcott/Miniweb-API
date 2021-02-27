@@ -9,7 +9,7 @@ export const send = (phone, text) =>
         PhoneNumber: phone
       },
       (error, data) => {
-        if (error) throw new Error(error, { phone, text });
+        if (error) throw new Error(error, '', { phone, text });
         resolve(data);
       }
     );

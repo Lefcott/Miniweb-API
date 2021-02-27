@@ -31,6 +31,10 @@ export const send_messages = async (project, conversation, messages) => {
       await send_line_messages(project, conversation, messages);
       break;
     default:
-      throw new InternalError(`invalid channel ${conversation.channel}`, { project, conversation, messages });
+      throw new InternalError(`invalid channel ${conversation.channel}`, '', {
+        project,
+        conversation,
+        messages
+      });
   }
 };

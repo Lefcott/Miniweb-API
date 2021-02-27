@@ -53,7 +53,7 @@ export default class Intent extends IntentBase {
 
     const choosen_intent = get_max_score_intent(intents);
 
-    if (!choosen_intent) throw new InternalError('intent not found', { project_code, channel, text });
+    if (!choosen_intent) throw new InternalError('intent not found', '', { project_code, channel, text });
 
     return choosen_intent;
   }

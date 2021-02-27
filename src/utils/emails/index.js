@@ -27,8 +27,9 @@ fs.readdir(`${projectDir}/src/emails`, (error, dirs) => {
 export const send_email = (from, to, subject, text, html, data) =>
   new Promise(resolve => {
     from = constants.EMAIL_FROM[from];
-    if (!from) throw new Error(`From ${from} not found`, { subject, to, data });
-    if (!to || !to.length) throw new Error(`No recipients found for sending email`, { from, subject, data });
+    if (!from) throw new Error(`From ${from} not found`, '', { subject, to, data });
+    if (!to || !to.length)
+      throw new Error(`No recipients found for sending email`, '', { from, subject, data });
 
     to = (Array.isArray(to) ? to : [to]).slice(0, 40);
 
@@ -53,12 +54,12 @@ export const send_email = (from, to, subject, text, html, data) =>
 
 export const get_email_from_template = (name, language_code, data) => {
   const template = templates[name];
-  if (!template) throw new Error(`Unexistent template with name ${name}`, { language_code, data });
+  if (!template) throw new Error(`Unexistent template with name ${name}`, '', { language_code, data });
   const language = template.lang[language_code];
   if (!language)
-    throw new Error(`Unexistent language with code ${language_code}`, { template_name: name, data });
+    throw new Error(`Unexistent language with code ${language_code}`, '', { template_name: name, data });
   if (!language.subject)
-    throw new Error(`Didn't find subject for language ${language_code}`, { template_name: name, data });
+    throw new Error(`Didn't find subject for language ${language_code}`, '', { template_name: name, data });
 
   return {
     subject: language.subject,

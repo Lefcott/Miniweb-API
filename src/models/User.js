@@ -110,7 +110,7 @@ export default class User extends UserBase {
   validate_project_ownership(project = {}, project_code) {
     if (!this.admin) throw new AuthorizationError(`user ${this._id} is not admin`);
     if (!this.project_codes.includes(project.code) && !this.project_codes.includes(project_code))
-      throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`, {
+      throw new AuthorizationError(`User ${this._id} does not own project with code ${project.code}`, '', {
         project
       });
   }
@@ -136,7 +136,10 @@ export default class User extends UserBase {
     };
     const previous_user = await User.findOne(search);
 
-    if (previous_user) throw new ValidationError('user with given email aleady exists', { previous_user });
+    if (previous_user)
+      throw new ValidationError('user with given email aleady exists', 'user_already_exists', {
+        previous_user
+      });
   }
 
   static async create(project_code, body) {
