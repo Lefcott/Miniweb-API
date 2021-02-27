@@ -159,7 +159,7 @@ export default class User extends UserBase {
       $or: [{ email: body.email.toLowerCase() }, { username: body.email.toLowerCase() }]
     });
 
-    if (!user) throw new AuthenticationError('Invalid email or password');
+    if (!user) throw new AuthenticationError('Invalid email or password', 'invalid_credentials');
 
     const authenticated = await compare(body.password, user.password);
 
