@@ -9,7 +9,8 @@ const ProductBase = mongoose.model(
     price: { type: Number, required: true },
     currency: { type: String, required: true },
     days_frequency: { type: Number, default: 0 },
-    images: [String]
+    images: [String],
+    data: {}
   })
 );
 
