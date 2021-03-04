@@ -7,7 +7,7 @@ export default async ({ session, params, body }, res) => {
 
   await ClientDocument.validate_creation(user, params.project_code, body);
 
-  const client_document = new ClientDocument(body);
+  const client_document = new ClientDocument({ ...body, project_code: params.project_code });
 
   await client_document.save();
 

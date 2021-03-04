@@ -9,6 +9,7 @@ const ClientDocumentBase = mongoose.model(
   'ClientDocument',
   mongoose.Schema(
     {
+      project_code: { type: String, required: true },
       entity: { type: String, required: true },
       value: { type: mongoose.SchemaTypes.Mixed, required: true }
     },
