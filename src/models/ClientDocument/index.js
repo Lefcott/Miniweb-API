@@ -1,9 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
-import { getSearchQuery } from '../utils/search';
+import { getSearchQuery } from '../../utils/search';
+import ClientModel from '../ClientModel';
 
-import ClientModel from './ClientModel';
+import * as utils from './utils';
 
 const ClientDocumentBase = mongoose.model(
   'ClientDocument',
@@ -20,10 +21,15 @@ const ClientDocumentBase = mongoose.model(
 
 export default class ClientDocument extends ClientDocumentBase {
   sanitize() {
+    this.make_calculations();
     this.hidden_keys.forEach(hidden_key => {
       this.value[hidden_key] = undefined;
     });
     return { _id: this._id, ...this.value };
+  }
+
+  make_calculations() {
+    utils.make_calculations(this);
   }
 
   edit(body) {
