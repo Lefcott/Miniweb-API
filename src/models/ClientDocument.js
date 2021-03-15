@@ -47,8 +47,10 @@ export default class ClientDocument extends ClientDocumentBase {
   }
 
   static search(query) {
-    const { page_size, page_number, regex_fields, regex_flags } = query;
+    const { page_size, page_number, regex_fields, regex_flags, count } = query;
     const searchQuery = getSearchQuery(query);
+
+    if (count) return ClientDocument.countDocuments(searchQuery);
 
     return ClientDocument.find(searchQuery)
       .skip(page_size * (page_number - 1))
