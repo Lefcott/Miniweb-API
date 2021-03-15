@@ -4,5 +4,7 @@ import ClientDocument from '../../models/ClientDocument';
 export default async ({ query }, res) => {
   const client_documents = await ClientDocument.search(query);
 
+  if (query.count) return res.json({ count: client_documents });
+
   res.json(client_documents.map(client_document => client_document.sanitize()));
 };
