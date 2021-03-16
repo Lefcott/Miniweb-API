@@ -1,9 +1,9 @@
-import calculations from './calculations';
+import effects from './effects';
 
-export const make_calculations = client_document => {
-  calculations.forEach(calculation => {
-    if (calculation.project_code !== client_document.project_code) return;
-    if (calculation.entity !== client_document.entity) return;
-    calculation.calculate(client_document);
+export const apply_effects = client_document => {
+  effects.forEach(effect => {
+    if (effect.project_code !== client_document.project_code) return;
+    if (effect.entity !== client_document.entity) return;
+    effect.apply(client_document);
   });
 };

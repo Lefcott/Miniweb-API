@@ -12,8 +12,7 @@ const ClientDocumentBase = mongoose.model(
     {
       project_code: { type: String, required: true },
       entity: { type: String, required: true },
-      value: { type: mongoose.SchemaTypes.Mixed, required: true },
-      hidden_keys: [String]
+      value: { type: mongoose.SchemaTypes.Mixed, required: true }
     },
     { collection: 'client_documents' }
   )
@@ -21,15 +20,8 @@ const ClientDocumentBase = mongoose.model(
 
 export default class ClientDocument extends ClientDocumentBase {
   sanitize() {
-    this.make_calculations();
-    this.hidden_keys.forEach(hidden_key => {
-      this.value[hidden_key] = undefined;
-    });
+    utils.apply_effects(this);
     return { _id: this._id, ...this.value };
-  }
-
-  make_calculations() {
-    utils.make_calculations(this);
   }
 
   edit(body) {
