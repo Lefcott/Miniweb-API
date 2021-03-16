@@ -14,7 +14,7 @@ const ClientDocumentBase = mongoose.model(
       entity: { type: String, required: true },
       value: { type: mongoose.SchemaTypes.Mixed, required: true }
     },
-    { collection: 'client_documents' }
+    { collection: 'client_documents', timestamps: true }
   )
 );
 
