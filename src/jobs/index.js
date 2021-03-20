@@ -1,10 +1,9 @@
 import agenda from '../utils/agenda';
 
-import './test';
+import ScheduleMasNegocio from './MasNegocio';
 
 (async () => {
   await agenda.start();
 
-  // TODO cron jobs here
-  await agenda.every('3 minutes', 'agenda test');
+  await ScheduleMasNegocio();
 })();

@@ -1,0 +1,9 @@
+¡Hola {{ data.card.form_data.name }} {{ data.card.form_data.surname }}! Nos alegra saber que hace una semana has creado tu primera tarjeta de negocio gratuita!
+Queremos proponerte mejorar tu tarjeta.
+Pasándote a la tarjeta Premium podrás:
+
+- Incluir información más específica sobre tu negocio.
+- Agregar fotos, videos y documentos.
+- Personalizar la URL de la tarjeta (por ejemplo https://www.masnegocio.webuildwebz.com/cards/tu-url).
+
+Esta es tu tarjeta actual: https://www.masnegocio.webuildwebz.com/dashboard/cards/{{ data.card._id }}

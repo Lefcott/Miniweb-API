@@ -1,6 +1,7 @@
 import rollbar from '../rollbar';
 import * as redis from '../redis';
 
+import useAgendash from './agendash';
 import sessionMiddleware from './session';
 import moesifMiddleware from './moesif';
 
@@ -54,6 +55,7 @@ app.get('/', (req, res) => {
   res.send(`Hello World from ${req.get('host')} !`);
 });
 app.use('/', router);
+useAgendash(app);
 
 log('Listen');
 const port = process.env.PORT || process.process.env.PORT;

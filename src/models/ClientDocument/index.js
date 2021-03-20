@@ -11,8 +11,17 @@ const ClientDocumentBase = mongoose.model(
   mongoose.Schema(
     {
       project_code: { type: String, required: true },
+      enabled: { type: Boolean, default: true },
       entity: { type: String, required: true },
-      value: { type: mongoose.SchemaTypes.Mixed, required: true }
+      value: { type: mongoose.SchemaTypes.Mixed, required: true },
+      payments: [
+        {
+          date: { type: Date, required: true },
+          payment_reminder_email_sent: { type: Boolean, required: true },
+          service_expired_email_sent: { type: Boolean, required: true },
+          service_disabled_email_sent: { type: Boolean, required: true }
+        }
+      ]
     },
     { collection: 'client_documents', timestamps: true }
   )

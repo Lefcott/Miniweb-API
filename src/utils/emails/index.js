@@ -16,7 +16,6 @@ fs.readdir(`${projectDir}/src/emails`, (error, dirs) => {
   for (let i = 0; i < dirs.length; i += 1) {
     const name = dirs[i];
     templates[name] = {
-      spec: require(`${projectDir}/src/emails/${name}/spec.json`),
       lang: require(`${projectDir}/src/emails/${name}/lang.json`),
       html: fs.readFileSync(`${projectDir}/src/emails/${name}/html.html`).toString(),
       text: fs.readFileSync(`${projectDir}/src/emails/${name}/text.txt`).toString()

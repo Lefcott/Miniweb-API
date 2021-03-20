@@ -1,4 +1,5 @@
 import { check } from '@lefcott/filter-json';
+import { log } from 'debug';
 
 import rollbar from './rollbar';
 
@@ -12,12 +13,12 @@ redis.on('error', err => {
 
 redis.on('end', () => {
   active = false;
-  console.log('Redis connection closed');
+  log('Redis connection closed');
 });
 
 redis.on('connect', () => {
   active = true;
-  console.log('Connected to REDIS!');
+  log('Connected to REDIS!');
 });
 
 export const isActive = () => active;
