@@ -14,7 +14,6 @@ const ProjectBase = mongoose.model(
       base_url: { type: String, required: true },
       disabled: { type: Boolean, default: false },
       language_code: { type: String, required: true }, // es | en
-      table_names: [{ type: String, required: true }],
       cloudinary_settings: {
         cloud_name: String,
         preset_name: String
@@ -74,18 +73,6 @@ export default class Project extends ProjectBase {
     this.chatbot.configuration = body;
 
     return this.save();
-  }
-
-  find_client_models() {
-    return ClientModel.find({ table_name: { $in: this.table_names } });
-  }
-
-  validate_client_docuemnt_ownership(client_document) {
-    if (!this.table_names.includes(client_document.table_name))
-      throw new AuthorizationError(
-        `Project ${this._id} does not own document with table name ${client_document.table_name}`,
-        { client_document }
-      );
   }
 
   async set_configuration_sections() {

@@ -39,7 +39,6 @@ const UserBase = mongoose.model(
       phone_confirmation_code: { type: String, default: () => randomCode(5) },
       phone_confirmed: { type: Boolean, default: false },
       project_codes: [String],
-      table_names: [String],
       development_requests: [
         {
           name: { type: String, required: true },
