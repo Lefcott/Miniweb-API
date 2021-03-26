@@ -13,3 +13,7 @@ export const apply_rating_average = client_document => {
     client_document.value.ratings.reduce((total, rating) => total + rating.score, 0) /
     client_document.value.ratings.length;
 };
+
+export const apply_comments_count = client_document => {
+  client_document.value.comments_count = client_document.value.comments.length;
+};
