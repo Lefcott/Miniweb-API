@@ -9,7 +9,7 @@ const FormBase = mongoose.model(
       code: { type: String, required: true },
       project_code: { type: String, required: true },
       name: { type: String, required: true },
-      form_variants: [
+      variants: [
         {
           field_variants: [
             {
