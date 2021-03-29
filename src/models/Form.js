@@ -9,10 +9,14 @@ const FormBase = mongoose.model(
       code: { type: String, required: true },
       project_code: { type: String, required: true },
       name: { type: String, required: true },
-      field_variants: [
+      form_variants: [
         {
-          field_key: { type: String, required: true },
-          enabled: { type: Boolean, required: true },
+          field_variants: [
+            {
+              field_key: { type: String, required: true },
+              enabled: { type: Boolean, required: true }
+            }
+          ],
           language: {
             es: { name: { type: String, required: true } },
             en: { name: { type: String, required: true } }
