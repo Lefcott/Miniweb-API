@@ -17,6 +17,10 @@ Field.add({
     field_key: String
   },
   options: [{ key: String, value: String, fields: [Field] }],
+  language: {
+    en: { name: String, title: String, description: String },
+    es: { name: String, title: String, description: String }
+  },
   subfields: [Field]
 });
 
