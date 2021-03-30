@@ -17,9 +17,18 @@ Field.add({
     field_key: String
   },
   options: [{ key: String, value: String, fields: [Field] }],
+  select_button_options: [
+    {
+      value: { type: String, required: true },
+      language: {
+        en: { name: String },
+        es: { name: String }
+      }
+    }
+  ],
   language: {
-    en: { name: String, title: String, description: String },
-    es: { name: String, title: String, description: String }
+    en: { name: String },
+    es: { name: String }
   },
   subfields: [Field]
 });
