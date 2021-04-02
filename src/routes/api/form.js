@@ -6,7 +6,8 @@ export const list = {
   method: 'get',
   paths: '/projects/:project_code/forms',
   query: joi.object().keys({
-    showable: joi.bool()
+    showable: joi.bool(),
+    editable: joi.bool(),
   }),
   params: joi.object().keys({
     project_code: joi.string().required()
