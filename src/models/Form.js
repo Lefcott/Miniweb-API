@@ -17,24 +17,11 @@ const FormBase = mongoose.model(
         email_code: String,
         emails: [String]
       },
-      steps: [
+      steps: [{ name: { en: String, es: String } }],
+      variants: [
         {
-          name: { en: String, es: String },
-          fields: [Field],
-          variants: [
-            {
-              field_variants: [
-                {
-                  field_key: { type: String, required: true },
-                  enabled: { type: Boolean, required: true }
-                }
-              ],
-              language: {
-                es: { name: { type: String, required: true } },
-                en: { name: { type: String, required: true } }
-              }
-            }
-          ]
+          key: String,
+          names: { en: String, es: String }
         }
       ],
       fields: [Field]
