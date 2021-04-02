@@ -4,7 +4,7 @@ const Field = new Schema();
 
 Field.add({
   key: { type: String, required: true },
-  name: { type: String, required: true },
+  name: String,
   names: {
     en: String,
     es: String
