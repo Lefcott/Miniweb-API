@@ -6,7 +6,7 @@ Field.add({
   key: { type: String, required: true },
   name: { type: String, required: true },
   default_value: { type: mongoose.SchemaTypes.Mixed },
-  important: { type: Boolean, required: true },
+  important: { type: Boolean, default: false },
   input_type: { type: String, required: true }, // text | number | image | email | phone
   is_required: { type: Boolean, default: false },
   read_only: { type: Boolean, default: false },
