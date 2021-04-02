@@ -5,6 +5,10 @@ const Field = new Schema();
 Field.add({
   key: { type: String, required: true },
   name: { type: String, required: true },
+  names: {
+    en: String,
+    es: String
+  },
   step: Number,
   default_value: { type: mongoose.SchemaTypes.Mixed },
   important: { type: Boolean, default: false },
