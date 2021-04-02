@@ -13,7 +13,7 @@ const FormBase = mongoose.model(
       showable: { type: Boolean, default: true },
       editable: { type: Boolean, default: false },
       notifications: {
-        enabled: { type: Boolean, required: true },
+        enabled: { type: Boolean, default: false },
         email_code: String,
         emails: [String]
       },
