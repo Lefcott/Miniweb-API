@@ -17,6 +17,7 @@ Field.add({
   read_only: { type: Boolean, default: false },
   fillable_by_user: { type: Boolean, default: true },
   testing_value: String,
+  show_on_variants: [String],
   options_reference: {
     form_code: String,
     field_key: String
