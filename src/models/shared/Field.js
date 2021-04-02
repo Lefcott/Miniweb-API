@@ -5,6 +5,7 @@ const Field = new Schema();
 Field.add({
   key: { type: String, required: true },
   name: { type: String, required: true },
+  step: Number,
   default_value: { type: mongoose.SchemaTypes.Mixed },
   important: { type: Boolean, default: false },
   input_type: { type: String, required: true }, // text | number | image | email | phone
