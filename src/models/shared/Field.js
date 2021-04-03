@@ -27,8 +27,8 @@ Field.add({
     {
       value: { type: String, required: true },
       language: {
-        en: { name: String },
-        es: { name: String }
+        en: { title: String, description: String },
+        es: { title: String, description: String }
       }
     }
   ],
