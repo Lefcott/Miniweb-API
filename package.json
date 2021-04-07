@@ -7,7 +7,8 @@
   },
   "scripts": {
     "start": "node -r esm src",
-    "dev": "nodemon app -e env,js,json"
+    "dev": "nodemon app -e env,js,json",
+    "debug":"node -r esm"
   },
   "author": "Leandro Cotti",
   "license": "ISC",

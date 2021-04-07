@@ -58,7 +58,7 @@ app.use('/', router);
 useAgendash(app);
 
 log('Listen');
-const port = process.env.PORT || process.process.env.PORT;
+const port = process.env.PORT || 4000;
 
 server.listen(port, () => {
   log(`Listening on ${port} with environment ${process.env.NODE_ENV}`);
