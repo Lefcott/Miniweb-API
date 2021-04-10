@@ -17,7 +17,9 @@ export default [
     entity: 'forum',
     apply: client_document => {
       readmyfcomic.apply_comments_count(client_document);
+      readmyfcomic.apply_views_count(client_document);
       client_document.value.comments = undefined;
+      client_document.value.views = undefined;
     }
   }
 ];
