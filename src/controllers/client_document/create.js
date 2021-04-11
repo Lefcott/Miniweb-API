@@ -11,5 +11,5 @@ export default async ({ session, params, body }, res) => {
 
   await client_document.save();
 
-  res.json(client_document.sanitize());
+  res.json(client_document.sanitize(true));
 };

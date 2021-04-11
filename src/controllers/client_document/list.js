@@ -7,5 +7,5 @@ export default async ({ query }, res) => {
 
   if (count) return res.json({ count: client_documents });
 
-  res.json(client_documents.map(client_document => client_document.sanitize()));
+  res.json(client_documents.map(client_document => client_document.sanitize(true)));
 };

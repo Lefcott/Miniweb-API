@@ -28,9 +28,9 @@ const ClientDocumentBase = mongoose.model(
 );
 
 export default class ClientDocument extends ClientDocumentBase {
-  sanitize() {
-    utils.apply_effects(this);
-    return { _id: this._id, ...this.value };
+  sanitize(apply_effects) {
+    if (apply_effects) utils.apply_effects(this);
+    return { _id: this._id, createdAt: this.createdAt, ...this.value };
   }
 
   edit(body) {

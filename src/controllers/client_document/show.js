@@ -6,5 +6,5 @@ export default async ({ params }, res) => {
 
   if (!client_document) throw new NotFoundError('client document not found');
 
-  res.json(client_document.sanitize());
+  res.json(client_document.sanitize(false));
 };
