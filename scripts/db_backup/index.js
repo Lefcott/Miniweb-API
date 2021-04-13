@@ -21,8 +21,6 @@ run(
   await makeBackup(repoName);
   run(`
       cd ${repoName};
-      touch test.js;
-      echo "// test" > test.js;
       git config user.name "updater";
       git add .;
       git commit -m "Update DB ${moment().format('DD/MM/YYYY hh:mm A')}";
