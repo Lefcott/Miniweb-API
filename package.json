@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node -r esm src",
     "dev": "nodemon app -e env,js,json",
-    "debug":"node -r esm"
+    "debug": "node -r esm",
+    "db-backup": "node -r esm scripts/db_backup"
   },
   "author": "Leandro Cotti",
   "license": "ISC",
