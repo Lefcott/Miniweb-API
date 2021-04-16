@@ -22,6 +22,10 @@ Field.add({
     form_code: String,
     field_key: String
   },
+  file_options: {
+    max_size: String,
+    max_files: Number
+  },
   options: [{ key: String, value: String, fields: [Field] }],
   select_button_options: [
     {
