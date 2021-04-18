@@ -1,4 +1,4 @@
-¡Hola {{ data.card.form_data.name }} {{ data.card.form_data.surname }}!
+¡Hola {{ data.card.name }} {{ data.card.surnames }}!
 
 Te recordamos que tienes una Tarjeta Digital de tipo {{ data.card.value.card_type }} hace casi un año.
 Para seguir utilizando esta tarjeta deberás relizar el pago correspondiente al siguiente año de uso.

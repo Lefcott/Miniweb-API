@@ -1,4 +1,4 @@
-¡Hola {{ data.card.form_data.name }} {{ data.card.form_data.surname }}! Nos alegra saber que hace una semana has creado tu primera tarjeta de negocio gratuita!
+¡Hola {{ data.card.name }} {{ data.card.surnames }}! Nos alegra saber que hace una semana has creado tu primera tarjeta de negocio gratuita!
 Queremos proponerte mejorar tu tarjeta.
 Pasándote a la tarjeta Premium podrás:
 

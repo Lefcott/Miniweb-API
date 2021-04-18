@@ -1,4 +1,4 @@
-¡Hola {{ data.card.form_data.name }} {{ data.card.form_data.surname }}!
+¡Hola {{ data.card.name }} {{ data.card.surnames }}!
 
 Al parecer tienes una Tarjeta Digital que ha expirado.
 Si no pagas dentro de los siguientes 7 días, esta Tarjeta Digital quedará deshabilitada. En caso de expirar, vas a poder rehabilitarla en cualquier momento.
