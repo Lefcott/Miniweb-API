@@ -14,8 +14,8 @@ const repoName = 'DB-Backup';
 run(
   `
   git clone ${dbRepourl} ${repoName};
-  git config user.email "lefcott@hotmail.com";
-  git config user.name "updater";
+  git config --global user.email "lefcott@hotmail.com";
+  git config --global user.name "lefcott";
 `
 ).on('exit', async () => {
   await makeBackup(repoName);
