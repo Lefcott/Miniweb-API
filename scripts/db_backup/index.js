@@ -11,17 +11,12 @@ import { makeBackup } from './makeBackup';
 
 const repoName = 'DB-Backup';
 
-run(
-  `
-  git clone ${dbRepourl} ${repoName};
-  git config --global user.email "lefcott@hotmail.com";
-  git config --global user.name "lefcott";
-`
-).on('exit', async () => {
+run(`git clone ${dbRepourl} ${repoName};`).on('exit', async () => {
   await makeBackup(repoName);
   run(`
       cd ${repoName};
-      git config user.name "updater";
+      git config --global user.email "lefcott@hotmail.com";
+      git config --global user.name "lefcott";
       git add .;
       git commit -m "Update DB ${moment().format('DD/MM/YYYY hh:mm A')}";
       git push origin master;
