@@ -9,7 +9,8 @@ export const show = {
     project_code_or_token: joi.string().required()
   }),
   query: joi.object().keys({
-    search_by_project_token: joi.bool().default(false)
+    search_by_project_token: joi.bool().default(false),
+    fill_forms: joi.bool().default(false)
   })
 };
 

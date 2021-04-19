@@ -10,5 +10,7 @@ export default async ({ params, query }, res) => {
 
   if (!project) throw new NotFoundError('project not found');
 
+  if (query.fill_forms) await project.set_configuration_sections();
+
   res.json(project);
 };
