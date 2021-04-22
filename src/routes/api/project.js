@@ -30,6 +30,17 @@ export const update_configuration = {
   body: joi.object().required()
 };
 
+export const update_configuration_section = {
+  method: 'put',
+  paths: '/projects/:project_id/configuration_sections/:form_code',
+  middlewares: sessionMiddleware,
+  params: joi.object().keys({
+    project_id: joi.string().required(),
+    form_code: joi.string().required()
+  }),
+  body: joi.object().required()
+};
+
 export const update_widgets = {
   method: 'put',
   paths: '/projects/:project_id/widgets',
