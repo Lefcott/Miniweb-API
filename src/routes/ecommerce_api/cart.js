@@ -3,6 +3,10 @@ import joi from '@hapi/joi';
 export const create = {
   method: 'post',
   paths: '/projects/:project_code/forms/:form_code/carts',
+  params: joi.object().keys({
+    project_code: joi.string().required(),
+    form_code: joi.string().required()
+  }),
   body: joi.object().keys({
     data: joi.object().required(),
     items: joi
