@@ -8,6 +8,8 @@ const CartBase = mongoose.model(
   'Cart',
   mongoose.Schema(
     {
+      project_code: { type: String, required: true },
+      form_code: { type: String, required: true },
       items: [
         {
           product: {},
@@ -22,6 +24,8 @@ const CartBase = mongoose.model(
 export default class Cart extends CartBase {
   static async create(body, params) {
     const cart = new Cart({
+      project_code: params.project_code,
+      form_code: params.form_code,
       items: body.items
     });
 
