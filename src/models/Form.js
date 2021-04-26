@@ -15,7 +15,8 @@ const FormBase = mongoose.model(
       notifications: {
         enabled: { type: Boolean, default: false },
         email_code: String,
-        emails: [String]
+        emails: [String],
+        email_data: {}
       },
       steps: [{ name: { en: String, es: String } }],
       variants: [

@@ -23,11 +23,12 @@ export default class FormResponse extends FormResponseBase {
     return { _id: this._id, ...this.data };
   }
 
-  notify_creation(cart, additional_data = {}) {
+  notify_creation(additional_data = {}) {
     const data = {
       project_name: this.project.name,
       client_data: this.form.fields.map(field => ({ key: field.name, value: this.data[field.key] })),
-      ...additional_data
+      ...additional_data,
+      ...(this.form.notifications.email_data || {})
     };
     const { subject, text, html } = get_email_from_template(
       this.form.notifications.email_code,
@@ -56,7 +57,7 @@ export default class FormResponse extends FormResponseBase {
     form_response.project = project;
     form_response.form = form;
 
-    if (form.notifications.enabled) form_response.notify_creation(cart, additional_data);
+    if (form.notifications.enabled) form_response.notify_creation(additional_data);
 
     return form_response.save();
   }
