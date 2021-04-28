@@ -14,7 +14,7 @@ agenda.define('MasNegocio: switch to premium email', async () => {
     if (!has_to_send) return;
 
     const user = await User.findById(card.value.user_id);
-    if (!user) rollbar.error('switch_to_premium_email: user not found', { card });
+    if (!user) return rollbar.error('switch_to_premium_email: user not found', { card });
 
     const data = { card };
 
