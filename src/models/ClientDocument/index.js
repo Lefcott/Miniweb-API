@@ -59,11 +59,11 @@ export default class ClientDocument extends ClientDocumentBase {
 
   static search(query) {
     const { page_size, page_number, regex_fields, regex_flags, count } = query;
-    const searchQuery = getSearchQuery(query);
+    const search_query = getSearchQuery(query);
 
-    if (count) return ClientDocument.countDocuments(searchQuery);
+    if (count) return ClientDocument.countDocuments(search_query);
 
-    return ClientDocument.find(searchQuery)
+    return ClientDocument.find(search_query)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
       .sort({ _id: -1 });

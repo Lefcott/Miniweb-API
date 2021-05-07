@@ -12,6 +12,11 @@ export const getSearchQuery = query => {
   delete query.regex_flags;
   delete query.regex_normalize_characters;
 
+  Object.keys(query).forEach(key => {
+    if (query[key] === 'true') query[key] = true;
+    if (query[key] === 'false') query[key] = false;
+  });
+
   const regex_query = {
     $or: regex_fields
       .map(regex_field => {
