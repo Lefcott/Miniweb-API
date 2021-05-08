@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
 import { getSearchQuery } from '../../utils/search';
-import ClientModel from '../ClientModel';
+import ItemModel from '../ItemModel';
 
 import * as utils from './utils';
 
@@ -50,10 +50,10 @@ export default class Item extends ItemBase {
   }
 
   static async validate_creation(user, project_code, body) {
-    const client_model = await ClientModel.findOne({ project_code, entity: body.entity });
+    const item_model = await ItemModel.findOne({ project_code, entity: body.entity });
 
-    if (!client_model) throw new NotFoundError('client model not found');
-    if (!user.admin && !client_model.public_creation)
+    if (!item_model) throw new NotFoundError('item model not found');
+    if (!user.admin && !item_model.public_creation)
       throw new AuthorizationError('user not allowed to create client document');
   }
 

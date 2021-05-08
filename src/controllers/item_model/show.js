@@ -8,7 +8,7 @@ export default async ({ session, params }, res) => {
   const project = await Project.find_by_code(params.project_code);
 
   user.validate_project_ownership(project);
-  const item_model = await ItemModel.findOne({ entity: params.client_model_entity });
+  const item_model = await ItemModel.findOne({ entity: params.item_model_entity });
 
   res.json(item_model);
 };

@@ -2,7 +2,6 @@ import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
 import Form from './Form';
-import ClientModel from './ClientModel';
 
 const ProjectBase = mongoose.model(
   'Project',

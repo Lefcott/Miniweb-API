@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 
 import Field from './shared/Field';
 
-const ClientModelBase = mongoose.model(
-  'ClientModel',
+const ItemModelBase = mongoose.model(
+  'ItemModel',
   mongoose.Schema(
     {
       project_code: { type: String, required: true },
@@ -14,8 +14,8 @@ const ClientModelBase = mongoose.model(
       table_descriptive_name: { type: String, required: true },
       fields: [Field]
     },
-    { collection: 'client_models' }
+    { collection: 'item_models' }
   )
 );
 
-export default class ClientModel extends ClientModelBase {}
+export default class ItemModel extends ItemModelBase {}
