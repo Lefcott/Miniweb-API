@@ -4,12 +4,11 @@ import Item from '../../models/Item';
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ session, params, body }, res) => {
   const user = await User.find_from_session(session);
+  const item = await Item.findOne({ _id: params.item_id });
 
-  await Item.validate_creation(user, params.project_code, body);
+  item.validate_update(user);
 
-  const client_document = new Item({ ...body, project_code: params.project_code });
+  await item.edit(body);
 
-  await client_document.save();
-
-  res.json(client_document.sanitize(true));
+  res.json({ message: `Item ${item._id} updated` });
 };

@@ -1,11 +1,11 @@
-import ClientDocument from '../../models/ClientDocument';
+import Item from '../../models/Item';
 
 /** @param {import('express').Request} req @param {import('express').Response} res */
 export default async ({ query }, res) => {
   const { count } = query;
-  const client_documents = await ClientDocument.search(query);
+  const items = await Item.search(query);
 
-  if (count) return res.json({ count: client_documents });
+  if (count) return res.json({ count: items });
 
-  res.json(client_documents.map(client_document => client_document.sanitize(true)));
+  res.json(items.map(client_document => client_document.sanitize(true)));
 };

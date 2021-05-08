@@ -1,4 +1,4 @@
-import ClientDocument from '../../models/ClientDocument';
+import Item from '../../models/Item';
 import User from '../../models/User';
 import agenda from '../../utils/agenda';
 import * as Email from '../../utils/emails';
@@ -9,9 +9,9 @@ import * as utils from './utils';
 agenda.define('last payment emails', async ({ attrs }) => {
   attrs.data.iterations.forEach(async iteration => {
     const complete_email_sent_flag = `payments.${iteration.email_sent_flag}`;
-    const client_documents = await ClientDocument.find({ enabled: true, [complete_email_sent_flag]: false });
+    const items = await Item.find({ enabled: true, [complete_email_sent_flag]: false });
 
-    client_documents.forEach(async client_document => {
+    items.forEach(async client_document => {
       const has_to_send = utils.should_send_email(client_document, iteration.duration);
       if (!has_to_send) return;
 

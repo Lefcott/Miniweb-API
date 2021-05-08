@@ -1,4 +1,4 @@
-import ClientDocument from '../../../models/ClientDocument';
+import Item from '../../../models/Item';
 import User from '../../../models/User';
 import agenda from '../../../utils/agenda';
 import * as Email from '../../../utils/emails';
@@ -7,7 +7,7 @@ import rollbar from '../../../utils/rollbar';
 import * as utils from './utils';
 
 agenda.define('MasNegocio: switch to premium email', async () => {
-  const cards = await ClientDocument.find({ 'value.switch_to_premium_email_sent': false });
+  const cards = await Item.find({ 'value.switch_to_premium_email_sent': false });
 
   cards.forEach(async card => {
     const has_to_send = utils.should_send_email(card);

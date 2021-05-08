@@ -6,8 +6,8 @@ import ClientModel from '../ClientModel';
 
 import * as utils from './utils';
 
-const ClientDocumentBase = mongoose.model(
-  'ClientDocument',
+const ItemBase = mongoose.model(
+  'Item',
   mongoose.Schema(
     {
       project_code: { type: String, required: true },
@@ -23,11 +23,11 @@ const ClientDocumentBase = mongoose.model(
         }
       ]
     },
-    { collection: 'client_documents', timestamps: true }
+    { collection: 'items', timestamps: true }
   )
 );
 
-export default class ClientDocument extends ClientDocumentBase {
+export default class Item extends ItemBase {
   sanitize(apply_effects) {
     if (apply_effects) utils.apply_effects(this);
     return { _id: this._id, createdAt: this.createdAt, ...this.value };
@@ -61,9 +61,9 @@ export default class ClientDocument extends ClientDocumentBase {
     const { page_size, page_number, regex_fields, regex_flags, count } = query;
     const search_query = getSearchQuery(query);
 
-    if (count) return ClientDocument.countDocuments(search_query);
+    if (count) return Item.countDocuments(search_query);
 
-    return ClientDocument.find(search_query)
+    return Item.find(search_query)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
       .sort({ _id: -1 });
@@ -71,7 +71,7 @@ export default class ClientDocument extends ClientDocumentBase {
 
   static async get_distinct_object(query) {
     const keys = Object.keys(query);
-    const queries = Promise.all(keys.map(key => ClientDocument.distinct(key)));
+    const queries = Promise.all(keys.map(key => Item.distinct(key)));
 
     const results = await queries;
 

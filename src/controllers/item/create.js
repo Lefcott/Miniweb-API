@@ -7,9 +7,9 @@ export default async ({ session, params, body }, res) => {
 
   await Item.validate_creation(user, params.project_code, body);
 
-  const client_document = new Item({ ...body, project_code: params.project_code });
+  const item = new Item({ ...body, project_code: params.project_code });
 
-  await client_document.save();
+  await item.save();
 
-  res.json(client_document.sanitize(true));
+  res.json(item.sanitize(true));
 };
