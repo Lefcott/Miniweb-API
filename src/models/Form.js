@@ -18,7 +18,7 @@ const FormBase = mongoose.model(
         emails: [String],
         email_data: {}
       },
-      steps: [{ key: String, name: { en: String, es: String } }],
+      steps: [{ name: { en: String, es: String } }],
       variants: [
         {
           key: String,
