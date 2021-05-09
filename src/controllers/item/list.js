@@ -5,7 +5,7 @@ export default async ({ query }, res) => {
   const { count } = query;
   const items = await Item.search(query);
 
-  if (count) return res.json({ count: items[0].count });
+  if (count) return res.json({ count: items[0]?.count });
 
   res.json(Item.sanitize_items(true, items));
 };
