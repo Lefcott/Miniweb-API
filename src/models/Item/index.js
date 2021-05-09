@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
-import { getSearchQuery } from '../../utils/search';
+import { getSearchAggregations } from '../../utils/search';
 import ItemModel from '../ItemModel';
 
 import * as utils from './utils';
@@ -33,6 +33,17 @@ export default class Item extends ItemBase {
     return { _id: this._id, createdAt: this.createdAt, ...this.value };
   }
 
+  static sanitize_items(apply_effects, items) {
+    const sanitized_items = [];
+
+    items.forEach(item => {
+      if (apply_effects) utils.apply_effects(item);
+      sanitized_items.push({ _id: item._id, createdAt: item.createdAt, ...item.value });
+    });
+
+    return sanitized_items;
+  }
+
   edit(body) {
     this.value = body;
 
@@ -59,11 +70,9 @@ export default class Item extends ItemBase {
 
   static search(query) {
     const { page_size, page_number, regex_fields, regex_flags, count } = query;
-    const search_query = getSearchQuery(query);
+    const aggregations = getSearchAggregations(query, count);
 
-    if (count) return Item.countDocuments(search_query);
-
-    return Item.find(search_query)
+    return Item.aggregate(aggregations)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
       .sort({ _id: -1 });

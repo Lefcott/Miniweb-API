@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import mongoose from 'mongoose';
 
-import { getSearchQuery } from '../utils/search';
+import { getSearchAggregations } from '../utils/search';
 
 import Message from './shared/Message';
 
@@ -25,6 +25,14 @@ export default class Conversation extends ConversationBase {
   sanitize() {
     this.message_count = this.messages.length;
     this.messages = undefined;
+  }
+
+  static sanitize_conversations(conversations) {
+    return conversations.map(conversation => ({
+      ...conversation,
+      messages: undefined,
+      message_count: this.messages.length
+    }));
   }
 
   static async find_or_create(project_code, id, channel) {
@@ -53,9 +61,9 @@ export default class Conversation extends ConversationBase {
 
   static search(query) {
     const { page_size, page_number, regex_fields, regex_flags } = query;
-    const searchQuery = getSearchQuery(query);
+    const aggregations = getSearchAggregations(query);
 
-    return Conversation.find(searchQuery)
+    return Conversation.aggregate(aggregations)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
       .sort({ updatedAt: -1 });

@@ -9,7 +9,5 @@ export default async ({ session, params, query }, res) => {
 
   const conversations = await Conversation.search(query);
 
-  conversations.map(conversation => conversation.sanitize());
-
-  res.json(conversations);
+  res.json(Conversation.sanitize_conversations(conversations));
 };

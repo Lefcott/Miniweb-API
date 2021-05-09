@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import { get_email_from_template, send_email } from '../utils/emails';
-import { getSearchQuery } from '../utils/search';
+import { getSearchAggregations } from '../utils/search';
 
 import Project from './Project';
 import Form from './Form';
@@ -21,6 +21,10 @@ const FormResponseBase = mongoose.model(
 export default class FormResponse extends FormResponseBase {
   sanitize() {
     return { _id: this._id, ...this.data };
+  }
+
+  static sanitize_form_responses(form_responses) {
+    return form_responses.map(form_response => ({ _id: form_response._id, ...form_response.data }));
   }
 
   notify_creation(additional_data = {}) {
@@ -64,7 +68,7 @@ export default class FormResponse extends FormResponseBase {
 
   static search(query, params) {
     const { page_size, page_number, regex_fields, regex_flags } = query;
-    const searchQuery = getSearchQuery(query);
+    const searchQuery = getSearchAggregations(query);
 
     return FormResponse.find({ ...params, ...searchQuery })
       .skip(page_size * (page_number - 1))

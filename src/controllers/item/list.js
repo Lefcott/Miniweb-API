@@ -7,5 +7,5 @@ export default async ({ query }, res) => {
 
   if (count) return res.json({ count: items });
 
-  res.json(items.map(item => item.sanitize(true)));
+  res.json(Item.sanitize_items(true, items));
 };

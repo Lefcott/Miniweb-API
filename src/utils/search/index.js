@@ -2,7 +2,7 @@ import lodash from 'lodash';
 
 import { normalize, toAccentInsensitive } from '../string';
 
-export const getSearchQuery = query => {
+export const getSearchAggregations = (query, count = false) => {
   const { page_size, page_number, regex_fields, regex_flags } = query;
   const { regex_normalize_characters } = query;
   delete query.count;
@@ -11,11 +11,33 @@ export const getSearchQuery = query => {
   delete query.regex_fields;
   delete query.regex_flags;
   delete query.regex_normalize_characters;
+  const aggregations = [];
 
   Object.keys(query).forEach(key => {
     if (query[key] === 'true') query[key] = true;
     if (query[key] === 'false') query[key] = false;
   });
+
+  Object.keys(query)
+    .filter(key => key.includes('+'))
+    .forEach(key => {
+      const value = query[key];
+      delete query[key];
+      const fields = key.replace(/\++/g, '+ +').split('+');
+      const regex = new RegExp(value, regex_flags);
+      aggregations.push(
+        {
+          $addFields: {
+            [`calculated_fields.${key}`]: {
+              $concat: fields.map(field => (field === ' ' ? field : `$${field}`))
+            }
+          }
+        },
+        { $match: { [`calculated_fields.${key}`]: regex } }
+      );
+    });
+
+  if (count) aggregations.push({ $count: 'count' });
 
   const regex_query = {
     $or: regex_fields
@@ -37,5 +59,5 @@ export const getSearchQuery = query => {
 
   if (!regex_query.$or.length) delete regex_query.$or;
 
-  return { ...query, ...regex_query };
+  return [{ $match: { ...query, ...regex_query } }, ...aggregations];
 };
