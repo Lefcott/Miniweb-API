@@ -39,7 +39,7 @@ export const getSearchAggregations = (query, count = false) => {
       );
     });
 
-  if (Object.keys(add_fields).length) aggregations.push(add_fields);
+  if (Object.keys(add_fields).length) aggregations.push({ $addFields: add_fields });
 
   if (count) aggregations.push({ $count: 'count' });
 
