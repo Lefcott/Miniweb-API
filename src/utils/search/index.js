@@ -5,12 +5,14 @@ import { normalize, toAccentInsensitive } from '../string';
 export const getSearchAggregations = (query, count = false) => {
   const { page_size, page_number, regex_fields, regex_flags } = query;
   const { regex_normalize_characters } = query;
+  const add_fields = JSON.parse(query.add_fields);
   delete query.count;
   delete query.page_size;
   delete query.page_number;
   delete query.regex_fields;
   delete query.regex_flags;
   delete query.regex_normalize_characters;
+  delete query.add_fields;
   const aggregations = [];
 
   Object.keys(query).forEach(key => {
@@ -36,6 +38,8 @@ export const getSearchAggregations = (query, count = false) => {
         { $match: { [`calculated_fields.${key}`]: regex } }
       );
     });
+
+  if (Object.keys(add_fields).length) aggregations.push(add_fields);
 
   if (count) aggregations.push({ $count: 'count' });
 
