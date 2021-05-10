@@ -60,12 +60,14 @@ export default class Conversation extends ConversationBase {
   }
 
   static search(query) {
+    const sort_by = JSON.parse(query.sort_by);
+    delete query.sort_by;
     const { page_size, page_number, regex_fields, regex_flags } = query;
     const aggregations = getSearchAggregations(query);
 
     return Conversation.aggregate(aggregations)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
-      .sort({ updatedAt: -1 });
+      .sort({ updatedAt: -1, ...sort_by });
   }
 }

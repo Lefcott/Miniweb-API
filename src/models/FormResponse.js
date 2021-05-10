@@ -67,12 +67,14 @@ export default class FormResponse extends FormResponseBase {
   }
 
   static search(query, params) {
+    const sort_by = JSON.parse(query.sort_by);
+    delete query.sort_by;
     const { page_size, page_number, regex_fields, regex_flags } = query;
     const searchQuery = getSearchAggregations(query);
 
     return FormResponse.find({ ...params, ...searchQuery })
       .skip(page_size * (page_number - 1))
       .limit(page_size)
-      .sort({ _id: -1 });
+      .sort(sort_by);
   }
 }

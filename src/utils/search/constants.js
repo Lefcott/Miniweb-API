@@ -6,5 +6,6 @@ export const SEARCH_PARAMETERS = {
   page_number: joi.number().min(1).required(),
   regex_fields: joi.array().default([]),
   regex_flags: joi.string().default(''),
-  regex_normalize_characters: joi.boolean().default(true)
+  regex_normalize_characters: joi.boolean().default(true),
+  sort_by: joi.string().default('{"_id": -1}')
 };

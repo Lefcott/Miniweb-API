@@ -69,6 +69,8 @@ export default class Item extends ItemBase {
   }
 
   static search(query) {
+    const sort_by = JSON.parse(query.sort_by);
+    delete query.sort_by;
     const { page_size, page_number, regex_fields, regex_flags, count } = query;
     const aggregations = getSearchAggregations(query, count);
 
@@ -77,7 +79,7 @@ export default class Item extends ItemBase {
     return Item.aggregate(aggregations)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
-      .sort({ _id: -1 });
+      .sort(sort_by);
   }
 
   static async get_distinct_object(query) {
