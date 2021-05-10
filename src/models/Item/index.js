@@ -72,6 +72,8 @@ export default class Item extends ItemBase {
     const { page_size, page_number, regex_fields, regex_flags, count } = query;
     const aggregations = getSearchAggregations(query, count);
 
+    if (count) return Item.aggregate(aggregations);
+
     return Item.aggregate(aggregations)
       .skip(page_size * (page_number - 1))
       .limit(page_size)
