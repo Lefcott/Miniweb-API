@@ -78,8 +78,8 @@ export default class Item extends ItemBase {
 
     return Item.aggregate(aggregations)
       .skip(page_size * (page_number - 1))
-      .limit(page_size)
-      .sort(sort_by);
+      .sort(sort_by)
+      .limit(page_size);
   }
 
   static async get_distinct_object(query) {
