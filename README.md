@@ -1,3 +1,1 @@
-# Admin
-
-Platforma de administación de productos.
+# Miniweb - API
