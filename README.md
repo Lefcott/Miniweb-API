@@ -36,4 +36,4 @@ WEB_ORIGINS=[]
 
 TOKEN_SECRET=token-secret-d94367cf-dcc3-4679-b79d-3c929fa39a75
 
-## [Colecciones de MongoDB a configurar](/docs/index.md)
+## [Colecciones de MongoDB a configurar](/docs/README.md)
