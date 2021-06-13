@@ -1,5 +1,5 @@
 # Colecciones de MongoDB a configurar
 
-- [projects](/docs/projects)
-- [forms](/docs/forms)
-- [items](/docs/items)
+- [projects](/docs/projects.md)
+- [forms](/docs/forms.md)
+- [items](/docs/items.md)
