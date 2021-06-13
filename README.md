@@ -1,6 +1,6 @@
 # Miniweb - API
 
-Variables de entorno:
+## Variables de entorno:
 
 ADMIN_SECRET=adfa3c10-97b3-11eb-84d8-eb3b0bc08730
 
@@ -35,3 +35,5 @@ URL_PREFIX=http://
 WEB_ORIGINS=[]
 
 TOKEN_SECRET=token-secret-d94367cf-dcc3-4679-b79d-3c929fa39a75
+
+## [Colecciones de MongoDB a configurar](/docs/index.md)
