@@ -1,5 +1,12 @@
 # Miniweb - API
 
+## Componentes:
+- Redis (con Heroku esto es gratis)
+- MongoDB
+- Rollbar (con Heroku esto es gratis)
+- Moesif (no es necesario, pero es útil para ver las solicitudes http entrantes y salientes)
+- Clouodinary (se tiene que crear una cuenta y configurar las credenciales en el documento de **projects** de la base de datos MongoDB)
+
 ## Variables de entorno:
 
 ADMIN_SECRET=adfa3c10-97b3-11eb-84d8-eb3b0bc08730
